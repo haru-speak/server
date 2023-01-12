@@ -12,12 +12,6 @@
     </p>
 </div>
 
-- [서비스 소개](#서비스-소개-)
-- [프로젝트 기술 스택 - Server](#프로젝트-기술-스택-)
-    - [common](#common)
-    - [backend](#backend)
-- [팀원 소개](#팀원-️)
-
 # 서비스 소개
 
 ‘하루스픽’은 모든 사용자에게 스피킹 기록지(aka. 스피킹log)를 제공합니다. 사용자는 이 기록지를 활용해 매일 나의 스피킹을 기록할 수 있고, 다른 사용자와 스터디를 꾸려 함께 공부할 수도 있습니다. 
@@ -40,7 +34,7 @@
 | BE | BE | BE  | BE |
 | :-----: | :-----: | :-----:  | :-----: |
 | <img src="https://avatars.githubusercontent.com/u/67811880?v=4" width=400px alt="나단"/>  | <img src="https://avatars.githubusercontent.com/u/49313910?v=4" width=400px alt="동동"/>  | <img src="https://avatars.githubusercontent.com/u/95534831?v=4" width=400px alt="연"/>   | <img src="https://avatars.githubusercontent.com/u/79403892?v=4" width=400px alt="우기"/>  |
-| [나단-팀장](https://github.com/nathan29849) | [동동](https://github.com/HanKwanJin)  | [동동](https://github.com/seokho-ham)   | [연](https://github.com/leeys1218) | [우기](https://github.com/jakalroni) |
+| [나단-팀장](https://github.com/nathan29849) | [동동](https://github.com/HanKwanJin)  | [연](https://github.com/leeys1218) | [우기](https://github.com/jakalroni) |
 
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fharu-speak%2Fserver&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
