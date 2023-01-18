@@ -22,4 +22,8 @@ public class SpeakingLogService {
 		log.debug("SpeakingLogId = {}", speakingLogId);
 		return null;
 	}
+
+	public void deleteById(Long speakingLogId) {
+		log.debug("SpeakingLogId = {}", speakingLogId);
+	}
 }

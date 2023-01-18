@@ -1,5 +1,6 @@
 package com.example.be.core.web;
 
+import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_SPEAKING_LOG_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_SPEAKING_LOG_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
@@ -9,6 +10,7 @@ import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.SpeakingLogType;
 import io.swagger.annotations.ApiOperation;
 import java.time.LocalDate;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,4 +44,10 @@ public class SpeakingLogController {
 		return new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, response);
 	}
 
+	@DeleteMapping("/{speakingLogId}")
+	@ApiOperation(value = "스프킹 로그 삭제입니다.")
+	public BaseResponse<Void> deleteById(@PathVariable final Long speakingLogId) {
+		speakingLogService.deleteById(speakingLogId);
+		return new BaseResponse<>(DELETE_SPEAKING_LOG_SUCCESS, null);
+	}
 }
