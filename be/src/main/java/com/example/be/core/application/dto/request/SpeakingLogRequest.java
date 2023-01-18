@@ -21,6 +21,6 @@ public class SpeakingLogRequest {
     @Override
     public String toString() {
         return "title: " + title + ", voiceRecord: " + voiceRecord
-            + ", voidText: " + voiceText;
+            + ", voiceText: " + voiceText;
     }
 }

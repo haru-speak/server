@@ -9,8 +9,7 @@ public class QuestionResponse {
     private String voidRecord;
     private String voiceText;
 
-    private QuestionResponse() {
-    }
+    private QuestionResponse() {}
 
     public QuestionResponse(String title, String voidRecord, String voiceText) {
         this.title = title;
