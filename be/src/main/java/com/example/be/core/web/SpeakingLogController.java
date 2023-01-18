@@ -7,6 +7,7 @@ import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_SPEA
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.SpeakingLogService;
+import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
@@ -63,8 +64,8 @@ public class SpeakingLogController {
 	@ApiOperation(value = "스피킹 로그 수정입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> modify(
 		@PathVariable final Long speakingLogId,
-		@RequestBody final SpeakingLogRequest speakingLogRequest) {
-		speakingLogService.modify(speakingLogId, speakingLogRequest);
+		@RequestBody final SpeakingLogModifyRequest speakingLogModifyRequest) {
+		speakingLogService.modify(speakingLogId, speakingLogModifyRequest);
 		return new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, null);
 	}
 

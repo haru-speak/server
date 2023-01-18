@@ -1,5 +1,6 @@
 package com.example.be.core.application;
 
+import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
@@ -28,8 +29,8 @@ public class SpeakingLogService {
 		log.debug("SpeakingLogId = {}", speakingLogId);
 	}
 
-	public void modify(Long speakingLogId, SpeakingLogRequest speakingLogRequest) {
-		log.debug("SpeakingLogId = {}, speakingLogRequest = {}", speakingLogId, speakingLogRequest);
+	public void modify(Long speakingLogId, SpeakingLogModifyRequest speakingLogModifyRequest) {
+		log.debug("SpeakingLogId = {}, speakingLogRequest = {}", speakingLogId, speakingLogModifyRequest);
 	}
 
 	public SpeakingLogDetailResponse create(SpeakingLogRequest speakingLogRequest) {
