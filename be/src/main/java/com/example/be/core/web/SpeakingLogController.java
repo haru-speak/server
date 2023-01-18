@@ -13,6 +13,7 @@ import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.SpeakingLogType;
 import io.swagger.annotations.ApiOperation;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,8 @@ public class SpeakingLogController {
 	@ApiOperation(value = "스피킹 로그 타입에 따른 전체 조회입니다.")
 	public BaseResponse<SpeakingLogsResponse> find(
 		@RequestParam(name = "type", required = false, defaultValue = "MY") SpeakingLogType type,
-		@RequestParam(name = "date", required = false, defaultValue = "#{T(java.time.LocalDateTime).now()}") LocalDate date) {
+		@RequestParam(name = "date", required = false, defaultValue = "#{T(java.time.LocalDateTime).now()}")
+		@DateTimeFormat(pattern = "yyyyMMdd") LocalDate date) {
 
 		SpeakingLogsResponse response = speakingLogService.find(type, date);
 		return new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, response);
