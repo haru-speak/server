@@ -9,10 +9,8 @@ import lombok.Getter;
 public class SpeakingLogsResponse {
 
 	@NotNull
-	private SpeakingLogType type;
-	private List<SpeakingLogResponse> speakingLogResponses;
-
-	private SpeakingLogsResponse() {}
+	private final SpeakingLogType type;
+	private final List<SpeakingLogResponse> speakingLogResponses;
 	public SpeakingLogsResponse(SpeakingLogType type,
 		List<SpeakingLogResponse> speakingLogResponses) {
 		this.type = type;

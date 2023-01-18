@@ -10,19 +10,17 @@ public class CommentResponse {
 
 	@NotNull
 	@Positive
-	private Long commentId;
+	private final Long commentId;
 
 	@NotNull
 	@Positive
-	private Long memberId;
+	private final Long memberId;
 
 	@NotBlank
-	private String nickname;
+	private final String nickname;
 
 	@NotBlank
-	private String content;
-
-	private CommentResponse() {}
+	private final String content;
 
 	public CommentResponse(Long commentId, Long memberId, String nickname, String content) {
 		this.commentId = commentId;

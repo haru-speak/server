@@ -7,15 +7,13 @@ import lombok.Getter;
 public class QuestionResponse {
 
     @NotBlank
-    private String title;
+    private final String title;
 
     @NotBlank
-    private String voidRecord;
+    private final String voidRecord;
 
     @NotBlank
-    private String voiceText;
-
-    private QuestionResponse() {}
+    private final String voiceText;
 
     public QuestionResponse(String title, String voidRecord, String voiceText) {
         this.title = title;

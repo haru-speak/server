@@ -11,28 +11,26 @@ public class SpeakingLogDetailResponse {
 
 	@NotNull
 	@Positive
-	private Long memberId;
+	private final Long memberId;
 
 	@NotBlank
-	private String title;
+	private final String title;
 
 	@NotBlank
-	private String voiceRecord;
+	private final String voiceRecord;
 
 	@NotBlank
-	private String voiceText;
+	private final String voiceText;
 
 	@NotNull
-	private Integer likeCount;
+	private final Integer likeCount;
 
 	@NotNull
-	private Integer commentCount;
+	private final Integer commentCount;
 
 	@NotNull
-	private Boolean isLiked;
-	private List<CommentResponse> comments;
-
-	private SpeakingLogDetailResponse() {}
+	private final Boolean isLiked;
+	private final List<CommentResponse> comments;
 
 	public SpeakingLogDetailResponse(Long memberId, String title, String voiceRecord, String voiceText,
 		Integer likeCount, Integer commentCount, Boolean isLiked, List<CommentResponse> comments) {

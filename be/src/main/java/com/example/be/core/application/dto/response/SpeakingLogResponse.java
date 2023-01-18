@@ -10,33 +10,33 @@ public class SpeakingLogResponse {
 
 	@NotNull
 	@Positive
-	private Long speakingLogId;
+	private final Long speakingLogId;
 	@NotBlank
-	private String title;
+	private final String title;
 
 	@NotBlank
-	private String voiceRecord;
+	private final String voiceRecord;
 
 	@NotNull
-	private Integer likeCount;
+	private final Integer likeCount;
 
 	@NotNull
-	private Integer commentCount;
+	private final Integer commentCount;
 
 	@NotNull
-	private Boolean isLiked;
+	private final Boolean isLiked;
 
 	@NotNull
-	private String profileImage;
+	private final String profileImage;
 
 	@NotNull
 	@Positive
-	private Long memberId;
+	private final Long memberId;
 
-	private SpeakingLogResponse() {}
-
-	public SpeakingLogResponse(String title, String voiceRecord, Integer likeCount,
+	public SpeakingLogResponse(Long speakingLogId, String title, String voiceRecord,
+		Integer likeCount,
 		Integer commentCount, Boolean isLiked, String profileImage, Long memberId) {
+		this.speakingLogId = speakingLogId;
 		this.title = title;
 		this.voiceRecord = voiceRecord;
 		this.likeCount = likeCount;
