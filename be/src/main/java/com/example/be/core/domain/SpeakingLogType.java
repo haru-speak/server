@@ -1,5 +1,6 @@
 package com.example.be.core.domain;
 
+import com.example.be.common.exception.speakinglog.InvalidSpeakingLogTypeException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
 import lombok.Getter;
@@ -18,11 +19,4 @@ public enum SpeakingLogType {
 		this.type = type;
 	}
 
-	@JsonCreator
-	public static SpeakingLogType fromString(String type) {
-		return Arrays.stream(SpeakingLogType.values())
-			.filter(t -> t.name().equalsIgnoreCase(type))
-			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("해당 SPEAKING LOG TYPE을 찾을 수 없습니다."));
-	}
 }
