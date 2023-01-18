@@ -6,8 +6,16 @@ import lombok.Getter;
 @Getter
 public enum ResponseCodeAndMessages implements CodeAndMessages {
 
-	FIND_SPEAKING_LOG_SUCCESS("S-SL001", "스피킹 로그 타입 전체 조회가 성공했습니다."),
-	FIND_DETAIL_SPEAKING_LOG_SUCCESS("S-SL002", "스피킹 로그 개별 조회가 성공했습니다."),
+	/**
+	SpeakingLog
+	 */
+	FIND_SPEAKING_LOG_SUCCESS("S-SL001", "스피킹 로그 타입 전체 조회를 성공했습니다."),
+	FIND_DETAIL_SPEAKING_LOG_SUCCESS("S-SL002", "스피킹 로그 개별 조회를 성공했습니다."),
+
+	/**
+	Question
+	 */
+	FIND_QUESTION_SUCCESS("S-Q001", "오늘의 문장 조회를 성공했습니다."),
 	;
 
 	private final String code;
