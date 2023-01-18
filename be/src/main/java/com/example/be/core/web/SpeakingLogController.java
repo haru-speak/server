@@ -2,17 +2,21 @@ package com.example.be.core.web;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_SPEAKING_LOG_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_SPEAKING_LOG_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_SPEAKING_LOG_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.SpeakingLogService;
+import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.SpeakingLogType;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import java.time.LocalDate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,9 +49,18 @@ public class SpeakingLogController {
 	}
 
 	@DeleteMapping("/{speakingLogId}")
-	@ApiOperation(value = "스프킹 로그 삭제입니다.")
-	public BaseResponse<Void> deleteById(@PathVariable final Long speakingLogId) {
-		speakingLogService.deleteById(speakingLogId);
+	@ApiOperation(value = "스피킹 로그 삭제입니다.")
+	public BaseResponse<Void> delete(@PathVariable final Long speakingLogId) {
+		speakingLogService.delete(speakingLogId);
 		return new BaseResponse<>(DELETE_SPEAKING_LOG_SUCCESS, null);
+	}
+
+	@PutMapping("/{speakingLogId}")
+	@ApiOperation(value = "스피킹 로그 수정입니다.")
+	public BaseResponse<SpeakingLogDetailResponse> modify(
+		@PathVariable final Long speakingLogId,
+		@RequestBody final SpeakingLogRequest speakingLogRequest) {
+		speakingLogService.modify(speakingLogId, speakingLogRequest);
+		return new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, null);
 	}
 }

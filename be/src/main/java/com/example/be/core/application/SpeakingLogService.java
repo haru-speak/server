@@ -1,5 +1,6 @@
 package com.example.be.core.application;
 
+import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.SpeakingLogType;
@@ -23,7 +24,11 @@ public class SpeakingLogService {
 		return null;
 	}
 
-	public void deleteById(Long speakingLogId) {
+	public void delete(Long speakingLogId) {
 		log.debug("SpeakingLogId = {}", speakingLogId);
+	}
+
+	public void modify(Long speakingLogId, SpeakingLogRequest speakingLogRequest) {
+		log.debug("SpeakingLogId = {}, speakingLogRequest = {}", speakingLogId, speakingLogRequest);
 	}
 }
