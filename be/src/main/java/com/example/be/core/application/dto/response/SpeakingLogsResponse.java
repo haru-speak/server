@@ -2,11 +2,13 @@ package com.example.be.core.application.dto.response;
 
 import com.example.be.core.domain.SpeakingLogType;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
 public class SpeakingLogsResponse {
 
+	@NotNull
 	private SpeakingLogType type;
 	private List<SpeakingLogResponse> speakingLogResponses;
 
