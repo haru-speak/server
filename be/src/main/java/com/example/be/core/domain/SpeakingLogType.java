@@ -1,8 +1,5 @@
 package com.example.be.core.domain;
 
-import com.example.be.common.exception.speakinglog.InvalidSpeakingLogTypeException;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
