@@ -2,3 +2,7 @@
 	path = be/config
 	url = https://github.com/haru-speak/demo-repository.git
 	branch = main
+
+	path = be/config
+	url = git@github.com:haru-speak/demo-repository.git
+	branch = main
