@@ -1,16 +1,19 @@
 package com.example.be.core.web;
 
+import static com.example.be.common.exception.ErrorCodeAndMessages.SPEAKING_LOG_DATE_FORMAT_ERROR;
 import static com.example.be.common.exception.ErrorCodeAndMessages.SPEAKING_LOG_TYPE_ERROR;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_SPEAKING_LOG_SUCCESS;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.be.common.exception.speakinglog.InvalidSpeakingLogDateException;
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.SpeakingLogService;
+import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.SpeakingLogType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,14 +67,15 @@ class SpeakingLogControllerFindByTypeTest {
 				@DisplayName("ALL TYPE 스피킹 로그 조회시 해당 날짜의 ALL TYPE 스피킹 로그가 조회된다")
 				void find_all_type_speaking_log_with_date() throws Exception {
 					//given
+					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest("all", "20230108");
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
-					when(speakingLogService.find(SpeakingLogType.ALL, LocalDate.of(2023, 1, 18)))
+					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
 						.thenReturn(speakingLogsResponse);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?type=all&date=20230118")
+					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?type=all&date=20230108")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -80,21 +84,22 @@ class SpeakingLogControllerFindByTypeTest {
 						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
-					verify(speakingLogService).find(SpeakingLogType.ALL, LocalDate.of(2023, 1, 18));
+					verify(speakingLogService).find(refEq(speakingLogConditionRequest));
 				}
 
 				@Test
 				@DisplayName("타입 없이 스피킹 로그 조회시 해당 날짜의 MY TYPE 스피킹 로그가 조회된다.")
 				void find_no_type_speaking_log_with_date() throws Exception {
 					//given
+					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest(null, "20230108");
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
-					when(speakingLogService.find(SpeakingLogType.MY, LocalDate.of(2023, 1, 18)))
+					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
 						.thenReturn(speakingLogsResponse);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?date=20230118")
+					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?date=20230108")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -103,7 +108,7 @@ class SpeakingLogControllerFindByTypeTest {
 						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
-					verify(speakingLogService).find(SpeakingLogType.MY, LocalDate.of(2023, 1, 18));
+					verify(speakingLogService).find(refEq(speakingLogConditionRequest));
 				}
 			}
 
@@ -115,10 +120,11 @@ class SpeakingLogControllerFindByTypeTest {
 				@DisplayName("ALL TYPE 스피킹 로그 조회시 오늘 날짜의 ALL TYPE 스피킹 로그가 조회된다")
 				void find_all_type_speaking_log_with_no_date() throws Exception {
 					//given
+					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest("all", null);
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
-					when(speakingLogService.find(SpeakingLogType.ALL, LocalDate.now()))
+					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
 						.thenReturn(speakingLogsResponse);
 
 					//when
@@ -131,17 +137,18 @@ class SpeakingLogControllerFindByTypeTest {
 						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
-					verify(speakingLogService).find(SpeakingLogType.ALL, LocalDate.now());
+					verify(speakingLogService).find(refEq(speakingLogConditionRequest));
 				}
 
 				@Test
 				@DisplayName("타입 없이 스피킹 로그 조회시 오늘 날짜의 MY TYPE 스피킹 로그가 조회된다")
 				void find_no_type_speaking_log_with_no_date() throws Exception {
 					//given
+					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest(null, null);
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
-					when(speakingLogService.find(SpeakingLogType.MY, LocalDate.now()))
+					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
 						.thenReturn(speakingLogsResponse);
 
 					//when
@@ -154,7 +161,7 @@ class SpeakingLogControllerFindByTypeTest {
 						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
-					verify(speakingLogService).find(SpeakingLogType.MY, LocalDate.now());
+					verify(speakingLogService).find(refEq(speakingLogConditionRequest));
 				}
 			}
 		}
@@ -171,12 +178,7 @@ class SpeakingLogControllerFindByTypeTest {
 				@DisplayName("스피킹 로그 조회시 Error가 발생한다.")
 				void find_wrong_type_speaking_log() throws Exception {
 					//given
-					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_TYPE_ERROR, null);
-
-
-					when(speakingLogService.find(SpeakingLogType.MY, LocalDate.now()))
-						.thenReturn(speakingLogsResponse);
 
 					//when
 					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?type=nathan")
@@ -197,15 +199,10 @@ class SpeakingLogControllerFindByTypeTest {
 				@DisplayName("스피킹 로그 조회시 Error가 발생한다.")
 				void find_wrong_date_format_speaking_log() throws Exception {
 					//given
-					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, null);
-					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_TYPE_ERROR, null);
-
-
-					when(speakingLogService.find(SpeakingLogType.MY, LocalDate.now()))
-						.thenReturn(speakingLogsResponse);
+					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_DATE_FORMAT_ERROR, null);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?date=2023-01-02")
+					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?date=2023^^0108")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
