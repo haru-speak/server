@@ -7,6 +7,7 @@ import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_SPEA
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.SpeakingLogService;
+import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
@@ -37,12 +38,8 @@ public class SpeakingLogController {
 
 	@GetMapping
 	@ApiOperation(value = "스피킹 로그 타입에 따른 전체 조회입니다.")
-	public BaseResponse<SpeakingLogsResponse> find(
-		@RequestParam(name = "type", required = false, defaultValue = "MY") SpeakingLogType type,
-		@RequestParam(name = "date", required = false, defaultValue = "#{T(java.time.LocalDateTime).now()}")
-		@DateTimeFormat(pattern = "yyyyMMdd") LocalDate date) {
-
-		SpeakingLogsResponse response = speakingLogService.find(type, date);
+	public BaseResponse<SpeakingLogsResponse> find(SpeakingLogConditionRequest speakingLogConditionRequest) {
+		SpeakingLogsResponse response = speakingLogService.find(speakingLogConditionRequest);
 		return new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, response);
 	}
 

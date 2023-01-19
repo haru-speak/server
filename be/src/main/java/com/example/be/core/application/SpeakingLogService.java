@@ -1,5 +1,6 @@
 package com.example.be.core.application;
 
+import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
@@ -15,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SpeakingLogService {
 
-	public SpeakingLogsResponse find(SpeakingLogType type, LocalDate date) {
-		log.debug("SpeakingLogType = {}, Date = {}", type, date);
+	public SpeakingLogsResponse find(SpeakingLogConditionRequest speakingLogConditionRequest) {
+		log.debug(speakingLogConditionRequest.toString());
 		return null;
 	}
 
