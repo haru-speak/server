@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Git Submodule
+### 빌드 시 복사된 application.yml 파일
+src/main/resources/*.yml
