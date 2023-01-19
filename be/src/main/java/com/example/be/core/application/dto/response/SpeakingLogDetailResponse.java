@@ -8,7 +8,6 @@ import javax.validation.constraints.Positive;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
-@Schema
 @Getter
 public class SpeakingLogDetailResponse {
 

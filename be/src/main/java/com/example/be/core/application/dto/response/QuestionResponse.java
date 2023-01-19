@@ -5,8 +5,6 @@ import javax.validation.constraints.NotBlank;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
-
-@Schema(description = "오늘의 문장 Response")
 @Getter
 public class QuestionResponse {
 
