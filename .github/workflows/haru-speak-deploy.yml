@@ -46,7 +46,7 @@ jobs:
       - name: Docker - Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./be/docker
+          context: ./be
           push: true
           tags: hankwanjin/haru-speak:latest
 
