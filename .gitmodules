@@ -1,0 +1,4 @@
+[submodule "be/config"]
+	path = be/config
+	url = https://github.com/haru-speak/demo-repository.git
+	branch = main
