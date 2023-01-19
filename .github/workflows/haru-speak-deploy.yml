@@ -10,7 +10,10 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./be
+    
     steps:
       # Java Spring Gradle
       - uses: actions/checkout@v3
@@ -22,9 +25,12 @@ jobs:
           distribution: "temurin"
       
       # switch env file 추후 작성 예정
-        
-      - name: Spring-application build
-        run: ./gradlew build
+      
+      - name: Spring - Grant execute permission for gradlew
+        run: chmod +x gradlew
+      
+      - name: Spring-application build 
+        run: ./gradlew bootJar
       
 
       # Docker
