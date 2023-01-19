@@ -70,7 +70,6 @@ public class SpeakingLogController {
 	@ApiOperation(value = "스피킹 로그 생성입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> create(
 		@RequestBody final SpeakingLogRequest speakingLogRequest) {
-
 		SpeakingLogDetailResponse response = speakingLogService.create(speakingLogRequest);
 		return new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
 	}

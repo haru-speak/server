@@ -4,6 +4,8 @@ import com.example.be.common.exception.speakinglog.InvalidSpeakingLogDateExcepti
 import com.example.be.core.domain.SpeakingLogType;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.ToString;
 
