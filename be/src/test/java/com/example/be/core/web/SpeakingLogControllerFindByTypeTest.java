@@ -1,6 +1,8 @@
 package com.example.be.core.web;
 
+import static com.example.be.common.exception.ErrorCodeAndMessages.SPEAKING_LOG_TYPE_ERROR;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_SPEAKING_LOG_SUCCESS;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,7 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 @WebMvcTest(SpeakingLogController.class)
-class SpeakingLogControllerTest {
+class SpeakingLogControllerFindByTypeTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -153,6 +155,63 @@ class SpeakingLogControllerTest {
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
 					verify(speakingLogService).find(SpeakingLogType.MY, LocalDate.now());
+				}
+			}
+		}
+
+		@Nested
+		@DisplayName("비정상적인 요청이라면")
+		class AbnormalTest {
+
+			@Nested
+			@DisplayName("타입 데이터가 ALL, MY, MATE 중 하나가 아닐 때")
+			class WrongTypeTest {
+
+				@Test
+				@DisplayName("스피킹 로그 조회시 Error가 발생한다.")
+				void find_wrong_type_speaking_log() throws Exception {
+					//given
+					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, null);
+					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_TYPE_ERROR, null);
+
+
+					when(speakingLogService.find(SpeakingLogType.MY, LocalDate.now()))
+						.thenReturn(speakingLogsResponse);
+
+					//when
+					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?type=nathan")
+						.accept(MediaType.APPLICATION_JSON_VALUE)
+						.contentType(MediaType.APPLICATION_JSON_VALUE));
+
+					//then
+					resultActions.andExpect(status().isOk())
+						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
+				}
+			}
+
+			@Nested
+			@DisplayName("날짜 데이터가 yyyyMMdd 형식이 아닐 때")
+			class WrongDateFormatTest {
+
+				@Test
+				@DisplayName("스피킹 로그 조회시 Error가 발생한다.")
+				void find_wrong_date_format_speaking_log() throws Exception {
+					//given
+					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, null);
+					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_TYPE_ERROR, null);
+
+
+					when(speakingLogService.find(SpeakingLogType.MY, LocalDate.now()))
+						.thenReturn(speakingLogsResponse);
+
+					//when
+					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?date=2023-01-02")
+						.accept(MediaType.APPLICATION_JSON_VALUE)
+						.contentType(MediaType.APPLICATION_JSON_VALUE));
+
+					//then
+					resultActions.andExpect(status().isOk())
+						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 				}
 			}
 		}
