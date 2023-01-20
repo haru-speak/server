@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table
 @Entity
 public class Member {
 
@@ -31,13 +30,13 @@ public class Member {
 
   private String password;
 
-  public Member(String nickname, String email, String password) {
+  private Member(String nickname, String email, String password) {
     this.nickname = nickname;
     this.email = email;
     this.password = password;
   }
 
-  public static Member createMember(MemberFormRequest memberFormRequest, PasswordEncoder passwordEncoder) {
+  public static Member of(MemberFormRequest memberFormRequest, PasswordEncoder passwordEncoder) {
     return new Member(memberFormRequest.getNickname(), memberFormRequest.getEmail(), passwordEncoder.encode(memberFormRequest.getPassword()));
   }
 
