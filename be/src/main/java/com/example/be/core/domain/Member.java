@@ -7,19 +7,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
-@NoArgsConstructor
-@Table(name = "member")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table
 @Entity
 public class Member {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "member_id")
   private Long id;
 
@@ -30,7 +31,6 @@ public class Member {
 
   private String password;
 
-  @Builder
   public Member(String nickname, String email, String password) {
     this.nickname = nickname;
     this.email = email;
@@ -38,13 +38,7 @@ public class Member {
   }
 
   public static Member createMember(MemberFormRequest memberFormRequest, PasswordEncoder passwordEncoder) {
-    Member member = Member.builder()
-        .nickname(memberFormRequest.getNickname())
-        .email(memberFormRequest.getEmail())
-        .password(passwordEncoder.encode(memberFormRequest.getPassword()))  // 암호화 처리
-        .build();
-
-    return member;
+    return new Member(memberFormRequest.getNickname(), memberFormRequest.getEmail(), passwordEncoder.encode(memberFormRequest.getPassword()));
   }
 
 }
