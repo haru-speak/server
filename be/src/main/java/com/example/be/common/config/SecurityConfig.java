@@ -26,7 +26,7 @@ public class SecurityConfig {
     * */
     http
         .authorizeRequests()
-            .antMatchers("/api/**").permitAll();
+            .antMatchers("/**").permitAll();
 
     /*
     * 로그인 폼 설정
@@ -34,13 +34,13 @@ public class SecurityConfig {
     * */
     http
         .formLogin()
-        .loginPage("/api/member/login")
-        .defaultSuccessUrl("/api/home")
-        .usernameParameter("email") // 로그인 폼에서
-        .failureUrl("/api/member/login/error")
+        .loginPage("/member/login")
+        .defaultSuccessUrl("/home")
+        .usernameParameter("email") // 로그인 폼에서 input태그의 name이 email로 설정되어야 함
+        .failureUrl("/member/login/error")
         .and()
         .logout()
-        .logoutRequestMatcher(new AntPathRequestMatcher("/api/member/logout"))
+        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
         .logoutSuccessUrl("/")
         ;
 
