@@ -30,8 +30,9 @@ public class SpeakingLogService {
 		log.debug("SpeakingLogId = {}", speakingLogId);
 	}
 
-	public void modify(Long speakingLogId, SpeakingLogModifyRequest speakingLogModifyRequest) {
+	public SpeakingLogDetailResponse modify(Long speakingLogId, SpeakingLogModifyRequest speakingLogModifyRequest) {
 		log.debug("SpeakingLogId = {}, speakingLogRequest = {}", speakingLogId, speakingLogModifyRequest);
+		return null;
 	}
 
 	public SpeakingLogDetailResponse create(SpeakingLogRequest speakingLogRequest) {

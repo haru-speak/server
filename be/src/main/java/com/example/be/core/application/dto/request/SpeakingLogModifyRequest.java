@@ -1,7 +1,9 @@
 package com.example.be.core.application.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 
+@Getter
 public class SpeakingLogModifyRequest {
 
 	@Schema(type = "String", description = "변경할 제목, NOT NULL")

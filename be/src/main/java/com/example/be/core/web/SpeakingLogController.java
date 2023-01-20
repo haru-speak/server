@@ -59,8 +59,8 @@ public class SpeakingLogController {
 	public BaseResponse<SpeakingLogDetailResponse> modify(
 		@PathVariable final Long speakingLogId,
 		@RequestBody final SpeakingLogModifyRequest speakingLogModifyRequest) {
-		speakingLogService.modify(speakingLogId, speakingLogModifyRequest);
-		return new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, null);
+		SpeakingLogDetailResponse response = speakingLogService.modify(speakingLogId, speakingLogModifyRequest);
+		return new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@PostMapping
