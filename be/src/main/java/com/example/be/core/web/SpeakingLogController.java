@@ -2,6 +2,7 @@ package com.example.be.core.web;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_SPEAKING_LOG_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_SPEAKING_LOG_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_SPEAKING_LOG_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_SPEAKING_LOG_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_SPEAKING_LOG_SUCCESS;
 
@@ -12,12 +13,7 @@ import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
-import com.example.be.core.domain.SpeakingLogType;
 import io.swagger.annotations.ApiOperation;
-import java.time.LocalDate;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/speaking-log")
+@RequestMapping("/speaking-log")
 public class SpeakingLogController {
 
 	private final SpeakingLogService speakingLogService;
@@ -49,7 +44,7 @@ public class SpeakingLogController {
 	@ApiOperation(value = "스피킹 로그 상세 조회입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> findById(@PathVariable final Long speakingLogId) {
 		SpeakingLogDetailResponse response = speakingLogService.findById(speakingLogId);
-		return new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, response);
+		return new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@DeleteMapping("/{speakingLogId}")

@@ -32,10 +32,6 @@ public class SpeakingLogDetailResponse {
 	@NotNull
 	private final Integer likeCount;
 
-	@Schema(type = "Int", description = "댓글 개수, NOT NULL")
-	@NotNull
-	private final Integer commentCount;
-
 	@Schema(type = "Boolean", description = "좋아요 여부, NOT NULL")
 	@NotNull
 	private final Boolean isLiked;
@@ -43,14 +39,14 @@ public class SpeakingLogDetailResponse {
 	@Schema(type = "List<Comment>", description = "댓글 리스트, NULLABLE")
 	private final List<CommentResponse> comments;
 
-	public SpeakingLogDetailResponse(Long memberId, String title, String voiceRecord, String voiceText,
-		Integer likeCount, Integer commentCount, Boolean isLiked, List<CommentResponse> comments) {
+	public SpeakingLogDetailResponse(Long memberId, String title, String voiceRecord,
+		String voiceText,
+		Integer likeCount, Boolean isLiked, List<CommentResponse> comments) {
 		this.memberId = memberId;
 		this.title = title;
 		this.voiceRecord = voiceRecord;
 		this.voiceText = voiceText;
 		this.likeCount = likeCount;
-		this.commentCount = commentCount;
 		this.isLiked = isLiked;
 		this.comments = comments;
 	}
