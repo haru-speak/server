@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.be.common.exception.speakinglog.InvalidSpeakingLogDateException;
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
@@ -18,7 +17,6 @@ import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.SpeakingLogType;
 import com.example.be.core.web.SpeakingLogController;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -76,7 +74,7 @@ class SpeakingLogControllerFindByTypeTest {
 						.thenReturn(speakingLogsResponse);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?type=all&date=20230108")
+					ResultActions resultActions = mockMvc.perform(get("/speaking-log?type=all&date=20230108")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -100,7 +98,7 @@ class SpeakingLogControllerFindByTypeTest {
 						.thenReturn(speakingLogsResponse);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?date=20230108")
+					ResultActions resultActions = mockMvc.perform(get("/speaking-log?date=20230108")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -129,7 +127,7 @@ class SpeakingLogControllerFindByTypeTest {
 						.thenReturn(speakingLogsResponse);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?type=all")
+					ResultActions resultActions = mockMvc.perform(get("/speaking-log?type=all")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -153,7 +151,7 @@ class SpeakingLogControllerFindByTypeTest {
 						.thenReturn(speakingLogsResponse);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log")
+					ResultActions resultActions = mockMvc.perform(get("/speaking-log")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -182,7 +180,7 @@ class SpeakingLogControllerFindByTypeTest {
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_TYPE_ERROR, null);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?type=nathan")
+					ResultActions resultActions = mockMvc.perform(get("/speaking-log?type=nathan")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -203,7 +201,7 @@ class SpeakingLogControllerFindByTypeTest {
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_DATE_FORMAT_ERROR, null);
 
 					//when
-					ResultActions resultActions = mockMvc.perform(get("/api/speaking-log?date=2023^^0108")
+					ResultActions resultActions = mockMvc.perform(get("/speaking-log?date=2023^^0108")
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
