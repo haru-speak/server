@@ -26,25 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@WebMvcTest(SpeakingLogController.class)
-public class SpeakingLogControllerDeleteTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private SpeakingLogService speakingLogService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @BeforeEach
-    public void init(WebApplicationContext wc) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(wc)
-                .addFilter(new CharacterEncodingFilter("UTF-8", true))
-                .build();
-    }
+public class SpeakingLogControllerDeleteTest extends InitSpeakingLogControllerTest{
 
     @Nested
     @DisplayName("Speaking Log 삭제할 때")

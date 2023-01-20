@@ -31,24 +31,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-@WebMvcTest(SpeakingLogController.class)
-class SpeakingLogControllerFindByTypeTest {
+class SpeakingLogControllerFindByTypeTest extends InitSpeakingLogControllerTest{
 
-	@Autowired
-	private MockMvc mockMvc;
-
-	@MockBean
-	private SpeakingLogService speakingLogService;
-
-	@Autowired
-	private ObjectMapper objectMapper;
-
-	@BeforeEach
-	public void init(WebApplicationContext wc) {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(wc)
-			.addFilter(new CharacterEncodingFilter("UTF-8", true))
-			.build();
-	}
 	@Nested
 	@DisplayName("Speaking Log를 조회할 때")
 	class RetrieveTest {
