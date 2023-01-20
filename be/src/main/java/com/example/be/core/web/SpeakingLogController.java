@@ -2,6 +2,7 @@ package com.example.be.core.web;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_SPEAKING_LOG_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_SPEAKING_LOG_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_SPEAKING_LOG_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_SPEAKING_LOG_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_SPEAKING_LOG_SUCCESS;
 
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/speaking-log")
+@RequestMapping("/speaking-log")
 public class SpeakingLogController {
 
 	private final SpeakingLogService speakingLogService;
@@ -43,7 +44,7 @@ public class SpeakingLogController {
 	@ApiOperation(value = "스피킹 로그 상세 조회입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> findById(@PathVariable final Long speakingLogId) {
 		SpeakingLogDetailResponse response = speakingLogService.findById(speakingLogId);
-		return new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, response);
+		return new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@DeleteMapping("/{speakingLogId}")
