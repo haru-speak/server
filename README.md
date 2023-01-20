@@ -3,7 +3,7 @@
 <p align="middle">‘사용자간 데이터 공유’ 기능을 활용하여 외국어 스피킹 스터디에 도움을 주는 서비스입니다!</p>
 <div align="center">
     <p dir="auto">
-        <a href="#">
+        <a href="https://api.haru-speak.site/swagger-ui/index.html">
             <img src="https://img.shields.io/badge/API Docs-6DB33F?style=flat&logo=spring&logoColor=white">
         </a>
         <a href="https://github.com/haru-speak/server/wiki">
