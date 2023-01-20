@@ -20,7 +20,7 @@ public class QuestionController {
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
     }
-    
+
     @GetMapping
     @ApiOperation(value = "오늘의 문장 조회입니다.")
     public BaseResponse<QuestionResponse> find() {

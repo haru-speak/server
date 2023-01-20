@@ -1,9 +1,9 @@
 package com.example.be.core.application.dto.response;
 
-import javax.validation.constraints.NotBlank;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 public class QuestionResponse {

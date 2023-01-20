@@ -1,11 +1,11 @@
 package com.example.be.core.application.dto.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
 
 @Getter
 public class SpeakingLogResponse {

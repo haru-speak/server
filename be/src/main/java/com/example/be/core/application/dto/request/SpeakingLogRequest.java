@@ -9,8 +9,10 @@ public class SpeakingLogRequest {
 
     @Schema(type = "String", description = "제목, NOT NULL")
     private String title;
+
     @Schema(type = "String", description = "음성 녹음 URL, NOT NULL")
     private String voiceRecord;
+
     @Schema(type = "String", description = "음성 텍스트 URL, NOT NULL")
     private String voiceText;
 
