@@ -15,6 +15,8 @@ import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.SpeakingLogType;
 import io.swagger.annotations.ApiOperation;
 import java.time.LocalDate;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,7 +72,6 @@ public class SpeakingLogController {
 	@ApiOperation(value = "스피킹 로그 생성입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> create(
 		@RequestBody final SpeakingLogRequest speakingLogRequest) {
-
 		SpeakingLogDetailResponse response = speakingLogService.create(speakingLogRequest);
 		return new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
 	}

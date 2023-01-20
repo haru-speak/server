@@ -2,10 +2,12 @@ package com.example.be.core.application.dto.request;
 
 import com.example.be.common.exception.speakinglog.InvalidSpeakingLogDateException;
 import com.example.be.core.domain.SpeakingLogType;
-import java.time.LocalDate;
-import java.util.regex.Pattern;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.ToString;
+
+import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 @ToString
 @Getter
@@ -21,7 +23,10 @@ public class SpeakingLogConditionRequest {
 
 	public static final String YYYYMMDD = "(19|20)\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])";
 
+	@Schema(enumAsRef = true, description = "스피킹 로그 조회 타입, NOT NULL")
 	private final SpeakingLogType type;
+
+	@Schema(type = "date", description = "날짜, NOT NULL")
 	private final LocalDate date;
 
 	public SpeakingLogConditionRequest(String type, String date) {
