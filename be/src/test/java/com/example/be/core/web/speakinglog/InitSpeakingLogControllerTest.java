@@ -25,7 +25,7 @@ public abstract class InitSpeakingLogControllerTest {
 	protected ObjectMapper objectMapper;
 
 	@BeforeEach
-	public void init(WebApplicationContext wc) {
+	void init(WebApplicationContext wc) {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(wc)
 			.addFilter(new CharacterEncodingFilter("UTF-8", true))
 			.build();
