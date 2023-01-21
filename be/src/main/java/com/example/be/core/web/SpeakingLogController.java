@@ -51,7 +51,7 @@ public class SpeakingLogController {
 	@GetMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 상세 조회입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> findById(@PathVariable final Long speakingLogId) {
-		SpeakingLogDetailResponse response = speakingLogService.findById(speakingLogId);
+		SpeakingLogDetailResponse response = speakingLogService.findById(speakingLogId, 1L);
 		return new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 	}
 

@@ -46,14 +46,13 @@ public class SpeakingLogService {
 		return null;
 	}
 
-	public SpeakingLogDetailResponse findById(Long speakingLogId) {
+	public SpeakingLogDetailResponse findById(Long speakingLogId, Long loginMemberId) {
 		log.debug("[스피킹 로그 상세 조회] SpeakingLogId = {}", speakingLogId);
 
 		SpeakingLog speakingLog = speakingLogRepository.findById(speakingLogId)
 			.orElseThrow(NotFoundSpeakingLogIdException::new);
 
 		// 임시 (아직 로그인 구현 X)
-		Long loginMemberId = 1L;
 
 		Optional<Favorite> favoriteOfLoginMember = favoriteRepository.findByMemberIdAndSpeakingLog(loginMemberId, speakingLog);
 
