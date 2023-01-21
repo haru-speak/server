@@ -31,15 +31,14 @@ public class SpeakingLogControllerCreateTest extends InitSpeakingLogControllerTe
             @DisplayName("스프킹 로그 생성시, 해당 멤버 ID를 가진 스피킹 로그가 생성된다.")
             void create_speaking_log() throws Exception {
                 //given
-                Long speakingLogId = 1L;
-                Long memberId = 3L;
+                Long memberId = 1L;
                 Integer likeCount = 10;
                 SpeakingLogRequest request = new SpeakingLogRequest("스피킹 로그1", "dummy_record_adsf_1234", "dummy_text_asdf_1234");
                 SpeakingLogDetailResponse response = new SpeakingLogDetailResponse( memberId, "스피킹 로그1",
                         "dummy_record_adsf_1234","dummy_text_asdf_1234", likeCount, false,  new ArrayList<>());
                 BaseResponse<SpeakingLogDetailResponse> baseResponse = new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
 
-                when(speakingLogService.create(refEq(request)))
+                when(speakingLogService.create(refEq(request), refEq(memberId)))
                     .thenReturn(response);
 
                 //when
@@ -52,7 +51,7 @@ public class SpeakingLogControllerCreateTest extends InitSpeakingLogControllerTe
                 resultActions.andExpect(status().isOk())
                     .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
-                verify(speakingLogService).create(refEq(request));
+                verify(speakingLogService).create(refEq(request), refEq(memberId));
             }
         }
     }
