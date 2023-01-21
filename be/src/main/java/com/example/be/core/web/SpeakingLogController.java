@@ -33,6 +33,14 @@ public class SpeakingLogController {
 		this.speakingLogService = speakingLogService;
 	}
 
+	@PostMapping
+	@ApiOperation(value = "스피킹 로그 생성입니다.")
+	public BaseResponse<SpeakingLogDetailResponse> create(
+		@RequestBody final SpeakingLogRequest speakingLogRequest) {
+		SpeakingLogDetailResponse response = speakingLogService.create(speakingLogRequest);
+		return new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
+	}
+
 	@GetMapping
 	@ApiOperation(value = "스피킹 로그 타입에 따른 전체 조회입니다.")
 	public BaseResponse<SpeakingLogsResponse> find(SpeakingLogConditionRequest speakingLogConditionRequest) {
@@ -47,13 +55,6 @@ public class SpeakingLogController {
 		return new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 	}
 
-	@DeleteMapping("/{speakingLogId}")
-	@ApiOperation(value = "스피킹 로그 삭제입니다.")
-	public BaseResponse<Void> delete(@PathVariable final Long speakingLogId) {
-		speakingLogService.delete(speakingLogId);
-		return new BaseResponse<>(DELETE_SPEAKING_LOG_SUCCESS, null);
-	}
-
 	@PutMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 수정입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> modify(
@@ -63,11 +64,10 @@ public class SpeakingLogController {
 		return new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, response);
 	}
 
-	@PostMapping
-	@ApiOperation(value = "스피킹 로그 생성입니다.")
-	public BaseResponse<SpeakingLogDetailResponse> create(
-		@RequestBody final SpeakingLogRequest speakingLogRequest) {
-		SpeakingLogDetailResponse response = speakingLogService.create(speakingLogRequest);
-		return new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
+	@DeleteMapping("/{speakingLogId}")
+	@ApiOperation(value = "스피킹 로그 삭제입니다.")
+	public BaseResponse<Void> delete(@PathVariable final Long speakingLogId) {
+		speakingLogService.delete(speakingLogId);
+		return new BaseResponse<>(DELETE_SPEAKING_LOG_SUCCESS, null);
 	}
 }
