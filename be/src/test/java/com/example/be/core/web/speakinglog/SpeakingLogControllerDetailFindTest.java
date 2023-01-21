@@ -9,24 +9,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
-import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
-import com.example.be.core.web.SpeakingLogController;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 public class SpeakingLogControllerDetailFindTest extends InitSpeakingLogControllerTest{
 
@@ -43,13 +32,13 @@ public class SpeakingLogControllerDetailFindTest extends InitSpeakingLogControll
 			void find_detail_speaking_log() throws Exception {
 				//given
 				Long speakingLogId = 1L;
-				Long memberId = 3L;
+				Long memberId = 1L;
 				Integer likeCount = 10;
 				SpeakingLogDetailResponse response = new SpeakingLogDetailResponse(memberId, "스피킹 로그 1",
 					"dummy-record-abcd-1234", "dummy-text-abcd-1234", likeCount, Boolean.TRUE, new ArrayList<>());
 				BaseResponse<SpeakingLogDetailResponse> baseResponse = new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 
-				when(speakingLogService.findById(refEq(speakingLogId)))
+				when(speakingLogService.findById(refEq(speakingLogId), refEq(memberId)))
 					.thenReturn(response);
 
 				//when
@@ -61,7 +50,7 @@ public class SpeakingLogControllerDetailFindTest extends InitSpeakingLogControll
 				resultActions.andExpect(status().isOk())
 					.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
-				verify(speakingLogService).findById(refEq(speakingLogId));
+				verify(speakingLogService).findById(refEq(speakingLogId), refEq(memberId));
 			}
 		}
 	}
