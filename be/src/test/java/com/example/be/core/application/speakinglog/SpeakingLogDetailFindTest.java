@@ -1,7 +1,12 @@
 package com.example.be.core.application.speakinglog;
 
+import static com.example.be.common.exception.ErrorCodeAndMessages.SPEAKING_LOG_ID_NOT_FOUND_ERROR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.example.be.common.exception.BaseException;
+import com.example.be.common.exception.ErrorCodeAndMessages;
+import com.example.be.common.exception.speakinglog.NotFoundSpeakingLogIdException;
 import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
@@ -41,6 +46,32 @@ public class SpeakingLogDetailFindTest extends InitServiceTest {
 				assertThat(response.getTitle()).isEqualTo("speaking-log-title11");
 				assertThat(response.getVoiceRecord()).isEqualTo("dummy-voice-record11");
 				assertThat(response.getVoiceText()).isEqualTo("dummy-voice-text11");
+			}
+		}
+
+		@Nested
+		@DisplayName("비정상적인 요청이라면")
+		class AbnormalTest {
+
+			@Nested
+			@DisplayName("스피킹 로그 아이디가 없는 아이디 일 때")
+			class WrongSpeakingLogId {
+
+				@Test
+				@DisplayName("예외(NotFoundSpeakingLogIdException)를 던진다.")
+				void normal_detail_find() {
+
+					//given
+					Long speakingLogId = (long) Integer.MAX_VALUE;
+					Long memberId = 1L;
+
+					//when & then
+					assertThatThrownBy(() -> speakingLogService.findById(speakingLogId, memberId))
+						.isInstanceOf(BaseException.class)
+						.isExactlyInstanceOf(NotFoundSpeakingLogIdException.class)
+						.hasMessage(SPEAKING_LOG_ID_NOT_FOUND_ERROR.getMessage());
+				}
+
 			}
 		}
 	}
