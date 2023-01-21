@@ -21,7 +21,7 @@ import org.hibernate.annotations.Where;
 @Entity
 @Where(clause = "deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE speaking_log SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE speaking_log SET deleted = true WHERE speaking_log_id = ?")
 public class SpeakingLog extends BaseEntity {
 
 	@Id
