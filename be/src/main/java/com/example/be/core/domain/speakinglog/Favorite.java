@@ -1,5 +1,6 @@
 package com.example.be.core.domain.speakinglog;
 
+import com.example.be.core.domain.BaseEntity;
 import com.example.be.core.domain.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +13,15 @@ import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Getter
 @Entity
+@Where(clause = "deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Favorite {
+@SQLDelete(sql = "UPDATE speaking_log SET deleted = true WHERE id = ?")
+public class Favorite extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
