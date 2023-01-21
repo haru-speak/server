@@ -1,6 +1,5 @@
 package com.example.be.core.repository.speakinglog;
 
-import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.Favorite;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
 import java.util.Optional;
