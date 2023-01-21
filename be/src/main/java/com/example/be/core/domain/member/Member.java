@@ -21,13 +21,6 @@ public class Member {
 
 	private String nickname;
 
-//	@OneToMany(mappedBy = "speakingLog")
-//	private List<Favorite> favorites = new ArrayList<>();
-//
-//	@OneToMany(mappedBy = "speakingLog")
-//	private List<Comment> comments = new ArrayList<>();
-
-
 	public Member(String nickname) {
 		this.nickname = nickname;
 	}
