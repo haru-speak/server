@@ -21,7 +21,14 @@ public class Member {
 
 	private String nickname;
 
-	public Member(String nickname) {
+	@Column(unique = true)
+	private String email;
+
+	private String password;
+
+	public Member(String nickname, String email, String password) {
 		this.nickname = nickname;
+		this.email = email;
+		this.password = password;
 	}
 }
