@@ -1,7 +1,7 @@
 package com.example.be.core.application.dto.request;
 
 import com.example.be.common.exception.speakinglog.InvalidSpeakingLogDateException;
-import com.example.be.core.domain.SpeakingLogType;
+import com.example.be.core.domain.speakinglog.SpeakingLogType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.ToString;

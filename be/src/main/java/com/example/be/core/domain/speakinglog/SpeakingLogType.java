@@ -1,4 +1,4 @@
-package com.example.be.core.domain;
+package com.example.be.core.domain.speakinglog;
 
 import com.example.be.common.exception.speakinglog.InvalidSpeakingLogTypeException;
 import java.util.Arrays;
