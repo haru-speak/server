@@ -3,7 +3,7 @@ package com.example.be.core.tool;
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
-import com.example.be.core.repository.member.MemberRespository;
+import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -30,7 +30,7 @@ public class DataBaseConfigurator implements InitializingBean {
 	private static final int NUMBER_OF_SPEAKING_LOG = 3;
 
 	@Autowired
-	private MemberRespository memberRespository;
+	private MemberRepository memberRepository;
 
 	@Autowired
 	private SpeakingLogRepository speakingLogRepository;
@@ -85,11 +85,12 @@ public class DataBaseConfigurator implements InitializingBean {
 	 */
 	private void initMember() {
 		for (int i = 1; i <= NUMBER_OF_MEMBER; i++) {
-			memberRespository.save(
+			memberRepository.save(
 				new Member(
 				"member" + i,
 				"member-email" + i + "@google.com",
-				"password1234" + i
+				"password1234" + i,
+					"profileImage" + i
 				));
 		}
 	}
@@ -100,7 +101,7 @@ public class DataBaseConfigurator implements InitializingBean {
 	 */
 	private void initSpeakingLog() {
 		for (int i = 1; i <= NUMBER_OF_MEMBER; i++) {
-			Member member = memberRespository.findById((long) i)
+			Member member = memberRepository.findById((long) i)
 				.orElseThrow(NotFoundMemberIdException::new);
 
 			for (int j = 1; j <= NUMBER_OF_SPEAKING_LOG; j++) {
