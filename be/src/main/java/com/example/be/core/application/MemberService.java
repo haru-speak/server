@@ -13,7 +13,7 @@ public class MemberService {
 
   private final MemberRepository memberRepository;
 
-  public Member saveMember(Member member) {
+  public Member join(Member member) {
     validateDuplicateMember(member);
 
     return memberRepository.save(member);

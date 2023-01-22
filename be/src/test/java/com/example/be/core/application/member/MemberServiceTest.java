@@ -5,6 +5,7 @@ import com.example.be.core.application.dto.request.MemberFormRequest;
 import com.example.be.core.domain.member.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-@ActiveProfiles("test")
-@DisplayName("서비스 테스트 : 회원가입")
+@ActiveProfiles("local")
+@DisplayName("서비스 테스트 : Member 회원가입")
 public class MemberServiceTest {
 
   @Autowired
@@ -25,17 +26,54 @@ public class MemberServiceTest {
   private PasswordEncoder passwordEncoder;
 
 
-  @Test
-  @DisplayName("회원가입 테스트")
-  public void saveMemberTest() {
-    // given
-    MemberFormRequest memberFormRequest = new MemberFormRequest("승연", "jakalroni@naver.com", "1111");
+  @Nested
+  @DisplayName("회원가입 요청 시")
+  class SaveMemberTest {
 
-    // when
-    Member member = Member.of(memberFormRequest, passwordEncoder);
-    Member savedMember = memberService.saveMember(member);
+    @Nested
+    @DisplayName("정상적으로 데이터가 입력되었다면")
+    class NormalTest {
 
-    // then
-    Assertions.assertThat(member.getEmail()).isEqualTo(savedMember.getEmail());
+      @Test
+      @DisplayName("회원가입에 성공한다.")
+      public void NormalSaveMemberTest() {
+        // given
+        MemberFormRequest memberFormRequest = new MemberFormRequest("승연", "jakalroni@naver.com",
+            "1111");
+
+        // when
+        Member member = Member.of(memberFormRequest, passwordEncoder);
+        Member savedMember = memberService.join(member);
+
+        // then
+        Assertions.assertThat(member.getEmail()).isEqualTo(savedMember.getEmail());
+      }
+    }
+
+    @Nested
+    @DisplayName("중복 회원 예외의 경우")
+    class DupulicateMemberTest {
+
+      @Test
+      @DisplayName("회원가입에 실패한다.")
+      public void DuplicateSaveMemberTest() {
+        // given
+        MemberFormRequest memberFormRequest1 = new MemberFormRequest("승연", "jakalroni@naver.com", "1111");
+        MemberFormRequest memberFormRequest2 = new MemberFormRequest("재욱", "jakalroni@naver.com", "1234");
+
+
+        // when
+        Member member1 = Member.of(memberFormRequest1, passwordEncoder);
+        Member member2 = Member.of(memberFormRequest2, passwordEncoder);
+
+        Member savedMember1 = memberService.join(member1);
+
+        // then
+        Assertions.assertThatThrownBy(() -> memberService.join(member2))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("이미 가입된 회원입니다.");
+
+      }
+    }
   }
 }
