@@ -23,8 +23,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-@ActiveProfiles("test")
+@Transactional
 @SpringBootTest
+@ActiveProfiles("test")
 @DisplayName("서비스 테스트 : SpeakingLog 전체 조회")
 public class SpeakingLogFindAllTest {
 
@@ -67,7 +68,6 @@ public class SpeakingLogFindAllTest {
 
             @Test
             @DisplayName("전체 스피킹 로그가 조회된다.")
-            @Transactional
             void normal_find_all() {
 
                 //given
@@ -85,7 +85,6 @@ public class SpeakingLogFindAllTest {
 
             @Nested
             @DisplayName("날짜 형식이 yyyyMMdd 형식이 아닐 때")
-            @Transactional
             class WrongDateFormatTest {
                 @Test
                 @DisplayName("스피킹 로그 전체 조회시 Error 가 발생한다.")
