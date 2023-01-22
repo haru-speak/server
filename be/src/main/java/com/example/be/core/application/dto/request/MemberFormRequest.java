@@ -27,4 +27,9 @@ public class MemberFormRequest {
     this.email = email;
     this.password = password;
   }
+
+  @Override
+  public String toString() {
+    return "nickname: " + nickname + ", email: " + email + ", password: " + password;
+  }
 }
