@@ -19,6 +19,12 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	Question
 	 */
 	FIND_QUESTION_SUCCESS("S-Q001", "오늘의 문장 조회를 성공했습니다."),
+
+
+	/**
+	 Member
+	 */
+	JOIN_SUCCESS("S-M001", "회원가입에 성공했습니다."),
 	;
 
 	private final String code;
