@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -66,6 +67,7 @@ public class SpeakingLogFindAllTest {
 
             @Test
             @DisplayName("전체 스피킹 로그가 조회된다.")
+            @Transactional
             void normal_find_all() {
 
                 //given
@@ -83,16 +85,17 @@ public class SpeakingLogFindAllTest {
 
             @Nested
             @DisplayName("날짜 형식이 yyyyMMdd 형식이 아닐 때")
+            @Transactional
             class WrongDateFormatTest {
                 @Test
                 @DisplayName("스피킹 로그 전체 조회시 Error 가 발생한다.")
                 void find_all_wrong_date_format_speaking_log() throws Exception{
                     //given
-                    String today = "2023-01-22";
+                    String wrong_date_format = "2023-01-22";
                     BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_DATE_FORMAT_ERROR, null);
                     //when
                     //then
-                    assertThatThrownBy(() -> speakingLogService.find(new SpeakingLogConditionRequest("ALL", today)))
+                    assertThatThrownBy(() -> speakingLogService.find(new SpeakingLogConditionRequest("ALL", wrong_date_format)))
                         .isInstanceOf(InvalidSpeakingLogDateException.class);
                 }
             }
