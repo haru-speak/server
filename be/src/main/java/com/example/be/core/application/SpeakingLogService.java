@@ -67,7 +67,7 @@ public class SpeakingLogService {
 				speakingLog.getTitle(),
 				speakingLog.getVoiceRecord(),
 				getFavoriteCount(speakingLog.getId()),
-				getCommentCount(speakingLog),
+				getCommentCount(speakingLog.getId()),
 				favoriteRepository.findByMemberIdAndSpeakingLog(loginMemberId, speakingLog).isPresent(),
 				speakingLog.getMember().getProfileImage(),
 				speakingLog.getId()
@@ -78,6 +78,7 @@ public class SpeakingLogService {
 			speakingLogResponses
 		);
 	}
+
 
 	public SpeakingLogDetailResponse findById(Long speakingLogId, Long loginMemberId) {
 		log.debug("[스피킹 로그 상세 조회] SpeakingLogId = {}", speakingLogId);
@@ -104,6 +105,10 @@ public class SpeakingLogService {
 		return favoriteRepository.countBySpeakingLogId(speakingLogId);
 	}
 
+	private Integer getCommentCount(Long speakingLogId) {
+		return commentRepository.countBySpeakingLogId(speakingLogId);
+	}
+
 	private List<CommentResponse> getCommentResponses(Long speakingLogId) {
 		return commentRepository.findAllBySpeakingLogId(speakingLogId)
 			.stream()
@@ -111,9 +116,6 @@ public class SpeakingLogService {
 			.collect(Collectors.toList());
 	}
 
-	private int getCommentCount(SpeakingLog speakingLog) {
-		return getCommentResponses(speakingLog.getId()).size();
-	}
 
 	@Transactional
 	public SpeakingLogDetailResponse modify(Long speakingLogId, SpeakingLogModifyRequest speakingLogModifyRequest) {
