@@ -14,8 +14,7 @@ import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.Favorite;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
-
-import com.example.be.core.repository.member.MemberRespository;
+import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.domain.speakinglog.SpeakingLogType;
 import com.example.be.core.repository.speakinglog.CommentRepository;
 import com.example.be.core.repository.speakinglog.FavoriteRepository;
@@ -39,21 +38,21 @@ public class SpeakingLogService {
 	private final SpeakingLogRepository speakingLogRepository;
 	private final FavoriteRepository favoriteRepository;
 	private final CommentRepository commentRepository;
-	private final MemberRespository memberRespository;
+	private final MemberRepository memberRepository;
 
 	public SpeakingLogService(SpeakingLogRepository speakingLogRepository,
 		FavoriteRepository favoriteRepository, CommentRepository commentRepository,
-		MemberRespository memberRespository) {
+		MemberRepository memberRepository) {
 		this.speakingLogRepository = speakingLogRepository;
 		this.favoriteRepository = favoriteRepository;
 		this.commentRepository = commentRepository;
-		this.memberRespository = memberRespository;
+		this.memberRepository = memberRepository;
 	}
 
 	@Transactional
 	public SpeakingLogDetailResponse create(SpeakingLogRequest speakingLogRequest, Long loginMemberId) {
 		log.debug("[스피킹 로그 생성] speakingLogRequest = {}", speakingLogRequest);
-		Member member = memberRespository.findById(loginMemberId)
+		Member member = memberRepository.findById(loginMemberId)
 			.orElseThrow(NotFoundMemberIdException::new);
 
 		SpeakingLog savedSpeakingLog = speakingLogRepository.save(
