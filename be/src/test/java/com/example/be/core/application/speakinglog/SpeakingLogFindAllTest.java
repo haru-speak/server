@@ -1,8 +1,10 @@
 package com.example.be.core.application.speakinglog;
 
+import static com.example.be.common.exception.ErrorCodeAndMessages.SPEAKING_LOG_DATE_FORMAT_ERROR;
 import static org.assertj.core.api.Assertions.*;
 
 import com.example.be.common.exception.speakinglog.InvalidSpeakingLogDateException;
+import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
@@ -12,7 +14,6 @@ import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -73,6 +74,27 @@ public class SpeakingLogFindAllTest {
                 SpeakingLogsResponse response = speakingLogService.find(new SpeakingLogConditionRequest("ALL", today));
                 //then
                 assertThat(response.getSpeakingLogResponses().size()).isEqualTo(2);
+            }
+        }
+
+        @Nested
+        @DisplayName("비정상적인 요청이라면")
+        class AbnormalTest {
+
+            @Nested
+            @DisplayName("날짜 형식이 yyyyMMdd 형식이 아닐 때")
+            class WrongDateFormatTest {
+                @Test
+                @DisplayName("스피킹 로그 전체 조회시 Error 가 발생한다.")
+                void find_all_wrong_date_format_speaking_log() throws Exception{
+                    //given
+                    String today = "2023-01-22";
+                    BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_DATE_FORMAT_ERROR, null);
+                    //when
+                    //then
+                    assertThatThrownBy(() -> speakingLogService.find(new SpeakingLogConditionRequest("ALL", today)))
+                        .isInstanceOf(InvalidSpeakingLogDateException.class);
+                }
             }
         }
     }
