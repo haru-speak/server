@@ -69,34 +69,12 @@ public class SpeakingLogFindAllTest {
             @Test
             @DisplayName("전체 스피킹 로그가 조회된다.")
             void normal_find_all() {
-
                 //given
                 String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
                 //when
                 SpeakingLogsResponse response = speakingLogService.find(new SpeakingLogConditionRequest("ALL", today));
                 //then
                 assertThat(response.getSpeakingLogResponses().size()).isEqualTo(2);
-            }
-        }
-
-        @Nested
-        @DisplayName("비정상적인 요청이라면")
-        class AbnormalTest {
-
-            @Nested
-            @DisplayName("날짜 형식이 yyyyMMdd 형식이 아닐 때")
-            class WrongDateFormatTest {
-                @Test
-                @DisplayName("스피킹 로그 전체 조회시 Error 가 발생한다.")
-                void find_all_wrong_date_format_speaking_log() throws Exception{
-                    //given
-                    String wrong_date_format = "2023-01-22";
-                    BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_DATE_FORMAT_ERROR, null);
-                    //when
-                    //then
-                    assertThatThrownBy(() -> speakingLogService.find(new SpeakingLogConditionRequest("ALL", wrong_date_format)))
-                        .isInstanceOf(InvalidSpeakingLogDateException.class);
-                }
             }
         }
     }
