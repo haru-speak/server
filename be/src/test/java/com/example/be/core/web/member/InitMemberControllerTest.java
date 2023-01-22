@@ -1,4 +1,4 @@
-package com.example.be.core.web.speakinglog;
+package com.example.be.core.web.member;
 
 import com.example.be.core.application.MemberService;
 import com.example.be.core.web.MemberController;

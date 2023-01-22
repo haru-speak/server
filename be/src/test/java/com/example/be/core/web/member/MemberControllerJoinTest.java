@@ -1,4 +1,4 @@
-package com.example.be.core.web.speakinglog;
+package com.example.be.core.web.member;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.JOIN_SUCCESS;
 import static org.mockito.ArgumentMatchers.refEq;
@@ -11,17 +11,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.MemberFormRequest;
 import com.example.be.core.application.dto.response.MemberResponse;
+import com.example.be.core.web.member.InitMemberControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-public class MemberControllerJoinTest extends InitMemberControllerTest{
+public class MemberControllerJoinTest extends InitMemberControllerTest {
 
   @Nested
   @DisplayName("회원가입 할 때")
-  class createTest {
+  class joinTest {
 
     @Nested
     @DisplayName("정상적인 요청이라면")
@@ -29,7 +30,7 @@ public class MemberControllerJoinTest extends InitMemberControllerTest{
 
       @Test
       @DisplayName("회원가입 완료 시, 해당 email을 가진 멤버가 생성된다.")
-      void create_speaking_log() throws Exception {
+      void join_member() throws Exception {
         //given
         Long memberId = 3L;
         MemberFormRequest request = new MemberFormRequest("승연", "tmddus@naver.com", "1234");
