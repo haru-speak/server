@@ -67,7 +67,7 @@ public class SpeakingLogService {
 				speakingLog.getTitle(),
 				speakingLog.getVoiceRecord(),
 				getFavoriteCount(speakingLog.getId()),
-				getCommentResponses(speakingLog.getId()).size(),
+				getCommentCount(speakingLog),
 				favoriteRepository.findByMemberIdAndSpeakingLog(loginMemberId, speakingLog).isPresent(),
 				speakingLog.getMember().getProfileImage(),
 				speakingLog.getId()
@@ -109,6 +109,10 @@ public class SpeakingLogService {
 			.stream()
 			.map(CommentResponse::from)
 			.collect(Collectors.toList());
+	}
+
+	private int getCommentCount(SpeakingLog speakingLog) {
+		return getCommentResponses(speakingLog.getId()).size();
 	}
 
 	@Transactional
