@@ -16,6 +16,8 @@ import com.example.be.core.domain.speakinglog.SpeakingLogType;
 import com.example.be.core.repository.speakinglog.CommentRepository;
 import com.example.be.core.repository.speakinglog.FavoriteRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +50,13 @@ public class SpeakingLogService {
 	public SpeakingLogsResponse find(SpeakingLogConditionRequest speakingLogConditionRequest) {
 		log.debug("[스피킹 로그 전체 조회] SpeakingLogConditionRequest = {}",speakingLogConditionRequest.toString());
 
-		List<SpeakingLog> speakingLogs = speakingLogRepository.findAll();
+		LocalDateTime startDateTime = LocalDateTime.of(speakingLogConditionRequest.getDate().minusDays(1),
+			LocalTime.of(0,0,0));
+
+		LocalDateTime endDateTime = LocalDateTime.of(speakingLogConditionRequest.getDate(), LocalTime.of(23,59,59));
+
+		List<SpeakingLog> speakingLogs = speakingLogRepository.findAllByCreatedAtBetween(
+			startDateTime, endDateTime);
 
 		// 임시 (아직 로그인 구현 X)
 		Long loginMemberId = 1L;
