@@ -1,5 +1,7 @@
 package com.example.be.core.application;
 
+import static com.example.be.core.domain.speakinglog.SpeakingLogType.*;
+
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.common.exception.speakinglog.NotFoundSpeakingLogIdException;
 import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
@@ -7,16 +9,21 @@ import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.CommentResponse;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
+import com.example.be.core.application.dto.response.SpeakingLogResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.Favorite;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
+
 import com.example.be.core.repository.member.MemberRespository;
+import com.example.be.core.domain.speakinglog.SpeakingLogType;
 import com.example.be.core.repository.speakinglog.CommentRepository;
 import com.example.be.core.repository.speakinglog.FavoriteRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -71,9 +78,37 @@ public class SpeakingLogService {
 	}
 
 	public SpeakingLogsResponse find(SpeakingLogConditionRequest speakingLogConditionRequest) {
-		log.debug(speakingLogConditionRequest.toString());
-		return null;
+		log.debug("[스피킹 로그 전체 조회] SpeakingLogConditionRequest = {}",speakingLogConditionRequest.toString());
+
+		LocalDateTime startDateTime = LocalDateTime.of(speakingLogConditionRequest.getDate().minusDays(1),
+			LocalTime.of(0,0,0));
+
+		LocalDateTime endDateTime = LocalDateTime.of(speakingLogConditionRequest.getDate(), LocalTime.of(23,59,59));
+
+		List<SpeakingLog> speakingLogs = speakingLogRepository.findAllByCreatedAtBetween(
+			startDateTime, endDateTime);
+
+		// 임시 (아직 로그인 구현 X)
+		Long loginMemberId = 1L;
+
+		List<SpeakingLogResponse> speakingLogResponses = speakingLogs.stream().map(speakingLog ->
+			new SpeakingLogResponse(
+				speakingLog.getId(),
+				speakingLog.getTitle(),
+				speakingLog.getVoiceRecord(),
+				getFavoriteCount(speakingLog.getId()),
+				getCommentCount(speakingLog.getId()),
+				favoriteRepository.findByMemberIdAndSpeakingLog(loginMemberId, speakingLog).isPresent(),
+				speakingLog.getMember().getProfileImage(),
+				speakingLog.getId()
+			)).collect(Collectors.toList());
+
+		return new SpeakingLogsResponse(
+			speakingLogConditionRequest.getType(),
+			speakingLogResponses
+		);
 	}
+
 
 	public SpeakingLogDetailResponse findById(Long speakingLogId, Long loginMemberId) {
 		log.debug("[스피킹 로그 상세 조회] SpeakingLogId = {}", speakingLogId);
@@ -90,10 +125,18 @@ public class SpeakingLogService {
 			speakingLog.getTitle(),
 			speakingLog.getVoiceRecord(),
 			speakingLog.getVoiceText(),
-			favoriteRepository.countBySpeakingLogId(speakingLogId),
+			getFavoriteCount(speakingLogId),
 			favoriteOfLoginMember.isPresent(),
 			getCommentResponses(speakingLogId)
 		);
+	}
+
+	private Integer getFavoriteCount(Long speakingLogId) {
+		return favoriteRepository.countBySpeakingLogId(speakingLogId);
+	}
+
+	private Integer getCommentCount(Long speakingLogId) {
+		return commentRepository.countBySpeakingLogId(speakingLogId);
 	}
 
 	private List<CommentResponse> getCommentResponses(Long speakingLogId) {
@@ -102,6 +145,7 @@ public class SpeakingLogService {
 			.map(CommentResponse::from)
 			.collect(Collectors.toList());
 	}
+
 
 	@Transactional
 	public SpeakingLogDetailResponse modify(Long speakingLogId, SpeakingLogModifyRequest speakingLogModifyRequest) {
