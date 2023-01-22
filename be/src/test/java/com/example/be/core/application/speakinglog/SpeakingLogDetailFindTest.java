@@ -6,9 +6,8 @@ import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
-import com.example.be.core.repository.member.MemberRespository;
+import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -29,12 +28,12 @@ public class SpeakingLogDetailFindTest {
 	private SpeakingLogRepository speakingLogRepository;
 
 	@Autowired
-	private MemberRespository memberRespository;
+	private MemberRepository memberRepository;
 
 	@BeforeEach
 	void init() {
-		Member loginMember = new Member("nathan", "nathan1234@google.com", "asdf1234@");
-		memberRespository.save(loginMember);
+		Member loginMember = new Member("nathan", "nathan1234@google.com", "asdf1234@", "profileImage");
+		memberRepository.save(loginMember);
 		SpeakingLog speakingLog = new SpeakingLog(
 			loginMember,
 			"첫 번째 스피킹 로그",

@@ -9,8 +9,8 @@ import lombok.ToString;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
-@ToString
 @Getter
+@ToString
 public class SpeakingLogConditionRequest {
 
 	/**
