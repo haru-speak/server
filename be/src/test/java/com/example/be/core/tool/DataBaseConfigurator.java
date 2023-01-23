@@ -17,6 +17,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class DataBaseConfigurator implements InitializingBean {
@@ -87,9 +88,9 @@ public class DataBaseConfigurator implements InitializingBean {
 		for (int i = 1; i <= NUMBER_OF_MEMBER; i++) {
 			memberRepository.save(
 				new Member(
-				"member" + i,
-				"member-email" + i + "@google.com",
-				"password1234" + i,
+					"member" + i,
+					"member-email" + i + "@google.com",
+					"password1234" + i,
 					"profileImage" + i
 				));
 		}
