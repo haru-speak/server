@@ -1,7 +1,5 @@
 package com.example.be.core.application;
 
-import static com.example.be.core.domain.speakinglog.SpeakingLogType.*;
-
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.common.exception.speakinglog.NotFoundSpeakingLogIdException;
 import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
@@ -15,14 +13,13 @@ import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.Favorite;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
 import com.example.be.core.repository.member.MemberRepository;
-import com.example.be.core.domain.speakinglog.SpeakingLogType;
 import com.example.be.core.repository.speakinglog.CommentRepository;
 import com.example.be.core.repository.speakinglog.FavoriteRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -154,6 +151,8 @@ public class SpeakingLogService {
 
 	@Transactional
 	public void delete(Long speakingLogId) {
-		log.debug("SpeakingLogId = {}", speakingLogId);
+		log.debug("[스피킹 로그 삭제] SpeakingLogId = {}", speakingLogId);
+
+		speakingLogRepository.deleteById(speakingLogId);
 	}
 }
