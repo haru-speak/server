@@ -34,7 +34,7 @@ public class Member {
 		this.password = password;
 	}
 
-	public static Member of(MemberFormRequest memberFormRequest, PasswordEncoder passwordEncoder) {
-		return new Member(memberFormRequest.getNickname(), memberFormRequest.getEmail(), passwordEncoder.encode(memberFormRequest.getPassword()));
+	public static Member of(MemberFormRequest memberFormRequest) {
+		return new Member(memberFormRequest.getNickname(), memberFormRequest.getEmail(), memberFormRequest.getPassword());
 	}
 }
