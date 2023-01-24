@@ -15,10 +15,18 @@ import com.example.be.core.web.member.InitMemberControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.ResultActions;
 
 public class MemberControllerJoinTest extends InitMemberControllerTest {
+
+
+  @MockBean
+  private PasswordEncoder passwordEncoder;
 
   @Nested
   @DisplayName("회원가입 할 때")
@@ -33,7 +41,7 @@ public class MemberControllerJoinTest extends InitMemberControllerTest {
       void join_member() throws Exception {
         //given
         Long memberId = 3L;
-        MemberFormRequest request = new MemberFormRequest("승연", "tmddus@naver.com", "1234");
+        MemberFormRequest request = new MemberFormRequest("승연", "tmddus@naver.com", "1234", passwordEncoder);
         MemberResponse response = new MemberResponse( memberId, "승연", "tmddus@naver.com","1234");
         BaseResponse<MemberResponse> baseResponse = new BaseResponse<>(JOIN_SUCCESS, response);
 
@@ -41,7 +49,7 @@ public class MemberControllerJoinTest extends InitMemberControllerTest {
             .thenReturn(response);
 
         //when
-        ResultActions resultActions = mockMvc.perform(post("/join")
+        ResultActions resultActions = mockMvc.perform(post("/member/join")
             .content(objectMapper.writeValueAsString(request))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));

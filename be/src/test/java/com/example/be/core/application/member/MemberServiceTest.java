@@ -2,6 +2,7 @@ package com.example.be.core.application.member;
 
 import com.example.be.core.application.MemberService;
 import com.example.be.core.application.dto.request.MemberFormRequest;
+import com.example.be.core.application.dto.response.MemberResponse;
 import com.example.be.core.domain.member.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -39,14 +40,14 @@ public class MemberServiceTest {
       public void NormalSaveMemberTest() {
         // given
         MemberFormRequest memberFormRequest = new MemberFormRequest("승연", "jakalroni@naver.com",
-            "1111");
+            "1111", passwordEncoder);
 
         // when
-        Member member = Member.of(memberFormRequest, passwordEncoder);
-        Member savedMember = memberService.join(member);
+//        Member member = Member.of(memberFormRequest);
+        MemberResponse savedMember = memberService.create(memberFormRequest);
 
         // then
-        Assertions.assertThat(member.getEmail()).isEqualTo(savedMember.getEmail());
+        Assertions.assertThat(memberFormRequest.getEmail()).isEqualTo(savedMember.getEmail());
       }
     }
 
@@ -58,18 +59,18 @@ public class MemberServiceTest {
       @DisplayName("회원가입에 실패한다.")
       public void DuplicateSaveMemberTest() {
         // given
-        MemberFormRequest memberFormRequest1 = new MemberFormRequest("승연", "jakalroni@naver.com", "1111");
-        MemberFormRequest memberFormRequest2 = new MemberFormRequest("재욱", "jakalroni@naver.com", "1234");
+        MemberFormRequest memberFormRequest1 = new MemberFormRequest("승연", "jakalroni@naver.com", "1111", passwordEncoder);
+        MemberFormRequest memberFormRequest2 = new MemberFormRequest("재욱", "jakalroni@naver.com", "1234", passwordEncoder);
 
 
         // when
-        Member member1 = Member.of(memberFormRequest1, passwordEncoder);
-        Member member2 = Member.of(memberFormRequest2, passwordEncoder);
+//        Member member1 = Member.of(memberFormRequest1);
+//        Member member2 = Member.of(memberFormRequest2);
 
-        Member savedMember1 = memberService.join(member1);
+        MemberResponse savedMember1 = memberService.create(memberFormRequest1);
 
         // then
-        Assertions.assertThatThrownBy(() -> memberService.join(member2))
+        Assertions.assertThatThrownBy(() -> memberService.create(memberFormRequest2))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("이미 가입된 회원입니다.");
 
