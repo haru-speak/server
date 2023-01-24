@@ -145,8 +145,28 @@ public class SpeakingLogService {
 
 	@Transactional
 	public SpeakingLogDetailResponse modify(Long speakingLogId, SpeakingLogModifyRequest speakingLogModifyRequest) {
-		log.debug("SpeakingLogId = {}, speakingLogRequest = {}", speakingLogId, speakingLogModifyRequest);
-		return null;
+		log.debug("[스피킹 로그 수정] SpeakingLogId = {}, speakingLogRequest = {}", speakingLogId, speakingLogModifyRequest);
+
+		SpeakingLog speakingLog = speakingLogRepository.findById(speakingLogId)
+			.orElseThrow(NotFoundSpeakingLogIdException::new);
+
+		speakingLog.modify(
+			speakingLogModifyRequest.getTitle(),
+			speakingLogModifyRequest.getVoiceRecord(),
+			speakingLogModifyRequest.getVoiceText());
+
+		//임시 로그인 아이디
+		Optional<Favorite> favoriteOfLoginMember = favoriteRepository.findByMemberIdAndSpeakingLog(1L, speakingLog);
+
+		return new SpeakingLogDetailResponse(
+			speakingLog.getMember().getId(),
+			speakingLog.getTitle(),
+			speakingLog.getVoiceRecord(),
+			speakingLog.getVoiceText(),
+			getFavoriteCount(speakingLogId),
+			favoriteOfLoginMember.isPresent(),
+			getCommentResponses(speakingLogId)
+		);
 	}
 
 	@Transactional
