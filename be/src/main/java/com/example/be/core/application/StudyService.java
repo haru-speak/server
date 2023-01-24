@@ -24,4 +24,13 @@ public class StudyService {
     log.debug("[스터디 상세 조회] studyId = {}", studyId);
     return null;
   }
+
+  public StudyDetailResponse modify(Long studyId, StudyRequest studyRequest) {
+    log.debug("[스터디 수정] StudyRequest = {}", studyRequest);
+    return null;
+  }
+
+  public void delete(Long studyId) {
+    log.debug("[스터디 삭제] studyId = {}", studyId);
+  }
 }

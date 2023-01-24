@@ -62,5 +62,4 @@ public class StudyRequest {
     this.timePerWeek = timePerWeek;
     this.posterImg = posterImg;
   }
-
 }

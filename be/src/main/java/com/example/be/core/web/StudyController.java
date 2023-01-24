@@ -1,8 +1,10 @@
 package com.example.be.core.web;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_MY_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_STUDY_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.StudyService;
@@ -10,10 +12,11 @@ import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import io.swagger.annotations.ApiOperation;
-import lombok.Getter;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,5 +50,21 @@ public class StudyController {
   public BaseResponse<StudyDetailResponse> findById(@PathVariable final Long studyId) {
     StudyDetailResponse response = studyService.findById(studyId);
     return new BaseResponse<>(FIND_DETAIL_STUDY_SUCCESS, response);
+  }
+
+  @PutMapping("/{studyId}")
+  @ApiOperation(value = "스터디 수정입니다.")
+  public BaseResponse<StudyDetailResponse> modify(
+      @PathVariable final Long studyId,
+      @RequestBody final StudyRequest studyRequest) {
+    StudyDetailResponse response = studyService.modify(studyId, studyRequest);
+    return new BaseResponse<>(MODIFY_STUDY_SUCCESS, response);
+  }
+
+  @DeleteMapping("/{studyId}")
+  @ApiOperation(value = "스터디 삭제입니다.")
+  public BaseResponse<Void> delete(@PathVariable Long studyId) {
+    studyService.delete(studyId);
+    return new BaseResponse<>(DELETE_STUDY_SUCCESS, null);
   }
 }
