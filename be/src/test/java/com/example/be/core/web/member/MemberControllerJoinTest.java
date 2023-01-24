@@ -41,8 +41,8 @@ public class MemberControllerJoinTest extends InitMemberControllerTest {
       void join_member() throws Exception {
         //given
         Long memberId = 3L;
-        MemberFormRequest request = new MemberFormRequest("승연", "tmddus@naver.com", "1234", passwordEncoder);
-        MemberResponse response = new MemberResponse( memberId, "승연", "tmddus@naver.com","1234");
+        MemberFormRequest request = new MemberFormRequest("승연", "tmddus@naver.com", "a1234!", passwordEncoder);
+        MemberResponse response = new MemberResponse( memberId, "승연", "tmddus@naver.com","a1234!");
         BaseResponse<MemberResponse> baseResponse = new BaseResponse<>(JOIN_SUCCESS, response);
 
         when(memberService.create(refEq(request)))
