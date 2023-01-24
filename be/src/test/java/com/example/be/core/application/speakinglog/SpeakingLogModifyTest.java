@@ -43,14 +43,13 @@ public class SpeakingLogModifyTest extends InitServiceTest {
                 SpeakingLogModifyRequest speakingLogModifyRequest = new SpeakingLogModifyRequest("동동동동", "동동동동", "동동동동");
 
                 //when
-                SpeakingLogDetailResponse result = speakingLogService.modify(speakingLogId,
-                    speakingLogModifyRequest);
+                speakingLogService.modify(speakingLogId, speakingLogModifyRequest);
 
                 //then
                 SpeakingLog after = speakingLogRepository.findById(1L).get();
-                assertThat(after.getTitle()).isEqualTo(result.getTitle());
-                assertThat(after.getVoiceRecord()).isEqualTo(result.getVoiceRecord());
-                assertThat(after.getVoiceText()).isEqualTo(result.getVoiceText());
+                assertThat(after.getTitle()).isEqualTo(speakingLogModifyRequest.getTitle());
+                assertThat(after.getVoiceRecord()).isEqualTo(speakingLogModifyRequest.getVoiceRecord());
+                assertThat(after.getVoiceText()).isEqualTo(speakingLogModifyRequest.getVoiceText());
             }
         }
 

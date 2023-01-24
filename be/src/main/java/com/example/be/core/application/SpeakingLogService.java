@@ -150,9 +150,9 @@ public class SpeakingLogService {
 		SpeakingLog speakingLog = speakingLogRepository.findById(speakingLogId)
 			.orElseThrow(NotFoundSpeakingLogIdException::new);
 
-		speakingLog.modifySpeakingLog(
+		speakingLog.modify(
 			speakingLogModifyRequest.getTitle(),
-			speakingLog.getVoiceRecord(),
+			speakingLogModifyRequest.getVoiceRecord(),
 			speakingLogModifyRequest.getVoiceText());
 
 		//임시 로그인 아이디
