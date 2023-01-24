@@ -23,7 +23,8 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	/**
 	 Study
 	 */
-	CREATE_STUDY_SUCCESS("S-S001", "스터디 생성을 성공했습니다"),
+	CREATE_STUDY_SUCCESS("S-S001", "스터디 생성을 성공했습니다."),
+	FIND_MY_STUDY_SUCCESS("S-S002", "스터디 조회를 성공했습니다."),
 	;
 
 	private final String code;
