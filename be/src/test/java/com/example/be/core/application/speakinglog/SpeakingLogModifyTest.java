@@ -1,7 +1,10 @@
 package com.example.be.core.application.speakinglog;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.example.be.common.exception.BaseException;
+import com.example.be.common.exception.speakinglog.NotFoundSpeakingLogIdException;
 import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
@@ -50,5 +53,24 @@ public class SpeakingLogModifyTest extends InitServiceTest {
                 assertThat(after.getVoiceText()).isEqualTo(result.getVoiceText());
             }
         }
+
+        @Nested
+        @DisplayName("비정상적인 요청이라면")
+        class abnormal_test {
+
+            @Test
+            @DisplayName("스피킹 로그 ID를 찾을 수 없을 때 NotFoundSpeakingLogIdException 예외를 보낸다.")
+            void abnormal_modify() throws Exception {
+                //given
+                Long speakingLogId = 987654321L;
+                SpeakingLogModifyRequest speakingLogModifyRequest = new SpeakingLogModifyRequest("동동동동", "동동동동", "동동동동");
+
+                //when & then
+                assertThatThrownBy(() -> speakingLogService.modify(speakingLogId, speakingLogModifyRequest))
+                    .isInstanceOf(BaseException.class)
+                    .isExactlyInstanceOf(NotFoundSpeakingLogIdException.class);
+            }
+        }
+
     }
 }
