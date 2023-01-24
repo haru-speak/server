@@ -1,6 +1,7 @@
 package com.example.be.core.web;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_MY_STUDY_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
@@ -34,10 +35,17 @@ public class StudyController {
     return new BaseResponse<>(CREATE_STUDY_SUCCESS, response);
   }
 
-  @GetMapping("/{memberId}")
+  @GetMapping("/me/{memberId}")
   @ApiOperation(value = "내 스터디 조회입니다")
   public BaseResponse<StudiesResponse> find(@PathVariable final Long memberId) {
     StudiesResponse response = studyService.find(memberId);
     return new BaseResponse<>(FIND_MY_STUDY_SUCCESS, response);
+  }
+
+  @GetMapping("/{studyId}")
+  @ApiOperation(value = "스터디 상세 조회입니다.")
+  public BaseResponse<StudyDetailResponse> findById(@PathVariable final Long studyId) {
+    StudyDetailResponse response = studyService.findById(studyId);
+    return new BaseResponse<>(FIND_DETAIL_STUDY_SUCCESS, response);
   }
 }

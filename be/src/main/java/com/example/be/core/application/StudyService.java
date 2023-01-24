@@ -19,4 +19,9 @@ public class StudyService {
     log.debug("내 스터디 조회 memberId = {}", memberId);
     return null;
   }
+
+  public StudyDetailResponse findById(Long studyId) {
+    log.debug("[스터디 상세 조회] studyId = {}", studyId);
+    return null;
+  }
 }
