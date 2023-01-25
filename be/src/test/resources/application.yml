@@ -16,5 +16,4 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
-    dev.whatevernote:
-      be: debug
+    com.example.be: debug
