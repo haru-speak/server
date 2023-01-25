@@ -24,7 +24,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	 Study
 	 */
 	CREATE_STUDY_SUCCESS("S-S001", "스터디 생성을 성공했습니다."),
-	FIND_MY_STUDY_SUCCESS("S-S002", "스터디 조회를 성공했습니다."),
+	FIND_STUDY_SUCCESS("S-S002", "스터디 타입 전체 조회를 성공했습니다."),
 	FIND_DETAIL_STUDY_SUCCESS("S-S003", "스터디 상세 조회를 성공했습니다."),
 	MODIFY_STUDY_SUCCESS("S-S004", "스터디 수정을 성공했습니다."),
 	DELETE_STUDY_SUCCESS("S-S005", "스터디 삭제를 성공했습니다."),

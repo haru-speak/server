@@ -3,6 +3,7 @@ package com.example.be.core.application;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.core.domain.study.StudyType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,8 @@ public class StudyService {
     return null;
   }
 
-  public StudiesResponse find(Long memberId) {
-    log.debug("내 스터디 조회 memberId = {}", memberId);
+  public StudiesResponse find(StudyType type) {
+    log.debug("스터디 조회 type = {}", type);
     return null;
   }
 
