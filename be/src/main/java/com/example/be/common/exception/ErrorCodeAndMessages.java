@@ -22,6 +22,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	 * 404 Not Found
 	 */
 	SPEAKING_LOG_ID_NOT_FOUND_ERROR("E-NF001", "스피킹 로그 아이디를 찾을 수 없습니다."),
+	LOGIN_MEMBER_NOT_FOUND_ERROR("E-NF002", "로그인 된 멤버를 찾을 수 없습니다."),
 	;
 
 	private final String code;

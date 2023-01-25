@@ -2,17 +2,21 @@ package com.example.be.core.application.dto.request;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
 public class SpeakingLogRequest {
 
+    @NotBlank
     @Schema(type = "String", description = "제목, NOT NULL")
     private String title;
 
+    @NotBlank
     @Schema(type = "String", description = "음성 녹음 URL, NOT NULL")
     private String voiceRecord;
 
+    @NotBlank
     @Schema(type = "String", description = "음성 텍스트 URL, NOT NULL")
     private String voiceText;
 

@@ -47,4 +47,10 @@ public class SpeakingLog extends BaseEntity {
 		this.voiceRecord = voiceRecord;
 		this.voiceText = voiceText;
 	}
+
+	public void modify(String title, String voiceRecord, String voiceText) {
+		this.title = title;
+		this.voiceRecord = voiceRecord;
+		this.voiceText = voiceText;
+	}
 }
