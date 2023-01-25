@@ -19,6 +19,13 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	Question
 	 */
 	FIND_QUESTION_SUCCESS("S-Q001", "오늘의 문장 조회를 성공했습니다."),
+
+	/**
+	 Assignment
+	 */
+	CREATE_ASSIGNMENT_SUCCESS("S-A001", "과제 생성을 성공했습니다."),
+	FIND_ASSIGNMENT_SUCCESS("S-A002", "과제 전체 조회를 성공했습니다."),
+	FIND_DETAIL_ASSIGNMENT_SUCCESS("S-A003", "과제 개별 조회를 성공했습니다.")
 	;
 
 	private final String code;
