@@ -33,7 +33,7 @@ public class SpeakingLogDetailFindTest {
 
 	@BeforeEach
 	void init() {
-		Member loginMember = new Member("nathan", "nathan1234@google.com", "asdf1234@");
+		Member loginMember = new Member("nathan", "nathan1234@google.com", "asdf1234@", "aaaaa");
 		memberRepository.save(loginMember);
 		SpeakingLog speakingLog = new SpeakingLog(
 			loginMember,

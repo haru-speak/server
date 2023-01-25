@@ -9,10 +9,11 @@ import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.ToString;
 
 @Getter
 @Entity
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -28,13 +29,16 @@ public class Member {
 
 	private String password;
 
-	public Member(String nickname, String email, String password) {
+	private String profileImage;
+
+	public Member(String nickname, String email, String password, String profileImage) {
 		this.nickname = nickname;
 		this.email = email;
 		this.password = password;
+		this.profileImage = profileImage;
 	}
 
 	public static Member of(MemberFormRequest memberFormRequest) {
-		return new Member(memberFormRequest.getNickname(), memberFormRequest.getEmail(), memberFormRequest.getPassword());
+		return new Member(memberFormRequest.getNickname(), memberFormRequest.getEmail(), memberFormRequest.getPassword(), memberFormRequest.getProfileImage());
 	}
 }

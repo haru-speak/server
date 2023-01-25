@@ -26,11 +26,15 @@ public class MemberResponse {
   @NotBlank
   private final String password;
 
-  public MemberResponse(Long memberId, String nickname, String email, String password) {
+  @Schema(type = "String", description = "프로필 이미지, NOT NULL")
+  private final String profileImage;
+
+  public MemberResponse(Long memberId, String nickname, String email, String password, String profileImage) {
     this.memberId = memberId;
     this.nickname = nickname;
     this.email = email;
     this.password = password;
+    this.profileImage = profileImage;
   }
 
 }

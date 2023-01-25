@@ -1,17 +1,16 @@
 package com.example.be.core.application.dto.request;
 
-import com.example.be.core.repository.member.MemberRepository;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberFormRequest {
 
@@ -28,14 +27,13 @@ public class MemberFormRequest {
   @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\\\d)(?=.*\\\\W).{4,16}$", message = "비밀번호는 4~16자로, 영문, 숫자, 특수문자를 이용하여 구성해주세요.")
   private String password;
 
-  public MemberFormRequest(String nickname, String email, String password, PasswordEncoder passwordEncoder) {
+  private String profileImage;
+
+  public MemberFormRequest(String nickname, String email, String password, String profileImage) {
     this.nickname = nickname;
     this.email = email;
-    this.password = passwordEncoder.encode(password); // DTO에서 password 인코딩
+    this.password = password;
+    this.profileImage = profileImage;
   }
 
-  @Override
-  public String toString() {
-    return "nickname: " + nickname + ", email: " + email + ", password: " + password;
-  }
 }

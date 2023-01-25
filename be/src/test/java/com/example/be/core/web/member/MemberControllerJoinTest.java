@@ -11,22 +11,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.MemberFormRequest;
 import com.example.be.core.application.dto.response.MemberResponse;
-import com.example.be.core.web.member.InitMemberControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.ResultActions;
 
 public class MemberControllerJoinTest extends InitMemberControllerTest {
-
-
-  @MockBean
-  private PasswordEncoder passwordEncoder;
 
   @Nested
   @DisplayName("회원가입 할 때")
@@ -41,8 +32,8 @@ public class MemberControllerJoinTest extends InitMemberControllerTest {
       void join_member() throws Exception {
         //given
         Long memberId = 3L;
-        MemberFormRequest request = new MemberFormRequest("승연", "tmddus@naver.com", "a1234!", passwordEncoder);
-        MemberResponse response = new MemberResponse( memberId, "승연", "tmddus@naver.com","a1234!");
+        MemberFormRequest request = new MemberFormRequest("승연", "tmddus@naver.com", "a1234!", "aaaaa");
+        MemberResponse response = new MemberResponse(memberId, "승연", "tmddus@naver.com","a1234!", "aaaaa");
         BaseResponse<MemberResponse> baseResponse = new BaseResponse<>(JOIN_SUCCESS, response);
 
         when(memberService.create(refEq(request)))
