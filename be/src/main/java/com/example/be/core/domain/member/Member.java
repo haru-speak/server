@@ -30,10 +30,6 @@ public class Member {
 
 	private String password;
 
-<<<<<<< HEAD
-=======
-	@Lob
->>>>>>> 2d6a7482972d67ed69236859542b27db0a829625
 	private String profileImage;
 
 	public Member(String nickname, String email, String password, String profileImage) {
