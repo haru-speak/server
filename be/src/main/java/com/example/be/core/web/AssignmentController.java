@@ -1,25 +1,17 @@
 package com.example.be.core.web;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_ASSIGNMENT_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_SPEAKING_LOG_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_SPEAKING_LOG_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_ASSIGNMENT_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_ASSIGNMENT_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_ASSIGNMENT_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_SPEAKING_LOG_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.FIND_SPEAKING_LOG_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_SPEAKING_LOG_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_ASSIGNMENT_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.AssignmentService;
 import com.example.be.core.application.dto.request.AssignmentRequest;
-import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
-import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
-import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.AssignmentDetailResponse;
 import com.example.be.core.application.dto.response.AssignmentResponse;
 import com.example.be.core.application.dto.response.AssignmentsResponse;
-import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
-import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,4 +53,20 @@ public class AssignmentController {
     AssignmentResponse response = assignmentService.findById(assignmentId);
     return new BaseResponse<>(FIND_DETAIL_ASSIGNMENT_SUCCESS, response);
   }
+
+  @PutMapping("/{assignmentId}")
+  @ApiOperation(value = "과제 수정입니다.")
+  public BaseResponse<AssignmentDetailResponse> modify(
+    @RequestBody final AssignmentRequest assignmentRequest) {
+    AssignmentDetailResponse response = assignmentService.modify(assignmentRequest, 1L);
+    return new BaseResponse<>(MODIFY_ASSIGNMENT_SUCCESS, response);
+  }
+
+  @DeleteMapping("/{assignmentId}")
+  @ApiOperation(value = "과제 삭제입니다.")
+  public BaseResponse<Void> delete(@PathVariable final Long assignmentId) {
+    assignmentService.delete(assignmentId);
+    return new BaseResponse<>(DELETE_ASSIGNMENT_SUCCESS, null);
+  }
+
 }

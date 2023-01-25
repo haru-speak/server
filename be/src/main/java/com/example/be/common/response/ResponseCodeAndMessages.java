@@ -25,7 +25,9 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	 */
 	CREATE_ASSIGNMENT_SUCCESS("S-A001", "과제 생성을 성공했습니다."),
 	FIND_ASSIGNMENT_SUCCESS("S-A002", "과제 전체 조회를 성공했습니다."),
-	FIND_DETAIL_ASSIGNMENT_SUCCESS("S-A003", "과제 개별 조회를 성공했습니다.")
+	FIND_DETAIL_ASSIGNMENT_SUCCESS("S-A003", "과제 개별 조회를 성공했습니다."),
+	MODIFY_ASSIGNMENT_SUCCESS("S-A004", "과제 수정을 성공했습니다"),
+	DELETE_ASSIGNMENT_SUCCESS("S-A005", "과제 삭제를 성공했습니다"),
 	;
 
 	private final String code;

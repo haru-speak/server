@@ -3,7 +3,9 @@ package com.example.be.core.application.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
+import lombok.Getter;
 
+@Getter
 public class AssignmentResponse {
 
   @Schema(type = "Long", description = "과제 ID, NOT NULL")

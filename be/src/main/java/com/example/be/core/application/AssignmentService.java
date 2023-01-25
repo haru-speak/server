@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class AssignmentService {
 
   public AssignmentDetailResponse create(AssignmentRequest assignmentRequest, Long memberId) {
-    log.debug("[과제 생성] StudyRequest = {}", assignmentRequest);
+    log.debug("[과제 생성] assignmentRequest = {}", assignmentRequest);
     return null;
   }
 
@@ -25,5 +25,14 @@ public class AssignmentService {
   public AssignmentResponse findById(Long assignmentId) {
     log.debug("[과제 개별 조회] assignmentId = {}", assignmentId);
     return null;
+  }
+
+  public AssignmentDetailResponse modify(AssignmentRequest assignmentRequest, Long memberId) {
+    log.debug("[과제 수정] assignmentRequest = {}", assignmentRequest);
+    return null;
+  }
+
+  public void delete(Long assignmentId) {
+    log.debug("[과제 삭제] assignmentId = {}", assignmentId);
   }
 }
