@@ -3,9 +3,12 @@ package com.example.be.core.application.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AssignmentDetailResponse {
 
   @Schema(type = "Long", description = "과제 ID, NOT NULL")
@@ -27,8 +30,6 @@ public class AssignmentDetailResponse {
   @Schema(type = "String", description = "음성 기록 URL, NOT NULL")
   @NotBlank
   private String voiceRecord;
-
-  private AssignmentDetailResponse() {}
 
   public AssignmentDetailResponse(Long assignmentId, String title, String content,
       LocalDate deadline, String voiceRecord) {

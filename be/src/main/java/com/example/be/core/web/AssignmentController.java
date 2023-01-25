@@ -57,8 +57,9 @@ public class AssignmentController {
   @PutMapping("/{assignmentId}")
   @ApiOperation(value = "과제 수정입니다.")
   public BaseResponse<AssignmentDetailResponse> modify(
+      @PathVariable final Long assignmentId,
     @RequestBody final AssignmentRequest assignmentRequest) {
-    AssignmentDetailResponse response = assignmentService.modify(assignmentRequest, 1L);
+    AssignmentDetailResponse response = assignmentService.modify(assignmentId, assignmentRequest);
     return new BaseResponse<>(MODIFY_ASSIGNMENT_SUCCESS, response);
   }
 
@@ -68,5 +69,4 @@ public class AssignmentController {
     assignmentService.delete(assignmentId);
     return new BaseResponse<>(DELETE_ASSIGNMENT_SUCCESS, null);
   }
-
 }
