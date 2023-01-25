@@ -1,6 +1,6 @@
 package com.example.be.core.domain.study;
 
-import com.example.be.common.exception.speakinglog.InvalidSpeakingLogTypeException;
+import com.example.be.common.exception.study.InvalidStudyTypeException;
 import java.util.Arrays;
 import lombok.Getter;
 
@@ -23,6 +23,6 @@ public enum StudyType {
     return Arrays.stream(StudyType.values())
         .filter(e -> e.type.equals(source))
         .findAny()
-        .orElseThrow(InvalidSpeakingLogTypeException::new);
+        .orElseThrow(InvalidStudyTypeException::new);
   }
 }

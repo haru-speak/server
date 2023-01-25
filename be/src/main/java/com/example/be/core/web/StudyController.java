@@ -41,7 +41,7 @@ public class StudyController {
 
   @GetMapping
   @ApiOperation(value = "스터디 타입에 따른 전체 조회입니다")
-  public BaseResponse<StudiesResponse> find(StudyType type) {
+  public BaseResponse<StudiesResponse> find(final StudyType type) {
     StudiesResponse response = studyService.find(type);
     return new BaseResponse<>(FIND_STUDY_SUCCESS, response);
   }
@@ -64,7 +64,7 @@ public class StudyController {
 
   @DeleteMapping("/{studyId}")
   @ApiOperation(value = "스터디 삭제입니다.")
-  public BaseResponse<Void> delete(@PathVariable Long studyId) {
+  public BaseResponse<Void> delete(@PathVariable final Long studyId) {
     studyService.delete(studyId);
     return new BaseResponse<>(DELETE_STUDY_SUCCESS, null);
   }

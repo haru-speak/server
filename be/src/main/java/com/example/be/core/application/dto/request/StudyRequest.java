@@ -1,10 +1,14 @@
 package com.example.be.core.application.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StudyRequest {
 
   @Schema(type = "String", description = "제목, NOT NULL")
@@ -31,26 +35,24 @@ public class StudyRequest {
   @NotBlank
   private String certificate;
 
-  @Schema(type = "String", description = "최대 인원, NOT NULL")
+  @Schema(type = "int", description = "최대 인원, NOT NULL")
   @NotBlank
-  private String capacity;
+  private Integer capacity;
 
   @Schema(type = "String", description = "규칙, NOT NULL")
   @NotBlank
   private String rule;
 
-  @Schema(type = "String", description = "주 횟수, NOT NULL")
+  @Schema(type = "date", description = "주 횟수, NOT NULL")
   @NotBlank
-  private String timePerWeek;
+  private LocalDate timePerWeek;
 
   @Schema(type = "String", description = "포스터 이미지, NOT NULL")
   @NotBlank
-  private String posterImg;
-
-  private StudyRequest() {}
+  private String posterImage;
 
   public StudyRequest(String title, String content, Integer level, String language, String goal,
-      String certificate, String capacity, String rule, String timePerWeek, String posterImg) {
+      String certificate, Integer capacity, String rule, LocalDate timePerWeek, String posterImage) {
     this.title = title;
     this.content = content;
     this.level = level;
@@ -60,6 +62,6 @@ public class StudyRequest {
     this.capacity = capacity;
     this.rule = rule;
     this.timePerWeek = timePerWeek;
-    this.posterImg = posterImg;
+    this.posterImage = posterImage;
   }
 }
