@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,10 +29,14 @@ public class Member {
 
 	private String password;
 
-	public Member(String nickname, String email, String password) {
+	@Lob
+	private String profileImage;
+
+	public Member(String nickname, String email, String password, String profileImage) {
 		this.nickname = nickname;
 		this.email = email;
 		this.password = password;
+		this.profileImage = profileImage;
 	}
 
 	public static Member of(MemberFormRequest memberFormRequest) {
