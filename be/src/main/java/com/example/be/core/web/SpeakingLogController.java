@@ -14,6 +14,7 @@ import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +37,7 @@ public class SpeakingLogController {
 	@PostMapping
 	@ApiOperation(value = "스피킹 로그 생성입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> create(
-		@RequestBody final SpeakingLogRequest speakingLogRequest) {
+		@RequestBody @Valid final SpeakingLogRequest speakingLogRequest) {
 		SpeakingLogDetailResponse response = speakingLogService.create(speakingLogRequest, 1L);
 		return new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
 	}
