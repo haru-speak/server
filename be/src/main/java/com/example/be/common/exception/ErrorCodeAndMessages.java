@@ -16,6 +16,10 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
   SPEAKING_LOG_DATE_FORMAT_ERROR("E-BR002", "올바르지 않은 날짜 형식입니다. YYYYMMDD 형식이어야 합니다."),
 	STUDY_TYPE_ERROR("E-BR003", "올바르지 않은 타입 형식입니다. ALL, MY, MATE 중 하나여야 합니다."),
 
+	MEMBERFORM_INVALID("E-BR003", "유효하지 않은 입력값입니다. 각 입력 조건을 확인해주세요."),
+
+	PASSWORD_MISMATCH("E-BR004", "저장된 회원의 비밀번호와 일치하지 않습니다."),
+
 	/**
 	 * 404 Not Found
 	 */
