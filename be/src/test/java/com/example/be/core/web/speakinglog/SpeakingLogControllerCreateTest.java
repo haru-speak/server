@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,9 +34,9 @@ public class SpeakingLogControllerCreateTest extends InitSpeakingLogControllerTe
                 //given
                 Long memberId = 1L;
                 Integer likeCount = 10;
-                SpeakingLogRequest request = new SpeakingLogRequest("스피킹 로그1", "dummy_record_adsf_1234", "dummy_text_asdf_1234");
+                SpeakingLogRequest request = new SpeakingLogRequest("스피킹 로그1", "https://dummy_record_adsf_1234", "dummy_text_asdf_1234");
                 SpeakingLogDetailResponse response = new SpeakingLogDetailResponse( memberId, "스피킹 로그1",
-                        "dummy_record_adsf_1234","dummy_text_asdf_1234", likeCount, false,  new ArrayList<>());
+                        "https://dummy_record_adsf_1234","dummy_text_asdf_1234", likeCount, false,  new ArrayList<>());
                 BaseResponse<SpeakingLogDetailResponse> baseResponse = new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
 
                 when(speakingLogService.create(refEq(request), refEq(memberId)))
@@ -49,7 +50,8 @@ public class SpeakingLogControllerCreateTest extends InitSpeakingLogControllerTe
 
                 //then
                 resultActions.andExpect(status().isOk())
-                    .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
+                    .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)))
+                    .andDo(print());
 
                 verify(speakingLogService).create(refEq(request), refEq(memberId));
             }

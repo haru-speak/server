@@ -17,7 +17,6 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class DataBaseConfigurator implements InitializingBean {
@@ -110,7 +109,7 @@ public class DataBaseConfigurator implements InitializingBean {
 					new SpeakingLog(
 						member,
 						"speaking-log-title"+i+j,
-						"dummy-voice-record"+i+j,
+						"https://dummy-voice-record"+i+j,
 						"dummy-voice-text"+i+j
 					));
 			}
