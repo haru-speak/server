@@ -101,6 +101,7 @@ public class SpeakingLogService {
 
 		return new SpeakingLogsResponse(
 			speakingLogConditionRequest.getType(),
+			speakingLogConditionRequest.getDate(),
 			speakingLogResponses
 		);
 	}

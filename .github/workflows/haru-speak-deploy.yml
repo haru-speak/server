@@ -71,6 +71,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: | 
+            sudo docker system prune -f
             sudo docker pull hankwanjin/haru-speak:latest
             sudo docker stop haru-speak-server && sudo docker rm haru-speak-server
             sudo docker run -d --name haru-speak-server -p 8080:8080 hankwanjin/haru-speak:latest

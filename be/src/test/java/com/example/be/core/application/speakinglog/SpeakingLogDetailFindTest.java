@@ -43,7 +43,7 @@ public class SpeakingLogDetailFindTest extends InitServiceTest {
 				assertThat(response.getIsLiked()).isFalse();
 				assertThat(response.getLikeCount()).isZero();
 				assertThat(response.getTitle()).isEqualTo("speaking-log-title11");
-				assertThat(response.getVoiceRecord()).isEqualTo("dummy-voice-record11");
+				assertThat(response.getVoiceRecord()).isEqualTo("https://dummy-voice-record11");
 				assertThat(response.getVoiceText()).isEqualTo("dummy-voice-text11");
 			}
 		}

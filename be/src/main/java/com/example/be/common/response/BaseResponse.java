@@ -21,4 +21,12 @@ public class BaseResponse<T>  {
 		this.message = codeAndMessages.getMessage();
 		this.data = data;
 	}
+
+	public static BaseResponse<Void> error(String code, String message) {
+		return new BaseResponse<>(
+			code,
+			message,
+			null
+		);
+	}
 }
