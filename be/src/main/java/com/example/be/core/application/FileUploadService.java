@@ -7,13 +7,12 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.be.core.application.dto.response.FileUploadResponse;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service
+@Component
 public class FileUploadService {
     private final AmazonS3 amazonS3;
 
@@ -44,9 +43,8 @@ public class FileUploadService {
         int fileExtensionIndex = originalFileName.lastIndexOf(".");
         String fileExtension = originalFileName.substring(fileExtensionIndex);
         String fileName = originalFileName.substring(0, fileExtensionIndex);
-        String random = String.valueOf(UUID.randomUUID());
 
-        return category + "/" + fileName + "-" + random + fileExtension;
+        return category + "/" + fileName + fileExtension;
     }
 
     public void delete(String filePath) {
