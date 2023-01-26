@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component
+@Service
 public class FileUploadService {
     private final AmazonS3 amazonS3;
 
