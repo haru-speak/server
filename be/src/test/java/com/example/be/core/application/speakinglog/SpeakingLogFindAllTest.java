@@ -37,7 +37,7 @@ public class SpeakingLogFindAllTest extends InitServiceTest {
                 //when
                 SpeakingLogsResponse response = speakingLogService.find(new SpeakingLogConditionRequest("ALL", today));
                 //then
-                assertThat(response.getSpeakingLogResponses().size()).isEqualTo(15);
+                assertThat(response.getSpeakingLogsResponse().size()).isEqualTo(15);
             }
         }
     }
