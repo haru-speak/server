@@ -15,6 +15,8 @@ import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @RestController
 @RequestMapping("/speaking-log")
 public class SpeakingLogController {
@@ -52,7 +55,8 @@ public class SpeakingLogController {
 
 	@GetMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 상세 조회입니다.")
-	public BaseResponse<SpeakingLogDetailResponse> findById(@PathVariable final Long speakingLogId) {
+	public BaseResponse<SpeakingLogDetailResponse> findById(@PathVariable
+	@Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId) {
 		SpeakingLogDetailResponse response = speakingLogService.findById(speakingLogId, 1L);
 		return new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 	}
