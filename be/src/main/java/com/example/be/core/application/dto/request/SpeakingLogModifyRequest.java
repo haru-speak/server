@@ -4,9 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SpeakingLogModifyRequest {
 
 	@NotNull(message = "제목이 빈 값이어서는 안됩니다.")
@@ -24,8 +27,6 @@ public class SpeakingLogModifyRequest {
 	@Size(min = 2, message = "올바른 voiceText를 입력해야 합니다.")
 	@Schema(type = "String", description = "변경할 음성 텍스트 URL, NOT NULL")
 	private String voiceText;
-
-	private SpeakingLogModifyRequest() {}
 
 	public SpeakingLogModifyRequest(String title, String voiceRecord, String voiceText) {
 		this.title = title;

@@ -64,8 +64,8 @@ public class SpeakingLogController {
 	@PutMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 수정입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> modify(
-		@PathVariable final Long speakingLogId,
-		@RequestBody final SpeakingLogModifyRequest speakingLogModifyRequest) {
+		@PathVariable @Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId,
+		@RequestBody @Valid final SpeakingLogModifyRequest speakingLogModifyRequest) {
 		SpeakingLogDetailResponse response = speakingLogService.modify(speakingLogId, speakingLogModifyRequest);
 		return new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, response);
 	}
