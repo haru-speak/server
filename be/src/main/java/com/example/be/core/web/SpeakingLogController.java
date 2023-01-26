@@ -72,7 +72,8 @@ public class SpeakingLogController {
 
 	@DeleteMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 삭제입니다.")
-	public BaseResponse<Void> delete(@PathVariable final Long speakingLogId) {
+	public BaseResponse<Void> delete(@PathVariable
+	@Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId) {
 		speakingLogService.delete(speakingLogId);
 		return new BaseResponse<>(DELETE_SPEAKING_LOG_SUCCESS, null);
 	}
