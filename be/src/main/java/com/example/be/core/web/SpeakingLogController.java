@@ -14,6 +14,9 @@ import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @RestController
 @RequestMapping("/speaking-log")
 public class SpeakingLogController {
@@ -36,21 +40,23 @@ public class SpeakingLogController {
 	@PostMapping
 	@ApiOperation(value = "스피킹 로그 생성입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> create(
-		@RequestBody final SpeakingLogRequest speakingLogRequest) {
+		@RequestBody @Valid final SpeakingLogRequest speakingLogRequest) {
 		SpeakingLogDetailResponse response = speakingLogService.create(speakingLogRequest, 1L);
 		return new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@GetMapping
 	@ApiOperation(value = "스피킹 로그 타입에 따른 전체 조회입니다.")
-	public BaseResponse<SpeakingLogsResponse> find(SpeakingLogConditionRequest speakingLogConditionRequest) {
+	public BaseResponse<SpeakingLogsResponse> find(
+		@Valid final SpeakingLogConditionRequest speakingLogConditionRequest) {
 		SpeakingLogsResponse response = speakingLogService.find(speakingLogConditionRequest);
 		return new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@GetMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 상세 조회입니다.")
-	public BaseResponse<SpeakingLogDetailResponse> findById(@PathVariable final Long speakingLogId) {
+	public BaseResponse<SpeakingLogDetailResponse> findById(@PathVariable
+	@Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId) {
 		SpeakingLogDetailResponse response = speakingLogService.findById(speakingLogId, 1L);
 		return new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 	}
@@ -58,15 +64,16 @@ public class SpeakingLogController {
 	@PutMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 수정입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> modify(
-		@PathVariable final Long speakingLogId,
-		@RequestBody final SpeakingLogModifyRequest speakingLogModifyRequest) {
+		@PathVariable @Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId,
+		@RequestBody @Valid final SpeakingLogModifyRequest speakingLogModifyRequest) {
 		SpeakingLogDetailResponse response = speakingLogService.modify(speakingLogId, speakingLogModifyRequest);
 		return new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@DeleteMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 삭제입니다.")
-	public BaseResponse<Void> delete(@PathVariable final Long speakingLogId) {
+	public BaseResponse<Void> delete(@PathVariable
+	@Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId) {
 		speakingLogService.delete(speakingLogId);
 		return new BaseResponse<>(DELETE_SPEAKING_LOG_SUCCESS, null);
 	}
