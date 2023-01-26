@@ -3,6 +3,7 @@ package com.example.be.core.web.speakinglog;
 import static com.example.be.common.exception.ErrorCodeAndMessages.SPEAKING_LOG_DATE_FORMAT_ERROR;
 import static com.example.be.common.exception.ErrorCodeAndMessages.SPEAKING_LOG_TYPE_ERROR;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_SPEAKING_LOG_SUCCESS;
+import static java.time.format.DateTimeFormatter.BASIC_ISO_DATE;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.speakinglog.SpeakingLogType;
+import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -40,7 +42,7 @@ class SpeakingLogControllerFindByTypeTest extends InitSpeakingLogControllerTest{
 				void find_all_type_speaking_log_with_date() throws Exception {
 					//given
 					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest("all", "20230108");
-					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, null);
+					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, LocalDate.parse("20230108", BASIC_ISO_DATE),null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
 					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
@@ -64,7 +66,7 @@ class SpeakingLogControllerFindByTypeTest extends InitSpeakingLogControllerTest{
 				void find_no_type_speaking_log_with_date() throws Exception {
 					//given
 					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest(null, "20230108");
-					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, null);
+					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, LocalDate.parse("20230108", BASIC_ISO_DATE), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
 					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
@@ -93,7 +95,7 @@ class SpeakingLogControllerFindByTypeTest extends InitSpeakingLogControllerTest{
 				void find_all_type_speaking_log_with_no_date() throws Exception {
 					//given
 					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest("all", null);
-					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, null);
+					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, LocalDate.now(), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
 					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
@@ -117,7 +119,7 @@ class SpeakingLogControllerFindByTypeTest extends InitSpeakingLogControllerTest{
 				void find_no_type_speaking_log_with_no_date() throws Exception {
 					//given
 					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest(null, null);
-					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, null);
+					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, LocalDate.now(), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
 					when(speakingLogService.find(refEq(speakingLogConditionRequest)))

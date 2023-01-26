@@ -44,7 +44,8 @@ public class SpeakingLogController {
 
 	@GetMapping
 	@ApiOperation(value = "스피킹 로그 타입에 따른 전체 조회입니다.")
-	public BaseResponse<SpeakingLogsResponse> find(SpeakingLogConditionRequest speakingLogConditionRequest) {
+	public BaseResponse<SpeakingLogsResponse> find(
+		@Valid final SpeakingLogConditionRequest speakingLogConditionRequest) {
 		SpeakingLogsResponse response = speakingLogService.find(speakingLogConditionRequest);
 		return new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, response);
 	}
