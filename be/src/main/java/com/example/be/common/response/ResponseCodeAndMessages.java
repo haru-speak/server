@@ -19,6 +19,12 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	Question
 	 */
 	FIND_QUESTION_SUCCESS("S-Q001", "오늘의 문장 조회를 성공했습니다."),
+
+	/**
+	FileUpload
+	 */
+	IMAGE_UPLOAD_SUCCESS("S-F001", "이미지 파일 업로드의 성공했습니다."),
+	VOICE_UPLOAD_SUCCESS("S-F002", "음성 파일 업로드의 성공했습니다."),
 	;
 
 	private final String code;

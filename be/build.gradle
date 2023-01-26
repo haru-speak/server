@@ -48,7 +48,8 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     // AWS S3
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation "org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE"
+    implementation 'com.amazonaws:aws-java-sdk-s3'
 }
 
 tasks.named('test') {
