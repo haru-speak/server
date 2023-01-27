@@ -8,10 +8,10 @@ import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_STUD
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.StudyService;
+import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
-import com.example.be.core.domain.study.StudyType;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +41,8 @@ public class StudyController {
 
   @GetMapping
   @ApiOperation(value = "스터디 타입에 따른 전체 조회입니다")
-  public BaseResponse<StudiesResponse> find(final StudyType type) {
-    StudiesResponse response = studyService.find(type);
+  public BaseResponse<StudiesResponse> find(final StudyConditionRequest studyConditionRequest) {
+    StudiesResponse response = studyService.find(studyConditionRequest);
     return new BaseResponse<>(FIND_STUDY_SUCCESS, response);
   }
 
