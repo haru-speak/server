@@ -1,16 +1,17 @@
 package com.example.be.core.application;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.example.be.core.application.dto.response.FileUploadResponse;
-import java.io.IOException;
+import com.example.be.core.application.dto.response.PreSignedUrlResponse;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Service
 public class FileUploadService {
     private final AmazonS3 amazonS3;
@@ -22,31 +23,17 @@ public class FileUploadService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public FileUploadResponse upload(String category, MultipartFile multipartFile) throws IOException {
+    public String generateUrl(String fileName, HttpMethod httpMethod) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, 1);
 
-        String fileName = createFileName(category ,multipartFile.getOriginalFilename());
-
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(multipartFile.getContentType());
-
-        amazonS3.putObject(new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), objectMetadata)
-            .withCannedAcl(CannedAccessControlList.PublicRead));
-
-        return new FileUploadResponse(
-            amazonS3.getUrl(bucket, fileName).toString(),
-            fileName
-        );
+        return amazonS3.generatePresignedUrl(bucket, fileName, calendar.getTime(), httpMethod).toString();
     }
 
-    private String createFileName(String category, String originalFileName) {
-        int fileExtensionIndex = originalFileName.lastIndexOf(".");
-        String fileExtension = originalFileName.substring(fileExtensionIndex);
-        String fileName = originalFileName.substring(0, fileExtensionIndex);
-
-        return category + "/" + fileName + fileExtension;
-    }
-
-    public void delete(String filePath) {
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket, filePath));
+    @Async
+    public PreSignedUrlResponse uploadUrl(String category, String extension) {
+        String fileName = category + "/" + UUID.randomUUID() + extension;
+        return new PreSignedUrlResponse(generateUrl(fileName, HttpMethod.PUT));
     }
 }

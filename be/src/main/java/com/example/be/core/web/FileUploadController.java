@@ -1,21 +1,19 @@
 package com.example.be.core.web;
 
-import static com.example.be.common.response.ResponseCodeAndMessages.IMAGE_UPLOAD_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.VOICE_UPLOAD_SUCCESS;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static com.example.be.common.response.ResponseCodeAndMessages.GENERATE_IMAGE_UPLOAD_RUL_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.GENERATE_VOICE_UPLOAD_URL_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.FileUploadService;
-import com.example.be.core.application.dto.response.FileUploadResponse;
+import com.example.be.core.application.dto.response.PreSignedUrlResponse;
 import java.io.IOException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping(value = "/upload", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/files")
 public class FileUploadController {
 
     private final FileUploadService fileUploadService;
@@ -25,14 +23,22 @@ public class FileUploadController {
     }
 
     @PostMapping("/image")
-    public BaseResponse<FileUploadResponse> uploadImage(
-        @RequestPart("file") MultipartFile multipartFile) throws IOException {
-        return new BaseResponse<>(IMAGE_UPLOAD_SUCCESS, fileUploadService.upload("image",multipartFile));
+    public BaseResponse<PreSignedUrlResponse> uploadImage(
+        @RequestParam("extension") String extension
+    ) throws IOException {
+        return new BaseResponse<>(
+            GENERATE_IMAGE_UPLOAD_RUL_SUCCESS,
+            fileUploadService.uploadUrl("image" ,extension)
+        );
     }
 
     @PostMapping("/voice")
-    public BaseResponse<FileUploadResponse> uploadVoice(
-        @RequestPart("file") MultipartFile multipartFile) throws IOException {
-        return new BaseResponse<>(VOICE_UPLOAD_SUCCESS, fileUploadService.upload("voice", multipartFile));
+    public BaseResponse<PreSignedUrlResponse> uploadVoice(
+        @RequestParam("extension") String extension
+    ) throws IOException {
+        return new BaseResponse<>(
+            GENERATE_VOICE_UPLOAD_URL_SUCCESS,
+            fileUploadService.uploadUrl("voice" ,extension)
+        );
     }
 }
