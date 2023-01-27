@@ -3,15 +3,15 @@ package com.example.be.core.web;
 import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_STUDY_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.FIND_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_ALL_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_STUDY_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.StudyService;
+import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
-import com.example.be.core.domain.study.StudyType;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,9 +41,9 @@ public class StudyController {
 
   @GetMapping
   @ApiOperation(value = "스터디 타입에 따른 전체 조회입니다")
-  public BaseResponse<StudiesResponse> find(final StudyType type) {
-    StudiesResponse response = studyService.find(type);
-    return new BaseResponse<>(FIND_STUDY_SUCCESS, response);
+  public BaseResponse<StudiesResponse> find(final StudyConditionRequest studyConditionRequest) {
+    StudiesResponse response = studyService.find(studyConditionRequest);
+    return new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
   }
 
   @GetMapping("/{studyId}")
