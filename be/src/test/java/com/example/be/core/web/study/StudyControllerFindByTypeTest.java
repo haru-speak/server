@@ -34,12 +34,12 @@ class StudyControllerFindByTypeTest extends InitStudyControllerTest{
       @DisplayName("ALL TYPE 스터디 조회시 ALL TYPE 스터디가 조회된다")
       void find_all_type_study() throws Exception {
         //given
-        StudyConditionRequest studyConditionRequest = new StudyConditionRequest("all");
-        StudiesResponse studiesResponse = new StudiesResponse(ALL, null);
-        BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_STUDY_SUCCESS, studiesResponse);
+        StudyConditionRequest request = new StudyConditionRequest("all");
+        StudiesResponse response = new StudiesResponse(ALL, null);
+        BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_STUDY_SUCCESS, response);
 
-        when(studyService.find(refEq(studyConditionRequest)))
-            .thenReturn(studiesResponse);
+        when(studyService.find(refEq(request)))
+            .thenReturn(response);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/study?type=all")
@@ -51,19 +51,19 @@ class StudyControllerFindByTypeTest extends InitStudyControllerTest{
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)))
             .andDo(print());
 
-        verify(studyService).find(refEq(studyConditionRequest));
+        verify(studyService).find(refEq(request));
       }
 
       @Test
       @DisplayName("타입 없이 스터디 조회시 MY TYPE 스터디가 조회된다")
       void find_no_type_study() throws Exception {
         //given
-        StudyConditionRequest studyConditionRequest = new StudyConditionRequest(null);
-        StudiesResponse studiesResponse = new StudiesResponse(MY, null);
-        BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_STUDY_SUCCESS, studiesResponse);
+        StudyConditionRequest request = new StudyConditionRequest(null);
+        StudiesResponse response = new StudiesResponse(MY, null);
+        BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_STUDY_SUCCESS, response);
 
-        when(studyService.find(refEq(studyConditionRequest)))
-            .thenReturn(studiesResponse);
+        when(studyService.find(refEq(request)))
+            .thenReturn(response);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/study")
@@ -75,7 +75,7 @@ class StudyControllerFindByTypeTest extends InitStudyControllerTest{
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)))
             .andDo(print());
 
-        verify(studyService).find(refEq(studyConditionRequest));
+        verify(studyService).find(refEq(request));
       }
     }
   }

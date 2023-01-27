@@ -34,14 +34,13 @@ public class StudyControllerDetailFindTest extends InitStudyControllerTest {
         //given
         Long studyId = 1L;
         Integer likeCount = 10;
-        StudyDetailResponse studyDetailResponse = new StudyDetailResponse(studyId, "스터디 1",
-            "스터디 1 입니다", 3, "english",
+        StudyDetailResponse response = new StudyDetailResponse(studyId, "스터디 1", "스터디 1 입니다", 3, "english",
             "토익 800", "toeic", 5, "비대면", 3, "asdfzxcv", likeCount, true, new ArrayList<>());
         BaseResponse<StudyDetailResponse> baseResponse = new BaseResponse<>(
-            FIND_DETAIL_STUDY_SUCCESS, studyDetailResponse);
+            FIND_DETAIL_STUDY_SUCCESS, response);
 
         when(studyService.findById(studyId))
-            .thenReturn(studyDetailResponse);
+            .thenReturn(response);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/study/{studyId}", studyId)
