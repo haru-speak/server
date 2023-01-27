@@ -24,7 +24,7 @@ public class QuestionController {
     @GetMapping
     @ApiOperation(value = "오늘의 문장 조회입니다.")
     public BaseResponse<QuestionResponse> find() {
-        QuestionResponse response = questionService.find();
+        QuestionResponse response = questionService.findById(1L);
         return new BaseResponse<>(FIND_QUESTION_SUCCESS, response);
     }
 }

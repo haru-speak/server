@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
-@Transactional(readOnly = true)
 @Service
+@Transactional(readOnly = true)
 public class QuestionService {
 
-
-    public QuestionResponse find() {
+    public QuestionResponse findById(Long questionId) {
+        log.debug("[오늘의 문장 조회] questionId = {}", questionId);
         return null;
     }
 }
