@@ -1,6 +1,6 @@
 package com.example.be.core.web.study;
 
-import static com.example.be.common.response.ResponseCodeAndMessages.FIND_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_ALL_STUDY_SUCCESS;
 import static com.example.be.core.domain.study.StudyType.ALL;
 import static com.example.be.core.domain.study.StudyType.MY;
 import static org.mockito.ArgumentMatchers.refEq;
@@ -36,7 +36,7 @@ class StudyControllerFindByTypeTest extends InitStudyControllerTest{
         //given
         StudyConditionRequest request = new StudyConditionRequest("all");
         StudiesResponse response = new StudiesResponse(ALL, null);
-        BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_STUDY_SUCCESS, response);
+        BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
 
         when(studyService.find(refEq(request)))
             .thenReturn(response);
@@ -60,7 +60,7 @@ class StudyControllerFindByTypeTest extends InitStudyControllerTest{
         //given
         StudyConditionRequest request = new StudyConditionRequest(null);
         StudiesResponse response = new StudiesResponse(MY, null);
-        BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_STUDY_SUCCESS, response);
+        BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
 
         when(studyService.find(refEq(request)))
             .thenReturn(response);
