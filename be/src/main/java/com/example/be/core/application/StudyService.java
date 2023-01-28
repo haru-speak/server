@@ -1,9 +1,12 @@
 package com.example.be.core.application;
 
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
+import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
+import com.example.be.core.application.dto.response.CommentResponse;
 import com.example.be.core.application.dto.response.StudiesResponse;
+import com.example.be.core.application.dto.response.StudyCommentResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 
 import com.example.be.core.application.dto.response.StudyResponse;
@@ -111,9 +114,9 @@ public class StudyService {
             study.getTitle(),
             study.getContent(),
             study.getPosterImage(),
-            studyFavoriteRepository.countByStudyId(study.getId()),
-            studyCommentRepository.countByStudyId(study.getId()),
-            studyFavoriteRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent()
+            getStudyLikeCount(study),
+            getStudyCommentCount(study),
+            getStudyFavorite(loginMemberId, study)
         )).collect(Collectors.toList());
 
     return new StudiesResponse(
@@ -124,7 +127,29 @@ public class StudyService {
 
   public StudyDetailResponse findById(Long studyId) {
     log.debug("[스터디 상세 조회] studyId = {}", studyId);
-    return null;
+
+    Study study = studyRepository.findById(studyId)
+        .orElseThrow(NotFoundStudyIdException::new);
+
+    // 임시 (아직 로그인 구현 X)
+    Long loginMemberId = 1L;
+
+    return new StudyDetailResponse(
+        study.getId(),
+        study.getTitle(),
+        study.getContent(),
+        study.getLevel(),
+        study.getLanguage(),
+        study.getGoal(),
+        study.getCertificate(),
+        study.getCapacity(),
+        study.getRule(),
+        study.getTimePerWeek(),
+        study.getPosterImage(),
+        getStudyLikeCount(study),
+        getStudyFavorite(loginMemberId, study),
+        getStudyComments(studyId)
+    );
   }
 
   public StudyDetailResponse modify(Long studyId, StudyRequest studyRequest) {
@@ -134,5 +159,23 @@ public class StudyService {
 
   public void delete(Long studyId) {
     log.debug("[스터디 삭제] studyId = {}", studyId);
+  }
+
+  private Integer getStudyLikeCount(Study study) {
+    return studyFavoriteRepository.countByStudyId(study.getId());
+  }
+
+  private Integer getStudyCommentCount(Study study) {
+    return studyCommentRepository.countByStudyId(study.getId());
+  }
+
+  private boolean getStudyFavorite(Long loginMemberId, Study study) {
+    return studyFavoriteRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent();
+  }
+
+  private List<StudyCommentResponse> getStudyComments(Long studyId) {
+    return studyCommentRepository.findAllByStudyId(studyId).stream()
+        .map(StudyCommentResponse::from)
+        .collect(Collectors.toList());
   }
 }

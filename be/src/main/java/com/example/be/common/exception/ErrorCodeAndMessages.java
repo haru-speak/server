@@ -26,6 +26,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	NOT_FOUND_ERROR("E-NF000", "존재하지 않습니다."),
 	SPEAKING_LOG_ID_NOT_FOUND_ERROR("E-NF001", "스피킹 로그 아이디를 찾을 수 없습니다."),
 	LOGIN_MEMBER_NOT_FOUND_ERROR("E-NF002", "로그인 된 멤버를 찾을 수 없습니다."),
+	STUDY_ID_NOT_FOUND_ERROR("E-NF003", "스터디 아이디를 찾을 수 없습니다."),
 	;
 
 	private final String code;
