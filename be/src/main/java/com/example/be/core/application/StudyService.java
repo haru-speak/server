@@ -34,6 +34,7 @@ public class StudyService {
     this.memberRepository = memberRepository;
   }
 
+  @Transactional
   public StudyDetailResponse create(StudyRequest studyRequest, Long memberId) {
     log.debug("[스터디 생성] StudyRequest = {}", studyRequest);
 
