@@ -3,8 +3,10 @@ package com.example.be.core.tool;
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
+import com.example.be.core.domain.study.Study;
 import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
+import com.example.be.core.repository.study.StudyRepository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,12 +30,16 @@ public class DataBaseConfigurator implements InitializingBean {
 
 	private static final int NUMBER_OF_MEMBER = 5;
 	private static final int NUMBER_OF_SPEAKING_LOG = 3;
+	private static final int NUMBER_OF_STUDY = 4;
 
 	@Autowired
 	private MemberRepository memberRepository;
 
 	@Autowired
 	private SpeakingLogRepository speakingLogRepository;
+
+	@Autowired
+	private StudyRepository studyRepository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -77,6 +83,7 @@ public class DataBaseConfigurator implements InitializingBean {
 	public void initDataSource() {
 		initMember();
 		initSpeakingLog();
+		initStudy();
 	}
 
 	/**
@@ -116,4 +123,26 @@ public class DataBaseConfigurator implements InitializingBean {
 		}
 
 	}
+
+	/**
+	 * Study
+	 * 도메인 객체를 NUMBER_OF_STUDY 만큼 생성합니다.
+	 */
+	private void initStudy() {
+		for (int i = 1; i <= NUMBER_OF_STUDY; i++) {
+			studyRepository.save(
+					new Study(
+							"study-title"+i,
+							"study-content"+i,
+							"study-posterImage"+i,
+							"study-language"+i,
+							i,
+							i,
+							"study-rule"+i,
+							i,
+							"stusy-goal"+i,
+							"study-certificate"+i
+					));
+			}
+		}
 }
