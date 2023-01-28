@@ -1,6 +1,6 @@
 package com.example.be.core.web;
 
-import static com.example.be.common.response.ResponseCodeAndMessages.GENERATE_IMAGE_UPLOAD_RUL_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.GENERATE_IMAGE_UPLOAD_URL_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.GENERATE_VOICE_UPLOAD_URL_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/files")
+@RequestMapping(value = "/file")
 public class FileUploadController {
 
     private final FileUploadService fileUploadService;
@@ -27,7 +27,7 @@ public class FileUploadController {
         @RequestParam("extension") String extension
     ) throws IOException {
         return new BaseResponse<>(
-            GENERATE_IMAGE_UPLOAD_RUL_SUCCESS,
+            GENERATE_IMAGE_UPLOAD_URL_SUCCESS,
             fileUploadService.uploadUrl("image" ,extension)
         );
     }
