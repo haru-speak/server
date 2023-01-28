@@ -5,6 +5,12 @@ import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+
+import com.example.be.core.application.dto.response.StudyResponse;
+import com.example.be.core.repository.study.StudyCommentRepository;
+import com.example.be.core.repository.study.StudyFavoriteRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyMember;
@@ -22,14 +28,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class StudyService {
 
-  private static final Integer ZERO = 0;
   private final StudyRepository studyRepository;
+  
+  private final StudyFavoriteRepository studyFavoriteRepository;
+  
+  private final StudyCommentRepository studyCommentRepository;
+  
   private final StudyMemberRepository studyMemberRepository;
+  
   private final MemberRepository memberRepository;
-
-  public StudyService(StudyRepository studyRepository, StudyMemberRepository studyMemberRepository,
+  
+  private static final Integer ZERO = 0;
+  
+  public StudyService(StudyRepository studyRepository,
+      StudyFavoriteRepository studyFavoriteRepository,
+      StudyCommentRepository studyCommentRepository,
+      StudyMemberRepository studyMemberRepository,
       MemberRepository memberRepository) {
     this.studyRepository = studyRepository;
+    this.studyFavoriteRepository = studyFavoriteRepository;
+    this.studyCommentRepository = studyCommentRepository;
     this.studyMemberRepository = studyMemberRepository;
     this.memberRepository = memberRepository;
   }
@@ -81,8 +99,27 @@ public class StudyService {
   }
 
   public StudiesResponse find(StudyConditionRequest studyConditionRequest) {
-    log.debug("스터디 조회 type = {}", studyConditionRequest.toString());
-    return null;
+    log.debug("스터디 전체 조회 type = {}", studyConditionRequest.toString());
+
+    // 임시 (아직 로그인 구현 X)
+    Long loginMemberId = 1L;
+
+    List<Study> studies = studyRepository.findAll();
+    List<StudyResponse> studyResponses = studies.stream().map(study ->
+        new StudyResponse(
+            study.getId(),
+            study.getTitle(),
+            study.getContent(),
+            study.getPosterImage(),
+            studyFavoriteRepository.countByStudyId(study.getId()),
+            studyCommentRepository.countByStudyId(study.getId()),
+            studyFavoriteRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent()
+        )).collect(Collectors.toList());
+
+    return new StudiesResponse(
+        studyConditionRequest.getType(),
+        studyResponses
+    );
   }
 
   public StudyDetailResponse findById(Long studyId) {
