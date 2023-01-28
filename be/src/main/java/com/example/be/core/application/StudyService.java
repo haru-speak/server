@@ -4,7 +4,6 @@ import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
-import com.example.be.core.application.dto.response.CommentResponse;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyCommentResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
@@ -21,7 +20,6 @@ import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import java.util.ArrayList;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,7 +114,7 @@ public class StudyService {
             study.getPosterImage(),
             getStudyLikeCount(study),
             getStudyCommentCount(study),
-            getStudyFavorite(loginMemberId, study)
+            hasStudyFavorite(loginMemberId, study)
         )).collect(Collectors.toList());
 
     return new StudiesResponse(
@@ -147,7 +145,7 @@ public class StudyService {
         study.getTimePerWeek(),
         study.getPosterImage(),
         getStudyLikeCount(study),
-        getStudyFavorite(loginMemberId, study),
+        hasStudyFavorite(loginMemberId, study),
         getStudyComments(studyId)
     );
   }
@@ -169,7 +167,7 @@ public class StudyService {
     return studyCommentRepository.countByStudyId(study.getId());
   }
 
-  private boolean getStudyFavorite(Long loginMemberId, Study study) {
+  private boolean hasStudyFavorite(Long loginMemberId, Study study) {
     return studyFavoriteRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent();
   }
 
