@@ -38,14 +38,14 @@ public class SpeakingLogControllerModifyTest extends InitSpeakingLogControllerTe
 
                 SpeakingLogModifyRequest request = new SpeakingLogModifyRequest(
                     "스피킹 로그 2",
-                    "dummy-record-abcd-4321",
+                    "https://dummy-record-abcd-4321",
                     "dummy-text-abcd-4321"
                 );
 
                 SpeakingLogDetailResponse response = new SpeakingLogDetailResponse(
                     memberId,
                     "스피킹 로그 2",
-                    "dummy-record-abcd-4321",
+                    "https://dummy-record-abcd-4321",
                     "dummy-text-abcd-4321",
                     likeCount,
                     Boolean.TRUE,
