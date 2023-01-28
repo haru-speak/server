@@ -49,10 +49,10 @@ public class StudyDetailResponse {
   @Schema(type = "Boolean", description = "좋아요 여부, NOT NULL")
   private final Boolean isLiked;
 
-  @Schema(type = "List<Comment>", description = "댓글 리스트, NULLABLE")
-  private final List<CommentResponse> comments;
+  @Schema(type = "List<StudyCommentResponse>", description = "댓글 리스트, NULLABLE")
+  private final List<StudyCommentResponse> comments;
 
-  public StudyDetailResponse(Long studyId, String title, String content, Integer level, String language, String goal, String certificate, Integer capacity, String rule, Integer timePerWeek, String posterImage, Integer likeCount, Boolean isLiked, List<CommentResponse> comments) {
+  public StudyDetailResponse(Long studyId, String title, String content, Integer level, String language, String goal, String certificate, Integer capacity, String rule, Integer timePerWeek, String posterImage, Integer likeCount, Boolean isLiked, List<StudyCommentResponse> comments) {
     this.studyId = studyId;
     this.title = title;
     this.content = content;
