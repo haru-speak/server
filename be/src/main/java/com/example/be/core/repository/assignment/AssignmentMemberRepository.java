@@ -6,8 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AssignmentMemberRepository extends JpaRepository<AssignmentMember, Long> {
 
-  List<AssignmentMember> findAssignmentMemberByMemberId(Long memberId);
-
-  List<AssignmentMember> findAllByMemberId(Long memberId);
-
+  List<AssignmentMember> findAssignmentMembersByMemberId(Long memberId);
 }

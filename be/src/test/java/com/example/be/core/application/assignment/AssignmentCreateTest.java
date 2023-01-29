@@ -49,7 +49,7 @@ public class AssignmentCreateTest extends InitServiceTest {
         AssignmentDetailResponse response = assignmentService.create(request, memberId);
 
         //then
-        List<AssignmentMember> assignmentMembers = assignmentMemberRepository.findAssignmentMemberByMemberId(2L);
+        List<AssignmentMember> assignmentMembers = assignmentMemberRepository.findAssignmentMembersByMemberId(2L);
         assertThat(assignmentMembers.size()).isEqualTo(4);
 
         assertThat(response.getAssignmentId()).isEqualTo(4);

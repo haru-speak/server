@@ -82,7 +82,7 @@ public class AssignmentService {
   public AssignmentsResponse find(Long memberId) {
     log.debug("[과제 전체 조회] memberId = {}", memberId);
 
-    List<AssignmentMember> assignmentMembers = assignmentMemberRepository.findAllByMemberId(memberId);
+    List<AssignmentMember> assignmentMembers = assignmentMemberRepository.findAssignmentMembersByMemberId(memberId);
     List<AssignmentResponse> assignmentResponses = assignmentMembers.stream().map(assignmentMember ->
         new AssignmentResponse(
             assignmentMember.getAssignment().getId(),
