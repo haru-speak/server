@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping("/login")
-public class OAuthController {
+public class LoginController {
 
 	private final LoginService loginService;
 
-	public OAuthController(LoginService loginService) {
+	public LoginController(LoginService loginService) {
 		this.loginService = loginService;
 	}
 
