@@ -34,6 +34,7 @@ dependencies {
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // Database
     runtimeOnly 'mysql:mysql-connector-java'
@@ -53,12 +54,12 @@ dependencies {
     // API Docs
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
-    // Spring Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.security:spring-security-test'
-
     // OAuth
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5', 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {
