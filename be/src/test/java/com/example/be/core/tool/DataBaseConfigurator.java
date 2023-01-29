@@ -1,9 +1,12 @@
 package com.example.be.core.tool;
 
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
+import com.example.be.common.exception.study.NotFoundStudyIdException;
+import com.example.be.core.domain.assignment.Assignment;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
 import com.example.be.core.domain.study.Study;
+import com.example.be.core.repository.assignment.AssignmentRepository;
 import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
 import com.example.be.core.repository.study.StudyRepository;
@@ -11,6 +14,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -31,7 +35,7 @@ public class DataBaseConfigurator implements InitializingBean {
 	private static final int NUMBER_OF_MEMBER = 5;
 	private static final int NUMBER_OF_SPEAKING_LOG = 3;
 	private static final int NUMBER_OF_STUDY = 4;
-
+	private static final int NUMBER_OF_ASSIGNMENT = 3;
 	@Autowired
 	private MemberRepository memberRepository;
 
@@ -40,6 +44,9 @@ public class DataBaseConfigurator implements InitializingBean {
 
 	@Autowired
 	private StudyRepository studyRepository;
+
+	@Autowired
+	private AssignmentRepository assignmentRepository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -84,6 +91,7 @@ public class DataBaseConfigurator implements InitializingBean {
 		initMember();
 		initSpeakingLog();
 		initStudy();
+		initAssignment();
 	}
 
 	/**
@@ -121,7 +129,6 @@ public class DataBaseConfigurator implements InitializingBean {
 					));
 			}
 		}
-
 	}
 
 	/**
@@ -140,9 +147,31 @@ public class DataBaseConfigurator implements InitializingBean {
 							i,
 							"study-rule"+i,
 							i,
-							"stusy-goal"+i,
+							"study-goal"+i,
 							"study-certificate"+i
+					));
+		}
+	}
+
+	/**
+	 * Assignment
+	 * 도메인 객체를 NUMBER_OF_ASSIGNMENT 만큼 생성합니다.
+	 */
+	private void initAssignment() {
+		for (int i = 1; i <= NUMBER_OF_STUDY; i++) {
+			Study study = studyRepository.findById((long) i)
+				.orElseThrow(NotFoundStudyIdException::new);
+
+			for (int j = 1; j <= NUMBER_OF_ASSIGNMENT; j++) {
+				assignmentRepository.save(
+					new Assignment(
+						study,
+						"assignment-title"+i+j,
+						LocalDateTime.now(),
+						"assignment-content"+i+j,
+						"https://dummy-voice-record"+i+j
 					));
 			}
 		}
+	}
 }

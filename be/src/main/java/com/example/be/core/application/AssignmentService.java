@@ -4,6 +4,8 @@ import com.example.be.core.application.dto.request.AssignmentRequest;
 import com.example.be.core.application.dto.response.AssignmentDetailResponse;
 import com.example.be.core.application.dto.response.AssignmentResponse;
 import com.example.be.core.application.dto.response.AssignmentsResponse;
+import com.example.be.core.repository.assignment.AssignmentMemberRepository;
+import com.example.be.core.repository.assignment.AssignmentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class AssignmentService {
+
+  private final AssignmentRepository assignmentRepository;
+
+  private final AssignmentMemberRepository assignmentMemberRepository;
 
   @Transactional
   public AssignmentDetailResponse create(AssignmentRequest assignmentRequest, Long memberId) {
@@ -38,5 +44,12 @@ public class AssignmentService {
   @Transactional
   public void delete(Long assignmentId) {
     log.debug("[과제 삭제] assignmentId = {}", assignmentId);
+  }
+
+
+  public AssignmentService(AssignmentRepository assignmentRepository,
+      AssignmentMemberRepository assignmentMemberRepository) {
+    this.assignmentRepository = assignmentRepository;
+    this.assignmentMemberRepository = assignmentMemberRepository;
   }
 }

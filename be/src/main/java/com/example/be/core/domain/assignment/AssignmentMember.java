@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class AssignmentMember {
     @JoinColumn(name = "assignment_id")
     private Assignment assignment;
 
+    @Lob
     private String voiceRecord;
 
     private String isSubmitted;
