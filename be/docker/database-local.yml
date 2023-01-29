@@ -10,3 +10,6 @@ services:
       - MYSQL_DATABASE=haru-speak
       - MYSQL_ROOT_PASSWORD=haru-speak-1234
       - TZ=Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
