@@ -7,22 +7,18 @@ import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyCommentResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
-
 import com.example.be.core.application.dto.response.StudyResponse;
-import com.example.be.core.domain.speakinglog.Favorite;
-import com.example.be.core.domain.study.StudyFavorite;
-import com.example.be.core.repository.study.StudyCommentRepository;
-import com.example.be.core.repository.study.StudyFavoriteRepository;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.repository.member.MemberRepository;
+import com.example.be.core.repository.study.StudyCommentRepository;
+import com.example.be.core.repository.study.StudyFavoriteRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +57,7 @@ public class StudyService {
     log.debug("[스터디 생성] StudyRequest = {}", studyRequest);
 
     Member member = memberRepository.findById(memberId)
-        .orElseThrow(NotFoundMemberIdException::new);
+        .orElseThrow(NotFoundStudyIdException::new);
 
     Study study = new Study(
         studyRequest.getTitle(),
