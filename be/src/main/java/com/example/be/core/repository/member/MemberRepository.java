@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-  /**
-   * 회원 가입시 중복된 회원이 있는지 검사하기 위해 이메일로 회원을 검사하는 메소드
-   * */
-  Optional<Member> findByEmail(String email);
+  	Optional<Member> findByEmail(String email);
+	Optional<Member> findByUniqueId(String uniqueId);
+	boolean existsByUniqueId(String uniqueId);
+
 }
