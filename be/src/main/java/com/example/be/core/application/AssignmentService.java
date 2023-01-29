@@ -1,5 +1,6 @@
 package com.example.be.core.application;
 
+import com.example.be.common.exception.assignment.NotFoundAssignmentIdException;
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.dto.request.AssignmentRequest;
@@ -110,6 +111,11 @@ public class AssignmentService {
   @Transactional
   public void delete(Long assignmentId) {
     log.debug("[과제 삭제] assignmentId = {}", assignmentId);
+
+    Assignment assignment = assignmentRepository.findById(assignmentId)
+        .orElseThrow(NotFoundAssignmentIdException::new);
+
+    assignmentRepository.delete(assignment);
   }
 
 
