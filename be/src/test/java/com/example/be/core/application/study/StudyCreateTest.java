@@ -53,11 +53,9 @@ public class StudyCreateTest extends InitServiceTest {
                 //when
                 StudyDetailResponse response = studyService.create(request, 1L);
 
-
                 //then
                 assertThat(response.getTitle()).isEqualTo(request.getTitle());
                 assertThat(response.getLevel()).isEqualTo(request.getLevel());
-
             }
         }
 

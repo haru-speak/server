@@ -49,13 +49,13 @@ public class DataBaseConfigurator implements InitializingBean {
 	private StudyRepository studyRepository;
 
 	@Autowired
+	private StudyMemberRepository studyMemberRepository;
+
+	@Autowired
 	private AssignmentRepository assignmentRepository;
 
 	@Autowired
 	private AssignmentMemberRepository assignmentMemberRepository;
-
-	@Autowired
-	private StudyMemberRepository studyMemberRepository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -144,27 +144,27 @@ public class DataBaseConfigurator implements InitializingBean {
 	private void initStudy() {
 		for (int i = 1; i <= NUMBER_OF_STUDY; i++) {
 			Study study = studyRepository.save(
-					new Study(
-							"study-title" + i,
-							"study-content" + i,
-							"study-posterImage" + i,
-							"study-language" + i,
-							i,
-							i,
-							"study-rule" + i,
-							i,
-							"study-goal" + i,
-							"study-certificate" + i
-					));
+				new Study(
+					"study-title" + i,
+					"study-content" + i,
+					"study-posterImage" + i,
+					"study-language" + i,
+					i,
+					i,
+					"study-rule" + i,
+					i,
+					"study-goal" + i,
+					"study-certificate" + i
+				));
 
-			for (int j = 1; j <= NUMBER_OF_MEMBER; j++) {
+			for(int j = 1; j <= NUMBER_OF_MEMBER; j++) {
 				Member member = memberRepository.findById((long) j)
-						.orElseThrow(NotFoundMemberIdException::new);
+					.orElseThrow(NotFoundMemberIdException::new);
 				studyMemberRepository.save(
-						new StudyMember(
-								member,
-								study
-						)
+					new StudyMember(
+						member,
+						study
+					)
 				);
 			}
 		}
@@ -176,26 +176,26 @@ public class DataBaseConfigurator implements InitializingBean {
 	private void initAssignment() {
 		Study study = studyRepository.findById(1L).get();
 		List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudyId(
-				study.getId());
-		for (int i = 1; i <= NUMBER_OF_ASSIGNMENT; i++) {
+			study.getId());
+		for(int i = 1; i <= NUMBER_OF_ASSIGNMENT; i++) {
 			Assignment assignment = assignmentRepository.save(
-					new Assignment(
-							study,
-							"assignment-title" + i,
-							LocalDateTime.now(),
-							"assignment-content" + i,
-							"https://dummy-voice-record" + i
-					)
+				new Assignment(
+					study,
+					"assignment-title" + i,
+					LocalDateTime.now(),
+					"assignment-content" + i,
+					"https://dummy-voice-record" + i
+				)
 			);
-			studyMembers.forEach(it ->
-					assignmentMemberRepository.save(
-							new AssignmentMember(
-									it.getMember(),
-									assignment,
-									"https://dummy-voice-record",
-									"미제출"
-							)
+			studyMembers.forEach( it ->
+				assignmentMemberRepository.save(
+					new AssignmentMember(
+						it.getMember(),
+						assignment,
+						"https://dummy-voice-record",
+						"미제출"
 					)
+				)
 			);
 		}
 	}
