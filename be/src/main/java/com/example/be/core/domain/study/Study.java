@@ -58,4 +58,17 @@ public class Study extends BaseEntity {
         this.goal = goal;
         this.certificate = certificate;
     }
+
+    public void modify(String title, String content, String posterImage, String language, Integer level, Integer timePerWeek, String rule, Integer capacity, String goal, String certificate) {
+        this.title = title;
+        this.content = content;
+        this.posterImage = posterImage;
+        this.language = language;
+        this.level = level;
+        this.timePerWeek = timePerWeek;
+        this.rule = rule;
+        this.capacity = capacity;
+        this.goal = goal;
+        this.certificate = certificate;
+    }
 }

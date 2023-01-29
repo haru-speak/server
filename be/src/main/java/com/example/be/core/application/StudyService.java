@@ -7,19 +7,18 @@ import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyCommentResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
-
 import com.example.be.core.application.dto.response.StudyResponse;
-import com.example.be.core.repository.study.StudyCommentRepository;
-import com.example.be.core.repository.study.StudyFavoriteRepository;
-import java.util.List;
-import java.util.stream.Collectors;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.repository.member.MemberRepository;
+import com.example.be.core.repository.study.StudyCommentRepository;
+import com.example.be.core.repository.study.StudyFavoriteRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,13 +149,52 @@ public class StudyService {
     );
   }
 
+  @Transactional
   public StudyDetailResponse modify(Long studyId, StudyRequest studyRequest) {
-    log.debug("[스터디 수정] StudyRequest = {}", studyRequest);
-    return null;
+    log.debug("[스터디 수정] StudyId = {}, StudyRequest = {}", studyId, studyRequest);
+
+    Study study = studyRepository.findById(studyId)
+        .orElseThrow(NotFoundStudyIdException::new);
+
+    study.modify(
+        studyRequest.getTitle(),
+        studyRequest.getContent(),
+        studyRequest.getPosterImage(),
+        studyRequest.getLanguage(),
+        studyRequest.getLevel(),
+        studyRequest.getTimePerWeek(),
+        studyRequest.getRule(),
+        studyRequest.getCapacity(),
+        studyRequest.getGoal(),
+        studyRequest.getCertificate()
+    );
+
+    // 임시 (아직 로그인 구현 X)
+    Long loginMemberId = 1L;
+
+    return new StudyDetailResponse(
+        study.getId(),
+        study.getTitle(),
+        study.getContent(),
+        study.getLevel(),
+        study.getLanguage(),
+        study.getGoal(),
+        study.getCertificate(),
+        study.getCapacity(),
+        study.getRule(),
+        study.getTimePerWeek(),
+        study.getPosterImage(),
+        getStudyLikeCount(study),
+        hasStudyFavorite(loginMemberId, study),
+        getStudyComments(studyId)
+    );
   }
 
+  @Transactional
   public void delete(Long studyId) {
     log.debug("[스터디 삭제] studyId = {}", studyId);
+
+    studyRepository.deleteById(studyId);
   }
 
   private Integer getStudyLikeCount(Study study) {
