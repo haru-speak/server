@@ -4,8 +4,11 @@ import com.example.be.core.application.dto.request.AssignmentRequest;
 import com.example.be.core.application.dto.response.AssignmentDetailResponse;
 import com.example.be.core.application.dto.response.AssignmentResponse;
 import com.example.be.core.application.dto.response.AssignmentsResponse;
+import com.example.be.core.domain.assignment.AssignmentMember;
 import com.example.be.core.repository.assignment.AssignmentMemberRepository;
 import com.example.be.core.repository.assignment.AssignmentRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +30,19 @@ public class AssignmentService {
 
   public AssignmentsResponse find(Long memberId) {
     log.debug("[과제 전체 조회] memberId = {}", memberId);
-    return null;
+
+    List<AssignmentMember> assignmentMembers = assignmentMemberRepository.findAllByMemberId(memberId);
+    List<AssignmentResponse> assignmentResponses = assignmentMembers.stream().map(assignmentMember ->
+        new AssignmentResponse(
+            assignmentMember.getAssignment().getId(),
+            assignmentMember.getAssignment().getTitle(),
+            assignmentMember.getAssignment().getStudy().getId(),
+            assignmentMember.getAssignment().getStudy().getTitle(),
+            assignmentMember.getAssignment().getDeadLine()
+        )).collect(Collectors.toList());
+    return new AssignmentsResponse(
+        assignmentResponses
+    );
   }
 
   public AssignmentResponse findById(Long assignmentId) {
