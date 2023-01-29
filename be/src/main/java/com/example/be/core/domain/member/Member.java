@@ -1,12 +1,11 @@
 package com.example.be.core.domain.member;
 
-import com.example.be.core.application.dto.request.MemberFormRequest;
+import com.example.be.core.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,18 +27,14 @@ public class Member {
 	@Column(unique = true)
 	private String email;
 
-	private String password;
+	private String uniqueId;
 
 	private String profileImage;
 
-	public Member(String nickname, String email, String password, String profileImage) {
+	public Member(String nickname, String email, String uniqueId, String profileImage) {
 		this.nickname = nickname;
 		this.email = email;
-		this.password = password;
+		this.uniqueId = uniqueId;
 		this.profileImage = profileImage;
-	}
-
-	public static Member of(MemberFormRequest memberFormRequest) {
-		return new Member(memberFormRequest.getNickname(), memberFormRequest.getEmail(), memberFormRequest.getPassword(), memberFormRequest.getProfileImage());
 	}
 }
