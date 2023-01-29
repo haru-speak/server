@@ -57,7 +57,7 @@ public class StudyService {
     log.debug("[스터디 생성] StudyRequest = {}", studyRequest);
 
     Member member = memberRepository.findById(memberId)
-        .orElseThrow(NotFoundStudyIdException::new);
+        .orElseThrow(NotFoundMemberIdException::new);
 
     Study study = new Study(
         studyRequest.getTitle(),
