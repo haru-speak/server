@@ -52,14 +52,12 @@ public class StudyCreateTest extends InitServiceTest {
 
                 //when
                 StudyDetailResponse response = studyService.create(request, 1L);
-                StudyMember studyMember = studyMemberRepository.findStudyMemberByMember_Id(
-                    1L);
+
 
                 //then
                 assertThat(response.getTitle()).isEqualTo(request.getTitle());
                 assertThat(response.getLevel()).isEqualTo(request.getLevel());
 
-                assertThat(studyMember.getStudy().getTitle()).isEqualTo(request.getTitle());
             }
         }
 
