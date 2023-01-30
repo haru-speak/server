@@ -51,6 +51,9 @@ dependencies {
     testImplementation "org.testcontainers:junit-jupiter:1.17.2"
     testImplementation "org.testcontainers:mysql:1.17.2"
 
+    // WireMock
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+
     // API Docs
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
 

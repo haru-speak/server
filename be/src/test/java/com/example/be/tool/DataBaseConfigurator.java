@@ -1,4 +1,4 @@
-package com.example.be.core.tool;
+package com.example.be.tool;
 
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.core.domain.member.Member;

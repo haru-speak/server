@@ -17,3 +17,12 @@ logging:
   level:
     org.hibernate.SQL: debug
     com.example.be: debug
+
+oauth:
+  kakao:
+    response-type: code
+    client-id: 1234
+    redirect-uri: redirectUri
+    token-type: Bearer
+    content-type: application/x-www-form-urlencoded;charset=utf-8
+    grant-type: authorization_code
