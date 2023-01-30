@@ -9,16 +9,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
+import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
+import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.SpeakingLogController;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-public class SpeakingLogControllerModifyTest extends InitSpeakingLogControllerTest{
+@WebMvcTest(SpeakingLogController.class)
+
+public class SpeakingLogControllerModifyTest extends InitControllerTest {
+
+    @MockBean
+    protected SpeakingLogService speakingLogService;
 
     @Nested
     @DisplayName("Speaking Log 수정할 때")

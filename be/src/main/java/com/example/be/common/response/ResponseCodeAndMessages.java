@@ -27,9 +27,10 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	GENERATE_VOICE_UPLOAD_URL_SUCCESS("S-F002", "음성 파일 업로드를 위한 URL 생성을 성공했습니다."),
 
 	/**
-	 Member
+	 OAuth
 	 */
-	JOIN_SUCCESS("S-M001", "회원가입에 성공했습니다."),
+	OAUTH_LOGIN_SUCCESS("S-OA001", "로그인(혹은 회원가입)에 성공했습니다."),
+	REISSUE_ACCESS_TOKEN_SUCCESS("S-OA002", "ACCESS TOKEN 재발급에 성공했습니다."),
 
 	/**
 	 Study

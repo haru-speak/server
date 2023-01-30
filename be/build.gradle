@@ -20,10 +20,21 @@ repositories {
     maven { url 'https://repo.spring.io/snapshot' }
 }
 
+ext {
+    set('springCloudVersion', "2021.0.5")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 dependencies {
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // Database
     runtimeOnly 'mysql:mysql-connector-java'
@@ -40,17 +51,22 @@ dependencies {
     testImplementation "org.testcontainers:junit-jupiter:1.17.2"
     testImplementation "org.testcontainers:mysql:1.17.2"
 
+    // WireMock
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+
     // API Docs
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
-    // Spring Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.security:spring-security-test'
+    // OAuth
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5', 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
     // AWS S3
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.2'
     implementation 'com.amazonaws:aws-java-sdk-s3'
-
     testImplementation 'io.findify:s3mock_2.13:0.2.6'
 }
 
