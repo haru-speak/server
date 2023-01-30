@@ -18,6 +18,7 @@ import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -99,7 +100,17 @@ public class AssignmentService {
 
   public AssignmentResponse findById(Long assignmentId) {
     log.debug("[과제 개별 조회] assignmentId = {}", assignmentId);
-    return null;
+
+    Assignment assignment = assignmentRepository.findById(assignmentId)
+        .orElseThrow(NotFoundAssignmentIdException::new);
+
+    return new AssignmentResponse(
+        assignmentId,
+        assignment.getTitle(),
+        assignment.getStudy().getId(),
+        assignment.getStudy().getTitle(),
+        assignment.getDeadLine()
+    );
   }
 
   @Transactional
