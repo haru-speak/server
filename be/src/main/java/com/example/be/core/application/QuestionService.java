@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
-@Transactional(readOnly = true)
 @Service
+@Transactional(readOnly = true)
 public class QuestionService {
-
 
     public QuestionResponse find() {
         return null;

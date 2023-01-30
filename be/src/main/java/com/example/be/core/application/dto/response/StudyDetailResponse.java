@@ -37,8 +37,8 @@ public class StudyDetailResponse {
   @Schema(type = "String", description = "규칙, NOT NULL")
   private final String rule;
 
-  @Schema(type = "date", description = "주 횟수, NOT NULL")
-  private final LocalDate timePerWeek;
+  @Schema(type = "Integer", description = "주 횟수, NOT NULL")
+  private final Integer timePerWeek;
 
   @Schema(type = "String", description = "포스터 이미지, NOT NULL")
   private final String posterImage;
@@ -52,7 +52,7 @@ public class StudyDetailResponse {
   @Schema(type = "List<Comment>", description = "댓글 리스트, NULLABLE")
   private final List<CommentResponse> comments;
 
-  public StudyDetailResponse(Long studyId, String title, String content, Integer level, String language, String goal, String certificate, Integer capacity, String rule, LocalDate timePerWeek, String posterImage, Integer likeCount, Boolean isLiked, List<CommentResponse> comments) {
+  public StudyDetailResponse(Long studyId, String title, String content, Integer level, String language, String goal, String certificate, Integer capacity, String rule, Integer timePerWeek, String posterImage, Integer likeCount, Boolean isLiked, List<CommentResponse> comments) {
     this.studyId = studyId;
     this.title = title;
     this.content = content;

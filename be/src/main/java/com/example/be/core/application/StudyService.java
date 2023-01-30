@@ -1,5 +1,6 @@
 package com.example.be.core.application;
 
+import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
@@ -16,8 +17,8 @@ public class StudyService {
     return null;
   }
 
-  public StudiesResponse find(StudyType type) {
-    log.debug("스터디 조회 type = {}", type);
+  public StudiesResponse find(StudyConditionRequest studyConditionRequest) {
+    log.debug("스터디 조회 type = {}", studyConditionRequest.toString());
     return null;
   }
 
