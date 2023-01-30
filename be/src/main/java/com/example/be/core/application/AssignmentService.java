@@ -1,5 +1,6 @@
 package com.example.be.core.application;
 
+import com.example.be.common.exception.assignment.NotFoundAssignmentIdException;
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.dto.request.AssignmentRequest;
@@ -103,8 +104,25 @@ public class AssignmentService {
 
   @Transactional
   public AssignmentDetailResponse modify(Long assignmentId, AssignmentRequest assignmentRequest) {
-    log.debug("[과제 수정] assignmentRequest = {}", assignmentRequest);
-    return null;
+    log.debug("[과제 수정] assignmentId = {} assignmentRequest = {}",assignmentId, assignmentRequest);
+
+    Assignment assignment = assignmentRepository.findById(assignmentId)
+        .orElseThrow(NotFoundAssignmentIdException::new);
+
+    assignment.modify(
+        assignmentRequest.getTitle(),
+        assignmentRequest.getDeadLine(),
+        assignmentRequest.getContent(),
+        assignmentRequest.getVoiceRecord()
+    );
+
+    return new AssignmentDetailResponse(
+        assignment.getId(),
+        assignment.getTitle(),
+        assignment.getContent(),
+        assignment.getDeadLine(),
+        assignment.getVoiceRecord()
+    );
   }
 
   @Transactional

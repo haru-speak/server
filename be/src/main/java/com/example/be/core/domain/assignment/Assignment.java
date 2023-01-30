@@ -51,4 +51,12 @@ public class Assignment extends BaseEntity {
         this.content = content;
         this.voiceRecord = voiceRecord;
     }
+
+    public void modify (String title, LocalDateTime deadLine, String content,
+        String voiceRecord) {
+        this.title = title;
+        this.deadLine = deadLine;
+        this.content = content;
+        this.voiceRecord = voiceRecord;
+    }
 }
