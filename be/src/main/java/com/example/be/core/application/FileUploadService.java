@@ -33,6 +33,6 @@ public class FileUploadService {
     public PreSignedUrlResponse uploadUrl(String category, String extension) {
         String fileName = category + "/" + UUID.randomUUID() + extension;
         log.debug("[S3에 업로드 되는 파일 이름] = {}", fileName);
-        return new PreSignedUrlResponse(generateUrl(fileName, HttpMethod.PUT));
+        return new PreSignedUrlResponse(generateUrl(fileName, HttpMethod.PUT), fileName);
     }
 }

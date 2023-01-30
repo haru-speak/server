@@ -1,7 +1,7 @@
 package com.example.be.core.application.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,24 +19,24 @@ public class AssignmentRequest {
   @NotBlank
   private String title;
 
+  @Schema(type = "date", description = "제출 기한, NOT NULL")
+  @NotBlank
+  private LocalDateTime deadLine;
+
   @Schema(type = "String", description = "내용, NOT NULL")
   @NotBlank
   private String content;
-
-  @Schema(type = "date", description = "날짜, NOT NULL")
-  @NotBlank
-  private LocalDate date;
 
   @Schema(type = "String", description = "음성 기록 URL, NOT NULL")
   @NotBlank
   private String voiceRecord;
 
-  public AssignmentRequest(Long studyId, String title, String content, LocalDate date,
+  public AssignmentRequest(Long studyId, String title, LocalDateTime deadLine, String content,
       String voiceRecord) {
     this.studyId = studyId;
     this.title = title;
+    this.deadLine = deadLine;
     this.content = content;
-    this.date = date;
     this.voiceRecord = voiceRecord;
   }
 }
