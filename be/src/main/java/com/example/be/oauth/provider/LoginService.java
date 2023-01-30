@@ -43,6 +43,7 @@ public class LoginService {
 			member.getId(),
 			member.getNickname(),
 			member.getProfileImage(),
+			member.getEmail(),
 			jwtProvider.generateAccessToken(member.getId()),
 			jwtProvider.generateRefreshToken(member.getId()),
 			isNewbie
