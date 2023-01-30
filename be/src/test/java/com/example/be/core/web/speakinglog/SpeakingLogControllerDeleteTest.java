@@ -11,16 +11,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.web.InitControllerTest;
-import com.example.be.core.web.SpeakingLogController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-@WebMvcTest(SpeakingLogController.class)
 
 public class SpeakingLogControllerDeleteTest extends InitControllerTest {
 

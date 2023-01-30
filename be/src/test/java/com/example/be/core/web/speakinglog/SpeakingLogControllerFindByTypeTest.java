@@ -17,18 +17,13 @@ import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.speakinglog.SpeakingLogType;
 import com.example.be.core.web.InitControllerTest;
-import com.example.be.core.web.SpeakingLogController;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-@WebMvcTest(SpeakingLogController.class)
-
 class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 
 	@MockBean

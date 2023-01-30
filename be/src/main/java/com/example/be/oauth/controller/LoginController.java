@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Validated
 @RestController
-@RequestMapping("")
 public class LoginController {
 
 	private final LoginService loginService;

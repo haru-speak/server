@@ -10,16 +10,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
+import com.example.be.core.application.StudyService;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.core.web.InitControllerTest;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-public class StudyControllerCreatTest extends InitStudyControllerTest {
+public class StudyControllerCreatTest extends InitControllerTest {
+
+  @MockBean
+  protected StudyService studyService;
 
   @Nested
   @DisplayName("Study 생성할 때")
