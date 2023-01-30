@@ -128,6 +128,11 @@ public class AssignmentService {
   @Transactional
   public void delete(Long assignmentId) {
     log.debug("[과제 삭제] assignmentId = {}", assignmentId);
+
+    Assignment assignment = assignmentRepository.findById(assignmentId)
+        .orElseThrow(NotFoundAssignmentIdException::new);
+
+    assignmentRepository.delete(assignment);
   }
 
 

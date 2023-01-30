@@ -9,3 +9,4 @@ public class NotFoundAssignmentIdException extends BaseException {
     super(ErrorCodeAndMessages.ASSIGNMENT_ID_NOT_FOUND_ERROR);
   }
 }
+
