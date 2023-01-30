@@ -115,13 +115,35 @@ public class AssignmentService {
 
   @Transactional
   public AssignmentDetailResponse modify(Long assignmentId, AssignmentRequest assignmentRequest) {
-    log.debug("[과제 수정] assignmentRequest = {}", assignmentRequest);
-    return null;
+    log.debug("[과제 수정] assignmentId = {} assignmentRequest = {}",assignmentId, assignmentRequest);
+
+    Assignment assignment = assignmentRepository.findById(assignmentId)
+        .orElseThrow(NotFoundAssignmentIdException::new);
+
+    assignment.modify(
+        assignmentRequest.getTitle(),
+        assignmentRequest.getDeadLine(),
+        assignmentRequest.getContent(),
+        assignmentRequest.getVoiceRecord()
+    );
+
+    return new AssignmentDetailResponse(
+        assignment.getId(),
+        assignment.getTitle(),
+        assignment.getContent(),
+        assignment.getDeadLine(),
+        assignment.getVoiceRecord()
+    );
   }
 
   @Transactional
   public void delete(Long assignmentId) {
     log.debug("[과제 삭제] assignmentId = {}", assignmentId);
+
+    Assignment assignment = assignmentRepository.findById(assignmentId)
+        .orElseThrow(NotFoundAssignmentIdException::new);
+
+    assignmentRepository.delete(assignment);
   }
 
 

@@ -5,7 +5,8 @@ import com.example.be.common.exception.ErrorCodeAndMessages;
 
 public class NotFoundAssignmentIdException extends BaseException {
 
-    public NotFoundAssignmentIdException(){
-        super(ErrorCodeAndMessages.ASSIGNMENT_ID_NOT_FOUND_ERROR);
-    }
+  public NotFoundAssignmentIdException(){
+    super(ErrorCodeAndMessages.ASSIGNMENT_ID_NOT_FOUND_ERROR);
+  }
 }
+
