@@ -150,11 +150,12 @@ public class DataBaseConfigurator implements InitializingBean {
 					"study-posterImage" + i,
 					"study-language" + i,
 					i,
-					i,
+					"study-timePerWeek" + i,
 					"study-rule" + i,
 					i,
-					"study-goal" + i,
-					"study-certificate" + i
+					i,
+					"study-speakingTest" + i,
+					"study-grade" + i
 				));
 
 			for(int j = 1; j <= NUMBER_OF_MEMBER; j++) {

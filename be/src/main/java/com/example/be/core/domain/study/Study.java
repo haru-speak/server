@@ -36,17 +36,22 @@ public class Study extends BaseEntity {
 
     private Integer level;
 
-    private Integer timePerWeek;
+    private String timePerWeek;
 
     private String rule;
 
-    private Integer capacity;
+    private Integer maxCapacity;
 
-    private String goal;
+    private Integer minCapacity;
 
-    private String certificate;
+    private String speakingTest;
 
-    public Study(String title, String content, String posterImage, String language, Integer level, Integer timePerWeek, String rule, Integer capacity, String goal, String certificate) {
+    private String grade;
+
+    public Study(String title, String content, String posterImage, String language, Integer level,
+        String timePerWeek, String rule, Integer maxCapacity, Integer minCapacity,
+        String speakingTest,
+        String grade) {
         this.title = title;
         this.content = content;
         this.posterImage = posterImage;
@@ -54,12 +59,16 @@ public class Study extends BaseEntity {
         this.level = level;
         this.timePerWeek = timePerWeek;
         this.rule = rule;
-        this.capacity = capacity;
-        this.goal = goal;
-        this.certificate = certificate;
+        this.maxCapacity = maxCapacity;
+        this.minCapacity = minCapacity;
+        this.speakingTest = speakingTest;
+        this.grade = grade;
     }
 
-    public void modify(String title, String content, String posterImage, String language, Integer level, Integer timePerWeek, String rule, Integer capacity, String goal, String certificate) {
+    public void modify(String title, String content, String posterImage, String language, Integer level,
+        String timePerWeek, String rule, Integer maxCapacity, Integer minCapacity,
+        String speakingTest,
+        String grade) {
         this.title = title;
         this.content = content;
         this.posterImage = posterImage;
@@ -67,8 +76,9 @@ public class Study extends BaseEntity {
         this.level = level;
         this.timePerWeek = timePerWeek;
         this.rule = rule;
-        this.capacity = capacity;
-        this.goal = goal;
-        this.certificate = certificate;
+        this.maxCapacity = maxCapacity;
+        this.minCapacity = minCapacity;
+        this.speakingTest = speakingTest;
+        this.grade = grade;
     }
 }

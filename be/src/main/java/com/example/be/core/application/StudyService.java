@@ -67,9 +67,10 @@ public class StudyService {
         studyRequest.getLevel(),
         studyRequest.getTimePerWeek(),
         studyRequest.getRule(),
-        studyRequest.getCapacity(),
-        studyRequest.getGoal(),
-        studyRequest.getCertificate()
+        studyRequest.getMinCapacity(),
+        studyRequest.getMaxCapacity(),
+        studyRequest.getSpeakingTest(),
+        studyRequest.getGrade()
     );
     studyRepository.save(study);
 
@@ -86,9 +87,10 @@ public class StudyService {
         study.getContent(),
         study.getLevel(),
         study.getLanguage(),
-        study.getGoal(),
-        study.getCertificate(),
-        study.getCapacity(),
+        study.getSpeakingTest(),
+        study.getGrade(),
+        study.getMaxCapacity(),
+        study.getMinCapacity(),
         study.getRule(),
         study.getTimePerWeek(),
         study.getPosterImage(),
@@ -137,9 +139,10 @@ public class StudyService {
         study.getContent(),
         study.getLevel(),
         study.getLanguage(),
-        study.getGoal(),
-        study.getCertificate(),
-        study.getCapacity(),
+        study.getSpeakingTest(),
+        study.getGrade(),
+        study.getMaxCapacity(),
+        study.getMinCapacity(),
         study.getRule(),
         study.getTimePerWeek(),
         study.getPosterImage(),
@@ -164,9 +167,10 @@ public class StudyService {
         studyRequest.getLevel(),
         studyRequest.getTimePerWeek(),
         studyRequest.getRule(),
-        studyRequest.getCapacity(),
-        studyRequest.getGoal(),
-        studyRequest.getCertificate()
+        studyRequest.getMaxCapacity(),
+        studyRequest.getMinCapacity(),
+        studyRequest.getSpeakingTest(),
+        studyRequest.getGrade()
     );
 
     // 임시 (아직 로그인 구현 X)
@@ -178,9 +182,10 @@ public class StudyService {
         study.getContent(),
         study.getLevel(),
         study.getLanguage(),
-        study.getGoal(),
-        study.getCertificate(),
-        study.getCapacity(),
+        study.getSpeakingTest(),
+        study.getGrade(),
+        study.getMaxCapacity(),
+        study.getMinCapacity(),
         study.getRule(),
         study.getTimePerWeek(),
         study.getPosterImage(),

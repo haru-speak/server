@@ -40,9 +40,9 @@ class StudyControllerModifyTest extends InitControllerTest {
         Long studyId = 1L;
         Integer likeCount = 10;
         StudyRequest request = new StudyRequest("스터디1", "내용1", 3, "english",
-            "토익 800점", "toeic", 5, "비대면", 3, "asdzxcv");
+            "OPIC", "AL", 5, 1, "대면", "월화수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg");
         StudyDetailResponse response = new StudyDetailResponse(memberId, "스터디1", "내용1", 3, "english",
-            "토익 800점", "toeic", 5, "비대면", 3, "asdzxcv", likeCount, false, new ArrayList<>());
+            "OPIC", "AL", 5, 1, "대면", "월화수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg",likeCount, false, new ArrayList<>());
         BaseResponse<StudyDetailResponse> baseResponse = new BaseResponse<>(MODIFY_STUDY_SUCCESS, response);
 
         when(studyService.modify(refEq(studyId), refEq(request)))

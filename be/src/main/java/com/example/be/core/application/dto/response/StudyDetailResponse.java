@@ -25,20 +25,23 @@ public class StudyDetailResponse {
   @Schema(type = "String", description = "언어, NOT NULL")
   private final String language;
 
-  @Schema(type = "String", description = "목표, NOT NULL")
-  private final String goal;
+  @Schema(type = "String", description = "스피킹 시험, NOT NULL")
+  private final String speakingTest;
 
-  @Schema(type = "String", description = "자격증, NOT NULL")
-  private final String certificate;
+  @Schema(type = "String", description = "스피킹 시험에서 받는 등급, NOT NULL")
+  private final String grade;
 
   @Schema(type = "int", description = "최대 인원, NOT NULL")
-  private final Integer capacity;
+  private final Integer maxCapacity;
+
+  @Schema(type = "int", description = "최소 인원, NOT NULL")
+  private final Integer minCapacity;
 
   @Schema(type = "String", description = "규칙, NOT NULL")
   private final String rule;
 
-  @Schema(type = "Integer", description = "주 횟수, NOT NULL")
-  private final Integer timePerWeek;
+  @Schema(type = "String", description = "주 횟수와 요일, NOT NULL")
+  private final String timePerWeek;
 
   @Schema(type = "String", description = "포스터 이미지, NOT NULL")
   private final String posterImage;
@@ -52,15 +55,19 @@ public class StudyDetailResponse {
   @Schema(type = "List<StudyCommentResponse>", description = "댓글 리스트, NULLABLE")
   private final List<StudyCommentResponse> comments;
 
-  public StudyDetailResponse(Long studyId, String title, String content, Integer level, String language, String goal, String certificate, Integer capacity, String rule, Integer timePerWeek, String posterImage, Integer likeCount, Boolean isLiked, List<StudyCommentResponse> comments) {
+  public StudyDetailResponse(Long studyId, String title, String content, Integer level,
+      String language, String speakingTest, String grade, Integer maxCapacity, Integer minCapacity,
+      String rule, String timePerWeek, String posterImage, Integer likeCount, Boolean isLiked,
+      List<StudyCommentResponse> comments) {
     this.studyId = studyId;
     this.title = title;
     this.content = content;
     this.level = level;
     this.language = language;
-    this.goal = goal;
-    this.certificate = certificate;
-    this.capacity = capacity;
+    this.speakingTest = speakingTest;
+    this.grade = grade;
+    this.maxCapacity = maxCapacity;
+    this.minCapacity = minCapacity;
     this.rule = rule;
     this.timePerWeek = timePerWeek;
     this.posterImage = posterImage;
