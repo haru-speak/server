@@ -27,7 +27,7 @@ import org.springframework.test.context.TestPropertySource;
 @DisplayName("OAuth Login 통합 테스트")
 @SpringBootTest
 @ActiveProfiles("test")
-public class OAuthLoginIntegrationTest {
+class OAuthLoginIntegrationTest {
 
 	@Autowired
 	private LoginService loginService;
