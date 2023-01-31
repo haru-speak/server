@@ -78,7 +78,8 @@ public class StudyService {
     studyMemberRepository.save(
         new StudyMember(
             member,
-            study
+            study,
+            Boolean.TRUE
         )
     );
 

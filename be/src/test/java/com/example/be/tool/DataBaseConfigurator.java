@@ -165,7 +165,8 @@ public class DataBaseConfigurator implements InitializingBean {
 				studyMemberRepository.save(
 					new StudyMember(
 						member,
-						study
+						study,
+						Boolean.TRUE
 					)
 				);
 			}
