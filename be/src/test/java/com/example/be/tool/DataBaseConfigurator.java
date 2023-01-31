@@ -152,6 +152,7 @@ public class DataBaseConfigurator implements InitializingBean {
 					i,
 					"study-timePerWeek" + i,
 					"study-rule" + i,
+					"study-region" + i,
 					i,
 					i,
 					"study-speakingTest" + i,

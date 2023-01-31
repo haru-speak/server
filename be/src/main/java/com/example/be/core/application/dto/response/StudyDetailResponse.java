@@ -37,8 +37,11 @@ public class StudyDetailResponse {
   @Schema(type = "int", description = "최소 인원, NOT NULL")
   private final Integer minCapacity;
 
-  @Schema(type = "String", description = "규칙, NOT NULL")
+  @Schema(type = "String", description = "대면, 비대면 규칙, NOT NULL")
   private final String rule;
+
+  @Schema(type = "String", description = "지역, NULL")
+  private final String region;
 
   @Schema(type = "String", description = "주 횟수와 요일, NOT NULL")
   private final String timePerWeek;
@@ -57,8 +60,8 @@ public class StudyDetailResponse {
 
   public StudyDetailResponse(Long studyId, String title, String content, Integer level,
       String language, String speakingTest, String grade, Integer maxCapacity, Integer minCapacity,
-      String rule, String timePerWeek, String posterImage, Integer likeCount, Boolean isLiked,
-      List<StudyCommentResponse> comments) {
+      String rule, String region, String timePerWeek, String posterImage, Integer likeCount,
+      Boolean isLiked, List<StudyCommentResponse> comments) {
     this.studyId = studyId;
     this.title = title;
     this.content = content;
@@ -69,6 +72,7 @@ public class StudyDetailResponse {
     this.maxCapacity = maxCapacity;
     this.minCapacity = minCapacity;
     this.rule = rule;
+    this.region = region;
     this.timePerWeek = timePerWeek;
     this.posterImage = posterImage;
     this.likeCount = likeCount;

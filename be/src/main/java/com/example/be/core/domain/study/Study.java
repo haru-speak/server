@@ -40,6 +40,8 @@ public class Study extends BaseEntity {
 
     private String rule;
 
+    private String region;
+
     private Integer maxCapacity;
 
     private Integer minCapacity;
@@ -49,9 +51,8 @@ public class Study extends BaseEntity {
     private String grade;
 
     public Study(String title, String content, String posterImage, String language, Integer level,
-        String timePerWeek, String rule, Integer maxCapacity, Integer minCapacity,
-        String speakingTest,
-        String grade) {
+        String timePerWeek, String rule, String region, Integer maxCapacity, Integer minCapacity,
+        String speakingTest, String grade) {
         this.title = title;
         this.content = content;
         this.posterImage = posterImage;
@@ -59,6 +60,7 @@ public class Study extends BaseEntity {
         this.level = level;
         this.timePerWeek = timePerWeek;
         this.rule = rule;
+        this.region = region;
         this.maxCapacity = maxCapacity;
         this.minCapacity = minCapacity;
         this.speakingTest = speakingTest;
@@ -66,9 +68,8 @@ public class Study extends BaseEntity {
     }
 
     public void modify(String title, String content, String posterImage, String language, Integer level,
-        String timePerWeek, String rule, Integer maxCapacity, Integer minCapacity,
-        String speakingTest,
-        String grade) {
+        String timePerWeek, String rule, String region, Integer maxCapacity, Integer minCapacity,
+        String speakingTest, String grade) {
         this.title = title;
         this.content = content;
         this.posterImage = posterImage;
@@ -76,6 +77,7 @@ public class Study extends BaseEntity {
         this.level = level;
         this.timePerWeek = timePerWeek;
         this.rule = rule;
+        this.region = region;
         this.maxCapacity = maxCapacity;
         this.minCapacity = minCapacity;
         this.speakingTest = speakingTest;

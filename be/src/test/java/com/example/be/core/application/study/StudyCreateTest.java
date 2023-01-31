@@ -35,6 +35,7 @@ class StudyCreateTest extends InitServiceTest {
                     5,
                     1,
                     "대면",
+                    "서울",
                     "study",
                     "study"
                 );

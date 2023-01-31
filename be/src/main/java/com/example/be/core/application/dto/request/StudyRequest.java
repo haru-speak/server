@@ -27,12 +27,10 @@ public class StudyRequest {
   @NotBlank
   private String language;
 
-  @Schema(type = "String", description = "스피킹 시험, NOT NULL")
-  @NotBlank
+  @Schema(type = "String", description = "스피킹 시험, NULL")
   private String speakingTest;
 
-  @Schema(type = "String", description = "스피킹 시험에서 받는 등급, NOT NULL")
-  @NotBlank
+  @Schema(type = "String", description = "스피킹 시험에서 받는 등급, NULL")
   private String grade;
 
   @Schema(type = "int", description = "최대 인원, NOT NULL")
@@ -47,6 +45,9 @@ public class StudyRequest {
   @NotBlank
   private String rule;
 
+  @Schema(type = "String", description = "지역, NULL")
+  private String region;
+
   @Schema(type = "String", description = "주 횟수와 요일, NOT NULL")
   @NotBlank
   private String timePerWeek;
@@ -57,7 +58,7 @@ public class StudyRequest {
 
   public StudyRequest(String title, String content, Integer level, String language,
       String speakingTest, String grade, Integer maxCapacity, Integer minCapacity, String rule,
-      String timePerWeek, String posterImage) {
+      String region, String timePerWeek, String posterImage) {
     this.title = title;
     this.content = content;
     this.level = level;
@@ -67,6 +68,7 @@ public class StudyRequest {
     this.maxCapacity = maxCapacity;
     this.minCapacity = minCapacity;
     this.rule = rule;
+    this.region = region;
     this.timePerWeek = timePerWeek;
     this.posterImage = posterImage;
   }
