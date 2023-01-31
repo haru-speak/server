@@ -2,19 +2,14 @@ package com.example.be.core.application.assignment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.be.core.application.AssignmentService;
 import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.dto.response.AssignmentsResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("서비스 테스트 : 과제 전체 조회")
-public class AssignmentFindAllTest extends InitServiceTest {
-
-    @Autowired
-    private AssignmentService assignmentService;
+@DisplayName("서비스 테스트 : Assignment 전체 조회")
+class AssignmentFindAllTest extends InitServiceTest {
 
     @Nested
     @DisplayName("과제를 전체 조회할 때")

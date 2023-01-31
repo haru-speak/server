@@ -6,19 +6,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.example.be.common.exception.BaseException;
 import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("서비스 테스트 : SpeakingLog 생성")
-public class SpeakingLogCreateTest extends InitServiceTest {
-
-	@Autowired
-	private SpeakingLogService speakingLogService;
+class SpeakingLogCreateTest extends InitServiceTest {
 
 	@Nested
 	@DisplayName("새로운 스피킹 로그를 생성할 때")

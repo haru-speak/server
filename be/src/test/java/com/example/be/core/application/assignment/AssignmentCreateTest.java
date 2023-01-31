@@ -2,28 +2,19 @@ package com.example.be.core.application.assignment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.be.core.application.AssignmentService;
 import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.dto.request.AssignmentRequest;
 import com.example.be.core.application.dto.response.AssignmentDetailResponse;
 import com.example.be.core.domain.assignment.AssignmentMember;
-import com.example.be.core.repository.assignment.AssignmentMemberRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @DisplayName("서비스 테스트 : Assignment 생성")
-public class AssignmentCreateTest extends InitServiceTest {
-
-  @Autowired
-  private AssignmentService assignmentService;
-
-  @Autowired
-  private AssignmentMemberRepository assignmentMemberRepository;
+class AssignmentCreateTest extends InitServiceTest {
 
   @Nested
   @DisplayName("새로운 과제를 생성할 때")

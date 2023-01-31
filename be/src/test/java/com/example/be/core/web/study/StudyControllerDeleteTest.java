@@ -9,13 +9,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
+import com.example.be.core.web.InitControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-public class StudyControllerDeleteTest extends InitStudyControllerTest {
+@DisplayName("컨트롤러 테스트 : 스터디 삭제")
+class StudyControllerDeleteTest extends InitControllerTest {
 
   @Nested
   @DisplayName("Study 삭제할 때")

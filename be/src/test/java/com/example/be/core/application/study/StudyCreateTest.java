@@ -3,27 +3,15 @@ package com.example.be.core.application.study;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.application.StudyService;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
-import com.example.be.core.domain.study.StudyMember;
-import com.example.be.core.repository.study.StudyMemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 
-@Transactional
 @DisplayName("서비스 테스트 : Study 생성")
-public class StudyCreateTest extends InitServiceTest {
-
-    @Autowired
-    private StudyService studyService;
-
-    @Autowired
-    private StudyMemberRepository studyMemberRepository;
+class StudyCreateTest extends InitServiceTest {
 
     @Nested
     @DisplayName("스터디를 생성할 때")

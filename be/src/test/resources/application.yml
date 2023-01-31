@@ -26,3 +26,5 @@ oauth:
     token-type: Bearer
     content-type: application/x-www-form-urlencoded;charset=utf-8
     grant-type: authorization_code
+    token-url: 1234
+    resource-url: 1234

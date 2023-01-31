@@ -6,26 +6,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.example.be.common.exception.BaseException;
 import com.example.be.common.exception.speakinglog.NotFoundSpeakingLogIdException;
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
-import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
-import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
-@DisplayName("서비스 테스트 : SpeakingLog 전체 조회")
+@DisplayName("서비스 테스트 : SpeakingLog 수정")
 public class SpeakingLogModifyTest extends InitServiceTest {
-
-    @Autowired
-    SpeakingLogService speakingLogService;
-
-    @Autowired
-    SpeakingLogRepository speakingLogRepository;
 
     @Nested
     @DisplayName("스피킹 로그를 수정할 때")

@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.core.web.InitControllerTest;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,7 +19,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-public class StudyControllerDetailFindTest extends InitStudyControllerTest {
+@DisplayName("컨트롤러 테스트 : 스터디 상세 조회")
+class StudyControllerDetailFindTest extends InitControllerTest {
 
   @Nested
   @DisplayName("Study 상세 조회할 때")

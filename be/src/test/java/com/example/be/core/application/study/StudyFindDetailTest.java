@@ -7,20 +7,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.example.be.common.exception.BaseException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.application.StudyService;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
-@DisplayName("서비스 테스트 : 스터디 상제 조회")
-public class StudyFindDetailTest extends InitServiceTest {
-
-    @Autowired
-    StudyService studyService;
+@DisplayName("서비스 테스트 : Study 상세 조회")
+class StudyFindDetailTest extends InitServiceTest {
 
     @Nested
     @DisplayName("스터디를 상제 조회할 때")

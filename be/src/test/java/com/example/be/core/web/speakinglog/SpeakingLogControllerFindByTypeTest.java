@@ -12,27 +12,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
-import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.speakinglog.SpeakingLogType;
 import com.example.be.core.web.InitControllerTest;
-import com.example.be.core.web.SpeakingLogController;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-@WebMvcTest(SpeakingLogController.class)
-
+@DisplayName("컨트롤러 테스트 : SpeakingLog 전체 조회")
 class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
-
-	@MockBean
-	protected SpeakingLogService speakingLogService;
 
 	@Nested
 	@DisplayName("Speaking Log를 조회할 때")
@@ -41,7 +33,6 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 		@Nested
 		@DisplayName("정상적인 요청이라면")
 		class NormalTest {
-
 
 			@Nested
 			@DisplayName("날짜 데이터가 들어갔을 때")

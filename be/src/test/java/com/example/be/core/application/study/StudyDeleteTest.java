@@ -3,22 +3,14 @@ package com.example.be.core.application.study;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.application.StudyService;
 import com.example.be.core.domain.study.Study;
-import com.example.be.core.repository.study.StudyRepository;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public class StudyDeleteTest extends InitServiceTest {
-
-  @Autowired
-  private StudyService studyService;
-
-  @Autowired
-  private StudyRepository studyRepository;
+@DisplayName("서비스 테스트: Study 삭제")
+class StudyDeleteTest extends InitServiceTest {
 
   @Nested
   @DisplayName("스터디를 삭제할 때")

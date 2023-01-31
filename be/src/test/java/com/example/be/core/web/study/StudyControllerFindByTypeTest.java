@@ -14,13 +14,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
+import com.example.be.core.web.InitControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-class StudyControllerFindByTypeTest extends InitStudyControllerTest{
+@DisplayName("컨트롤러 테스트 : 스터디 전체 조회")
+class StudyControllerFindByTypeTest extends InitControllerTest {
 
   @Nested
   @DisplayName("Study를 조회할 때")
