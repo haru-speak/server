@@ -13,7 +13,6 @@ import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
 import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("서비스 테스트 : SpeakingLog 상세 조회")
-public class SpeakingLogDetailFindTest extends InitServiceTest {
+class SpeakingLogDetailFindTest extends InitServiceTest {
 	@Autowired
 	private SpeakingLogService speakingLogService;
 

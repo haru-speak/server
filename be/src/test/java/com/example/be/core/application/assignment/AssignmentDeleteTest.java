@@ -5,22 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.example.be.common.exception.BaseException;
 import com.example.be.common.exception.assignment.NotFoundAssignmentIdException;
-import com.example.be.core.application.AssignmentService;
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.repository.assignment.AssignmentRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("서비스 테스트 : 과제 삭제")
-public class AssignmentDeleteTest extends InitServiceTest {
-
-    @Autowired
-    AssignmentService assignmentService;
-
-    @Autowired
-    AssignmentRepository assignmentRepository;
+@DisplayName("서비스 테스트 : Assignment 삭제")
+class AssignmentDeleteTest extends InitServiceTest {
 
     @Nested
     @DisplayName("과제를 삭제 요청할 때")

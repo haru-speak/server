@@ -3,21 +3,14 @@ package com.example.be.core.application.study;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.application.StudyService;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @DisplayName("서비스 테스트 : Study 전체 조회")
-public class StudyFindAllTest extends InitServiceTest {
-
-  @Autowired
-  private StudyService studyService;
+class StudyFindAllTest extends InitServiceTest {
 
   @Nested
   @DisplayName("스터디를 전체 조회할 때")

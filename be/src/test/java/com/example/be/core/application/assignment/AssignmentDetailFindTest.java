@@ -6,19 +6,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.example.be.common.exception.BaseException;
 import com.example.be.common.exception.assignment.NotFoundAssignmentIdException;
-import com.example.be.core.application.AssignmentService;
 import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.dto.response.AssignmentResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("서비스 테스트 : 과제 상세 조회")
-public class AssignmentDetailFindTest extends InitServiceTest {
-
-    @Autowired
-    private AssignmentService assignmentService;
+@DisplayName("서비스 테스트 : Assignment 상세 조회")
+class AssignmentDetailFindTest extends InitServiceTest {
 
     @Nested
     @DisplayName("과제 상세 조회할 때")
