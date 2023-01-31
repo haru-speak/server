@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.be.common.exception.ErrorCodeAndMessages;
 import com.example.be.common.response.BaseResponse;
 import com.example.be.oauth.config.properties.JwtProperties;
 import com.example.be.oauth.provider.JwtProvider;
