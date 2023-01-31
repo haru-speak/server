@@ -9,19 +9,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
-import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.web.InitControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-public class SpeakingLogControllerDeleteTest extends InitControllerTest {
-
-    @MockBean
-    protected SpeakingLogService speakingLogService;
+@DisplayName("컨트롤러 테스트 : SpeakingLog 삭제")
+class SpeakingLogControllerDeleteTest extends InitControllerTest {
 
     @Nested
     @DisplayName("Speaking Log 삭제할 때")

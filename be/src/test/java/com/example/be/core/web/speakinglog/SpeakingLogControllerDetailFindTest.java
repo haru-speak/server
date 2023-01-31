@@ -9,21 +9,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
-import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.web.InitControllerTest;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-public class SpeakingLogControllerDetailFindTest extends InitControllerTest {
-
-	@MockBean
-	protected SpeakingLogService speakingLogService;
+@DisplayName("컨트롤러 테스트 : SpeakingLog 상세 조회")
+class SpeakingLogControllerDetailFindTest extends InitControllerTest {
 
 	@Nested
 	@DisplayName("Speaking Log 상세 조회할 때")
