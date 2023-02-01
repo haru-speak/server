@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-@DisplayName("컨트롤러 테스트 : 스터디 수정")
+@DisplayName("컨트롤러 테스트 : Study 수정")
 class StudyControllerModifyTest extends InitControllerTest {
 
 

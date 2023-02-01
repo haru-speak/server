@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-@DisplayName("컨트롤러 테스트 : 스터디 상세 조회")
+@DisplayName("컨트롤러 테스트 : Study 상세 조회")
 class StudyControllerDetailFindTest extends InitControllerTest {
 
   @Nested

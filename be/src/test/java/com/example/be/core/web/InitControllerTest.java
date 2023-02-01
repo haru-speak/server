@@ -35,12 +35,6 @@ public abstract class InitControllerTest {
 	@MockBean
 	protected LoginArgumentResolver loginArgumentResolver;
 
-	@MockBean
-	protected JwtProvider jwtProvider;
-
-	@MockBean
-	protected JwtProperties jwtProperties;
-
 	@Autowired
 	protected MockMvc mockMvc;
 
