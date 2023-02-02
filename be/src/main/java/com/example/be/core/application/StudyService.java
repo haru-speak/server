@@ -5,7 +5,6 @@ import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
-import com.example.be.core.application.dto.response.StudyCommentResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.application.dto.response.StudyResponse;
 import com.example.be.core.domain.member.Member;
@@ -16,7 +15,6 @@ import com.example.be.core.repository.study.StudyCommentRepository;
 import com.example.be.core.repository.study.StudyFavoriteRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -98,8 +96,7 @@ public class StudyService {
         study.getTimePerWeek(),
         study.getPosterImage(),
         ZERO,
-        Boolean.FALSE,
-        new ArrayList<>()
+        Boolean.FALSE
     );
   }
 
@@ -151,8 +148,7 @@ public class StudyService {
         study.getTimePerWeek(),
         study.getPosterImage(),
         getStudyLikeCount(study),
-        hasStudyFavorite(loginMemberId, study),
-        getStudyComments(studyId)
+        hasStudyFavorite(loginMemberId, study)
     );
   }
 
@@ -196,8 +192,7 @@ public class StudyService {
         study.getTimePerWeek(),
         study.getPosterImage(),
         getStudyLikeCount(study),
-        hasStudyFavorite(loginMemberId, study),
-        getStudyComments(studyId)
+        hasStudyFavorite(loginMemberId, study)
     );
   }
 
@@ -218,11 +213,5 @@ public class StudyService {
 
   private boolean hasStudyFavorite(Long loginMemberId, Study study) {
     return studyFavoriteRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent();
-  }
-
-  private List<StudyCommentResponse> getStudyComments(Long studyId) {
-    return studyCommentRepository.findAllByStudyId(studyId).stream()
-        .map(StudyCommentResponse::from)
-        .collect(Collectors.toList());
   }
 }

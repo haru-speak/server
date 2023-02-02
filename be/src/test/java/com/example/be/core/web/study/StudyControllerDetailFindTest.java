@@ -37,7 +37,7 @@ class StudyControllerDetailFindTest extends InitControllerTest {
         Long studyId = 1L;
         Integer likeCount = 10;
         StudyDetailResponse response = new StudyDetailResponse(studyId, "스터디 1", "스터디 1 입니다", 3, "english",
-            "OPIC", "AL", 5, 1, "대면", "서울","월화수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg",likeCount, true, new ArrayList<>());
+            "OPIC", "AL", 5, 1, "대면", "서울","월화수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg",likeCount, true);
         BaseResponse<StudyDetailResponse> baseResponse = new BaseResponse<>(
             FIND_DETAIL_STUDY_SUCCESS, response);
 
