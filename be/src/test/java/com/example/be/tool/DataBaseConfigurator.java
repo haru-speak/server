@@ -1,6 +1,6 @@
 package com.example.be.tool;
 
-import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
+import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.core.domain.assignment.Assignment;
 import com.example.be.core.domain.assignment.AssignmentMember;
 import com.example.be.core.domain.member.Member;

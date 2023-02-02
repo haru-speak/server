@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.example.be.common.exception.BaseException;
-import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
+import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;

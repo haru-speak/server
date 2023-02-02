@@ -1,6 +1,6 @@
 package com.example.be.core.application;
 
-import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
+import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
