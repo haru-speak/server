@@ -27,14 +27,29 @@ public class Member extends BaseEntity {
 	@Column(unique = true)
 	private String email;
 
+	@Column(unique = true)
 	private String uniqueId;
 
 	private String profileImage;
+
+	private MemberType memberType;
+	private Boolean alarmStatus;
+	private Integer point;
 
 	public Member(String nickname, String email, String uniqueId, String profileImage) {
 		this.nickname = nickname;
 		this.email = email;
 		this.uniqueId = uniqueId;
+		this.profileImage = profileImage;
+	}
+
+	public void signUp(MemberType memberType, Boolean alarmStatus) {
+		this.memberType = memberType;
+		this.alarmStatus = alarmStatus;
+		this.point = 0;
+	}
+
+	public void updateProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
 }

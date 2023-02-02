@@ -1,10 +1,7 @@
-package com.example.be.core.domain.goal;
+package com.example.be.core.domain.member.goal;
 
-import com.example.be.core.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,9 +17,4 @@ public class Goal {
     private Long id;
 
     private String content;
-
-    public Goal(Long id, String content) {
-        this.id = id;
-        this.content = content;
-    }
 }
