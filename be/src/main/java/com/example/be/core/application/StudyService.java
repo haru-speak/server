@@ -114,7 +114,6 @@ public class StudyService {
             study.getContent(),
             study.getPosterImage(),
             getStudyLikeCount(study),
-            getStudyCommentCount(study),
             hasStudyFavorite(loginMemberId, study)
         )).collect(Collectors.toList());
 
@@ -205,10 +204,6 @@ public class StudyService {
 
   private Integer getStudyLikeCount(Study study) {
     return studyFavoriteRepository.countByStudyId(study.getId());
-  }
-
-  private Integer getStudyCommentCount(Study study) {
-    return studyCommentRepository.countByStudyId(study.getId());
   }
 
   private boolean hasStudyFavorite(Long loginMemberId, Study study) {

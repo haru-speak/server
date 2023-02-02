@@ -21,20 +21,16 @@ public class StudyResponse {
   @Schema(type = "Int", description = "좋아요 개수, NOT NULL")
   private final Integer likeCount;
 
-  @Schema(type = "Int", description = "댓글 개수, NOT NULL")
-  private final Integer commentCount;
-
   @Schema(type = "Boolean", description = "좋아요 여부, NOT NULL")
   private final Boolean isLiked;
 
   public StudyResponse(Long studyId, String title, String content, String posterImage,
-      Integer likeCount, Integer commentCount, Boolean isLiked) {
+      Integer likeCount, Boolean isLiked) {
     this.studyId = studyId;
     this.title = title;
     this.content = content;
     this.posterImage = posterImage;
     this.likeCount = likeCount;
-    this.commentCount = commentCount;
     this.isLiked = isLiked;
   }
 }
