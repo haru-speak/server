@@ -17,4 +17,9 @@ public class Goal {
     private Long id;
 
     private String content;
+
+    public Goal(Long id, String content) {
+        this.id = id;
+        this.content = content;
+    }
 }

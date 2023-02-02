@@ -4,12 +4,16 @@ import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.core.domain.assignment.Assignment;
 import com.example.be.core.domain.assignment.AssignmentMember;
 import com.example.be.core.domain.member.Member;
+import com.example.be.core.domain.member.goal.Goal;
+import com.example.be.core.domain.member.subject.Subject;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.repository.assignment.AssignmentMemberRepository;
 import com.example.be.core.repository.assignment.AssignmentRepository;
 import com.example.be.core.repository.member.MemberRepository;
+import com.example.be.core.repository.member.goal.GoalRepository;
+import com.example.be.core.repository.member.subject.SubjectRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
@@ -57,6 +61,12 @@ public class DataBaseConfigurator implements InitializingBean {
 	@Autowired
 	private AssignmentMemberRepository assignmentMemberRepository;
 
+	@Autowired
+	private GoalRepository goalRepository;
+
+	@Autowired
+	private SubjectRepository subjectRepository;
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -71,7 +81,7 @@ public class DataBaseConfigurator implements InitializingBean {
 
 		List<String> tableNames = new ArrayList<>();
 		ResultSet tables = connection.getMetaData()
-				.getTables(connection.getCatalog(), null, null, new String[]{TABLE});
+			.getTables(connection.getCatalog(), null, null, new String[]{TABLE});
 
 		try (tables) {
 			while (tables.next()) {
@@ -101,6 +111,8 @@ public class DataBaseConfigurator implements InitializingBean {
 		initSpeakingLog();
 		initStudy();
 		initAssignment();
+		initGoal();
+		initSubject();
 	}
 
 	/**
@@ -109,12 +121,12 @@ public class DataBaseConfigurator implements InitializingBean {
 	private void initMember() {
 		for (int i = 1; i <= NUMBER_OF_MEMBER; i++) {
 			memberRepository.save(
-					new Member(
-							"member" + i,
-							"member-email" + i + "@google.com",
-							"password1234" + i,
-							"profileImage" + i
-					));
+				new Member(
+					"member" + i,
+					"member-email" + i + "@google.com",
+					"password1234" + i,
+					"profileImage" + i
+				));
 		}
 	}
 
@@ -124,16 +136,16 @@ public class DataBaseConfigurator implements InitializingBean {
 	private void initSpeakingLog() {
 		for (int i = 1; i <= NUMBER_OF_MEMBER; i++) {
 			Member member = memberRepository.findById((long) i)
-					.orElseThrow(NotFoundMemberIdException::new);
+				.orElseThrow(NotFoundMemberIdException::new);
 
 			for (int j = 1; j <= NUMBER_OF_SPEAKING_LOG; j++) {
 				speakingLogRepository.save(
-						new SpeakingLog(
-								member,
-								"speaking-log-title" + i + j,
-								"https://dummy-voice-record" + i + j,
-								"dummy-voice-text" + i + j
-						));
+					new SpeakingLog(
+						member,
+						"speaking-log-title" + i + j,
+						"https://dummy-voice-record" + i + j,
+						"dummy-voice-text" + i + j
+					));
 			}
 		}
 	}
@@ -157,7 +169,7 @@ public class DataBaseConfigurator implements InitializingBean {
 					"study-certificate" + i
 				));
 
-			for(int j = 1; j <= NUMBER_OF_MEMBER; j++) {
+			for (int j = 1; j <= NUMBER_OF_MEMBER; j++) {
 				Member member = memberRepository.findById((long) j)
 					.orElseThrow(NotFoundMemberIdException::new);
 				studyMemberRepository.save(
@@ -177,7 +189,7 @@ public class DataBaseConfigurator implements InitializingBean {
 		Study study = studyRepository.findById(1L).get();
 		List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudyId(
 			study.getId());
-		for(int i = 1; i <= NUMBER_OF_ASSIGNMENT; i++) {
+		for (int i = 1; i <= NUMBER_OF_ASSIGNMENT; i++) {
 			Assignment assignment = assignmentRepository.save(
 				new Assignment(
 					study,
@@ -187,7 +199,7 @@ public class DataBaseConfigurator implements InitializingBean {
 					"https://dummy-voice-record" + i
 				)
 			);
-			studyMembers.forEach( it ->
+			studyMembers.forEach(it ->
 				assignmentMemberRepository.save(
 					new AssignmentMember(
 						it.getMember(),
@@ -198,5 +210,34 @@ public class DataBaseConfigurator implements InitializingBean {
 				)
 			);
 		}
+	}
+
+	/**
+	 * [고정 데이터]
+	 * GOAL(목표)를 생성합니다.
+	 */
+
+	private void initGoal() {
+		goalRepository.save(new Goal(1L, "일상 속 유용한 표현 배우기!"));
+		goalRepository.save(new Goal(2L, "다른 사람들의 피드백!"));
+		goalRepository.save(new Goal(3L, "듣기 능력 키우기!"));
+		goalRepository.save(new Goal(4L, "함께 공부할 스터디 찾기!"));
+		goalRepository.save(new Goal(5L, "어학 자격증 따기!"));
+	}
+
+	/**
+	 * [고정 데이터] SUBJECT(주제)를 생성합니다.
+	 */
+
+	private void initSubject() {
+		subjectRepository.save(new Subject(1L, "여행"));
+		subjectRepository.save(new Subject(2L, "영화&음악"));
+		subjectRepository.save(new Subject(3L, "일&회사"));
+		subjectRepository.save(new Subject(4L, "쇼핑"));
+		subjectRepository.save(new Subject(5L, "음식"));
+		subjectRepository.save(new Subject(6L, "가족&친구"));
+		subjectRepository.save(new Subject(7L, "운동&건강"));
+		subjectRepository.save(new Subject(8L, "동네"));
+		subjectRepository.save(new Subject(9L, "연애"));
 	}
 }

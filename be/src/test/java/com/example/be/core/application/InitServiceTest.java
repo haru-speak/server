@@ -6,11 +6,13 @@ import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import com.example.be.tool.DataBaseConfigurator;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+@Slf4j
 @SpringBootTest
 @ActiveProfiles("test")
 public abstract class InitServiceTest {
@@ -44,7 +46,10 @@ public abstract class InitServiceTest {
 
 	@BeforeEach
 	void setUpDataBase() {
+		log.info("[CLEAR DATA SOURCE]");
 		dbConfigurator.clear();
+		log.info("[INIT DATA SOURCE] BEFORE");
 		dbConfigurator.initDataSource();
+		log.info("[INIT DATA SOURCE] AFTER");
 	}
 }
