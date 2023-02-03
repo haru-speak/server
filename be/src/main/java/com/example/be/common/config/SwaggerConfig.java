@@ -25,8 +25,7 @@ public class SwaggerConfig {
 			.groupName("haru-speak")
 			.apiInfo(apiInfo())
 			.select()
-			.apis(RequestHandlerSelectors
-				.basePackage("com.example.be"))
+			.apis(RequestHandlerSelectors.basePackage("com.example.be"))
 			.paths(PathSelectors.any())
 			.build()
 			.securityContexts(Collections.singletonList(securityContext()))

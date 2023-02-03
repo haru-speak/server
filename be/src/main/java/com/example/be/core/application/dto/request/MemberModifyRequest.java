@@ -7,6 +7,7 @@ import javax.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.lang.Nullable;
 
 @Getter
@@ -18,8 +19,7 @@ public class MemberModifyRequest {
 	private String nickname;
 
 	@NotNull(message = "Profile Image 가 빈 값이어서는 안됩니다.")
-	@Pattern(regexp = "^(https?):\\/\\/([^:\\/\\s]+)(:([^\\/]*))?((\\/[^\\s/\\/]+)*)?\\/?([^#\\s\\?]*)(\\?([^#\\s]*))?(#(\\w*))?$",
-		message = "올바른 voiceRecord를 입력해야 합니다.")
+	@URL(message = "올바른 voiceRecord를 입력해야 합니다.")
 	@Schema(type = "String", description = "변경할 이미지, NOT NULL")
 	private String profileImage;
 }

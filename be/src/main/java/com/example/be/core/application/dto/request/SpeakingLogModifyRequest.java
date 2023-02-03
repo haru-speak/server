@@ -2,11 +2,11 @@ package com.example.be.core.application.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -18,8 +18,7 @@ public class SpeakingLogModifyRequest {
 	private String title;
 
 	@NotNull(message = "voiceRecord가 빈 값이어서는 안됩니다.")
-	@Pattern(regexp = "^(https?):\\/\\/([^:\\/\\s]+)(:([^\\/]*))?((\\/[^\\s/\\/]+)*)?\\/?([^#\\s\\?]*)(\\?([^#\\s]*))?(#(\\w*))?$",
-		message = "올바른 voiceRecord를 입력해야 합니다.")
+	@URL(message = "올바른 voiceRecord를 입력해야 합니다.")
 	@Schema(type = "String", description = "변경할 음성 녹음 URL, NOT NULL")
 	private String voiceRecord;
 
