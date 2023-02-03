@@ -7,7 +7,6 @@ import com.example.be.tool.TestWebConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -18,7 +17,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 @ActiveProfiles("test")
 @Import(TestWebConfig.class)
-@WebMvcTest(controllers = {SpeakingLogController.class, StudyController.class, MemberController.class})
 public abstract class InitControllerTest {
 
 	@MockBean

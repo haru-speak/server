@@ -10,12 +10,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.StudyController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+@WebMvcTest(StudyController.class)
 @DisplayName("컨트롤러 테스트 : Study 삭제")
 class StudyControllerDeleteTest extends InitControllerTest {
 
@@ -31,11 +34,13 @@ class StudyControllerDeleteTest extends InitControllerTest {
       @DisplayName("스터디 삭제시 해당 ID를 가진 스터디가 삭제된다")
       void delete_study_log() throws Exception {
         //given
+        Long memberId = 1L;
         Long studyId = 1L;
         BaseResponse<Void> baseResponse = new BaseResponse<>(DELETE_STUDY_SUCCESS, null);
 
         //when
         ResultActions resultActions = mockMvc.perform(delete("/study/{studyId}", studyId)
+            .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));
 

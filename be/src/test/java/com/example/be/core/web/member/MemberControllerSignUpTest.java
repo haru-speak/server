@@ -20,16 +20,19 @@ import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import com.example.be.core.domain.member.subject.Subject;
 import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.MemberController;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 
+@WebMvcTest(MemberController.class)
 @DisplayName("컨트롤러 테스트 : Member 회원가입")
 class MemberControllerSignUpTest extends InitControllerTest {
 

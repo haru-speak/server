@@ -15,12 +15,15 @@ import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.StudyController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+@WebMvcTest(StudyController.class)
 @DisplayName("컨트롤러 테스트 : Study 전체 조회")
 class StudyControllerFindByTypeTest extends InitControllerTest {
 
@@ -36,6 +39,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
       @DisplayName("ALL TYPE 스터디 조회시 ALL TYPE 스터디가 조회된다")
       void find_all_type_study() throws Exception {
         //given
+        Long memberId = 1L;
         StudyConditionRequest request = new StudyConditionRequest("all");
         StudiesResponse response = new StudiesResponse(ALL, null);
         BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
@@ -45,6 +49,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/study?type=all")
+            .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -60,6 +65,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
       @DisplayName("타입 없이 스터디 조회시 MY TYPE 스터디가 조회된다")
       void find_no_type_study() throws Exception {
         //given
+        Long memberId = 1L;
         StudyConditionRequest request = new StudyConditionRequest(null);
         StudiesResponse response = new StudiesResponse(MY, null);
         BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
@@ -69,6 +75,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/study")
+            .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));
 

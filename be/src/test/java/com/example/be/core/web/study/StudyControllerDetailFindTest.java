@@ -12,13 +12,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.StudyController;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+@WebMvcTest(StudyController.class)
 @DisplayName("컨트롤러 테스트 : Study 상세 조회")
 class StudyControllerDetailFindTest extends InitControllerTest {
 
@@ -34,6 +37,7 @@ class StudyControllerDetailFindTest extends InitControllerTest {
       @DisplayName("스터디 상세 조회시, 해당 ID를 가진 스터디가 조회된다.")
       void find_detail_study_log() throws Exception {
         //given
+        Long memberId = 1L;
         Long studyId = 1L;
         Integer likeCount = 10;
         StudyDetailResponse response = new StudyDetailResponse(studyId, "스터디 1", "스터디 1 입니다", 3, "english",
@@ -46,8 +50,9 @@ class StudyControllerDetailFindTest extends InitControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/study/{studyId}", studyId)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE));
+            .header("Authorization", "Bearer " + jwtProvider.generateAccessToken(memberId))
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .contentType(MediaType.APPLICATION_JSON_VALUE));
 
         //then
         resultActions.andExpect(status().isOk())
