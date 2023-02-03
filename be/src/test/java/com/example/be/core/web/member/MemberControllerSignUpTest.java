@@ -15,6 +15,7 @@ import com.example.be.core.application.dto.response.GoalResponse;
 import com.example.be.core.application.dto.response.MemberSignUpResponse;
 import com.example.be.core.application.dto.response.SubjectResponse;
 import com.example.be.core.domain.member.MemberType;
+import com.example.be.core.domain.member.SpeakingTestType;
 import com.example.be.core.domain.member.goal.Goal;
 import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
@@ -56,8 +57,8 @@ class MemberControllerSignUpTest extends InitControllerTest {
 				List<Long> subjects = Arrays.asList(2L ,7L, 8L);
 
 				MemberSignUpRequest request = new MemberSignUpRequest("university",
-					"eng", "1",
-					"kor", "2", goals, subjects, Boolean.FALSE);
+					"eng", "1", "kor", "2",
+					goals, subjects, Boolean.FALSE, "opic");
 
 				List<GoalResponse> goalResponses = Arrays.asList(
 					GoalResponse.of(new Goal(1L, "일상 속 유용한 표현 배우기!")),
@@ -78,7 +79,8 @@ class MemberControllerSignUpTest extends InitControllerTest {
 					SpeakingGradeLevel.LEVEL_TWO,
 					goalResponses,
 					subjectResponses,
-					Boolean.FALSE
+					Boolean.FALSE,
+					SpeakingTestType.OPIC
 				);
 
 				BaseResponse<MemberSignUpResponse> baseResponse = new BaseResponse<>(

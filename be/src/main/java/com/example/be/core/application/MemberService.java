@@ -20,7 +20,9 @@ import com.example.be.core.repository.member.goal.GoalRepository;
 import com.example.be.core.repository.member.grade.SpeakingGradeRepository;
 import com.example.be.core.repository.member.subject.SubjectMemberRepository;
 import com.example.be.core.repository.member.subject.SubjectRepository;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class MemberService {
+
+	private static final Long SPEAKING_TEST_GOAL_ID = 5L;
 
 	private final MemberRepository memberRepository;
 	private final SpeakingGradeRepository speakingGradeRepository;
@@ -53,9 +57,15 @@ public class MemberService {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(NotFoundMemberIdException::new);
 
+
+		if (hasNotSpeakingTestGoal(new HashSet<>(memberSignUpRequest.getGoals()))) {
+			memberSignUpRequest.updateSpeakingTestType(null);
+		}
+
 		member.signUp(
 			memberSignUpRequest.getMemberType(),
-			memberSignUpRequest.getAlarmStatus()
+			memberSignUpRequest.getAlarmStatus(),
+			memberSignUpRequest.getTestType()
 		);
 
 		SpeakingGrade learnerInfo = saveSpeakingGrade(
@@ -73,8 +83,13 @@ public class MemberService {
 			giverInfo.getLevel(),
 			getGoalResponses(memberSignUpRequest, member),
 			getSubjectResponses(memberSignUpRequest, member),
-			member.getAlarmStatus()
+			member.getAlarmStatus(),
+			member.getTestType()
 		);
+	}
+
+	private boolean hasNotSpeakingTestGoal(Set<Long> goals) {
+		return !goals.contains(SPEAKING_TEST_GOAL_ID);
 	}
 
 	private List<GoalResponse> getGoalResponses(MemberSignUpRequest memberSignUpRequest, Member member) {

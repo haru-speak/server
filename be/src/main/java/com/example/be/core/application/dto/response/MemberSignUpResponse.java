@@ -1,6 +1,7 @@
 package com.example.be.core.application.dto.response;
 
 import com.example.be.core.domain.member.MemberType;
+import com.example.be.core.domain.member.SpeakingTestType;
 import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import java.util.List;
@@ -19,12 +20,13 @@ public class MemberSignUpResponse {
 	private final List<GoalResponse> goals;
 	private final List<SubjectResponse> subjects;
 	private final Boolean alarmStatus;
+	private final SpeakingTestType testType;
 
 	public MemberSignUpResponse(Long memberId, MemberType memberType,
 		SpeakingGradeLanguage learnerLanguage, SpeakingGradeLevel learnerLevel,
 		SpeakingGradeLanguage giverLanguage, SpeakingGradeLevel giverLevel,
-		List<GoalResponse> goals,
-		List<SubjectResponse> subjects, Boolean alarmStatus) {
+		List<GoalResponse> goals, List<SubjectResponse> subjects,
+		Boolean alarmStatus, SpeakingTestType testType) {
 		this.memberId = memberId;
 		this.memberType = memberType;
 		this.learnerLanguage = learnerLanguage;
@@ -34,5 +36,6 @@ public class MemberSignUpResponse {
 		this.goals = goals;
 		this.subjects = subjects;
 		this.alarmStatus = alarmStatus;
+		this.testType = testType;
 	}
 }

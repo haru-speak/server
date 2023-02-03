@@ -1,10 +1,13 @@
 package com.example.be.core.application.dto.request;
 
 import com.example.be.core.domain.member.MemberType;
+import com.example.be.core.domain.member.SpeakingTestType;
 import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -60,9 +63,13 @@ public class MemberSignUpRequest {
 	@Schema(type = "Boolean")
 	private Boolean alarmStatus;
 
+
+	@Schema(enumAsRef = true, description = "스피킹 시험의 종류(한 개만 선택 가능): OPIC, TOEFL, TOEIC_SPEAKING")
+	private SpeakingTestType testType;
+
 	public MemberSignUpRequest(String memberType, String learnerLanguage,
 		String learnerLevel, String giverLanguage, String giverLevel, List<Long> goals,
-		List<Long> subjects, Boolean alarmStatus) {
+		List<Long> subjects, Boolean alarmStatus, String testType) {
 		this.memberType = MemberType.convert(memberType);
 		this.learnerLanguage = SpeakingGradeLanguage.convert(learnerLanguage);
 		this.learnerLevel = SpeakingGradeLevel.convert(learnerLevel);
@@ -71,5 +78,10 @@ public class MemberSignUpRequest {
 		this.goals = goals;
 		this.subjects = subjects;
 		this.alarmStatus = alarmStatus;
+		this.testType = SpeakingTestType.convert(testType);
+	}
+
+	public void updateSpeakingTestType(String source) {
+		this.testType = SpeakingTestType.convert(source);
 	}
 }

@@ -23,6 +23,8 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 		+ "eng, kor 중 하나여야 합니다."),
 	SPEAKING_GRADE_LEVEL_ERROR("E-BR008", "올바르지 않은 SpeakingGradeLevel 형식입니다."
 		+ "1, 2, 3, 4, 5 중 하나여야 합니다."),
+	SPEAKING_TEST_TYPE_ERROR("E-BR009", "올바르지 않은 SpeakingTestType 형식입니다."
+		+ "OPIC, TOEFL, TOEIC_SPEAKING 중 하나여야 합니다."),
 
 
 	/**

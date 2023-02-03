@@ -31,10 +31,10 @@ public class Member extends BaseEntity {
 	private String uniqueId;
 
 	private String profileImage;
-
 	private MemberType memberType;
 	private Boolean alarmStatus;
 	private Integer point;
+	private SpeakingTestType testType;
 
 	public Member(String nickname, String email, String uniqueId, String profileImage) {
 		this.nickname = nickname;
@@ -43,10 +43,11 @@ public class Member extends BaseEntity {
 		this.profileImage = profileImage;
 	}
 
-	public void signUp(MemberType memberType, Boolean alarmStatus) {
+	public void signUp(MemberType memberType, Boolean alarmStatus, SpeakingTestType testType) {
 		this.memberType = memberType;
 		this.alarmStatus = alarmStatus;
 		this.point = 0;
+		this.testType = testType;
 	}
 
 	public void updateProfileImage(String profileImage) {

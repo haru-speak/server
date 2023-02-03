@@ -7,6 +7,7 @@ import com.example.be.core.application.MemberService;
 import com.example.be.core.application.dto.request.MemberSignUpRequest;
 import com.example.be.core.application.dto.response.MemberSignUpResponse;
 import com.example.be.core.domain.member.MemberType;
+import com.example.be.core.domain.member.SpeakingTestType;
 import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import java.util.Arrays;
@@ -39,8 +40,8 @@ class MemberSignUpTest extends InitServiceTest {
 				List<Long> subjects = Arrays.asList(2L ,7L, 8L);
 
 				MemberSignUpRequest signUpRequest = new MemberSignUpRequest("university",
-					"eng", "4",
-					"kor", "2", goals, subjects, Boolean.FALSE);
+					"eng", "4", "kor", "2",
+					goals, subjects, Boolean.FALSE, "toefl");
 
 				//when
 				MemberSignUpResponse memberSignUpResponse = memberService.signUp(memberId, signUpRequest);
@@ -59,6 +60,7 @@ class MemberSignUpTest extends InitServiceTest {
 				assertThat(memberSignUpResponse.getGoals()).hasSize(2);
 				assertThat(memberSignUpResponse.getSubjects()).hasSize(3);
 				assertThat(memberSignUpResponse.getAlarmStatus()).isFalse();
+				assertThat(memberSignUpResponse.getTestType()).isNull();
 			}
 		}
 	}
