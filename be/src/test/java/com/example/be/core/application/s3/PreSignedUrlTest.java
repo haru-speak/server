@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.be.core.application.FileUploadService;
 import com.example.be.core.application.dto.response.PreSignedUrlResponse;
-import com.example.be.core.tool.AwsS3MockConfigurator;
+import com.example.be.tool.AwsS3MockConfigurator;
 import io.findify.s3mock.S3Mock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
