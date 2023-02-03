@@ -35,8 +35,8 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	/**
 	 * Member
 	 */
-	MEMBER_SIGN_UP_SUCCESS("S-M001", "멤버의 회원 등록에 성공했습니다."),
-	MEMBER_INFO_UPDATE_SUCCESS("S-M002", "멤버의 회원 정보 변경에 성공했습니다."),
+	SIGN_UP_MEMBER_SUCCESS("S-M001", "멤버의 회원 등록에 성공했습니다."),
+	MODIFY_MEMBER_INFO_SUCCESS("S-M002", "멤버의 회원 정보 변경에 성공했습니다."),
 
 	/**
 	 Study

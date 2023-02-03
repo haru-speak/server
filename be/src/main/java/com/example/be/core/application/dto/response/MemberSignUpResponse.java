@@ -14,7 +14,6 @@ public class MemberSignUpResponse {
 	private final MemberType memberType;
 	private final SpeakingGradeLanguage learnerLanguage;
 	private final SpeakingGradeLevel learnerLevel;
-
 	private final SpeakingGradeLanguage giverLanguage;
 	private final SpeakingGradeLevel giverLevel;
 	private final List<GoalResponse> goals;

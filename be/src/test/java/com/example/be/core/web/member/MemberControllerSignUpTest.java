@@ -1,6 +1,6 @@
 package com.example.be.core.web.member;
 
-import static com.example.be.common.response.ResponseCodeAndMessages.MEMBER_SIGN_UP_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.SIGN_UP_MEMBER_SUCCESS;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -81,7 +81,8 @@ class MemberControllerSignUpTest extends InitControllerTest {
 					Boolean.FALSE
 				);
 
-				BaseResponse<MemberSignUpResponse> baseResponse = new BaseResponse<>(MEMBER_SIGN_UP_SUCCESS, response);
+				BaseResponse<MemberSignUpResponse> baseResponse = new BaseResponse<>(
+					SIGN_UP_MEMBER_SUCCESS, response);
 				when(memberService.signUp(refEq(memberId), refEq(request)))
 					.thenReturn(response);
 

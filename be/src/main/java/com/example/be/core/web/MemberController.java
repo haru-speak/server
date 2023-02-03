@@ -1,7 +1,7 @@
 package com.example.be.core.web;
 
-import static com.example.be.common.response.ResponseCodeAndMessages.MEMBER_INFO_UPDATE_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.MEMBER_SIGN_UP_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_MEMBER_INFO_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.SIGN_UP_MEMBER_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.MemberService;
@@ -37,7 +37,7 @@ public class MemberController {
 	public BaseResponse<MemberSignUpResponse> signUp(@Login @Positive final Long memberId,
 		@RequestBody @Valid final MemberSignUpRequest memberSignUpRequest) {
 		MemberSignUpResponse response = memberService.signUp(memberId, memberSignUpRequest);
-		return new BaseResponse<>(MEMBER_SIGN_UP_SUCCESS, response);
+		return new BaseResponse<>(SIGN_UP_MEMBER_SUCCESS, response);
 	}
 
 	@PutMapping
@@ -45,7 +45,7 @@ public class MemberController {
 	public BaseResponse<MemberResponse> modify(@Login @Positive final Long memberId,
 		@RequestBody @Valid final MemberModifyRequest memberModifyRequest) {
 		MemberResponse response = memberService.modify(memberId, memberModifyRequest);
-		return new BaseResponse<>(MEMBER_INFO_UPDATE_SUCCESS, response);
+		return new BaseResponse<>(MODIFY_MEMBER_INFO_SUCCESS, response);
 	}
 
 }
