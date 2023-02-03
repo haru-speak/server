@@ -3,6 +3,8 @@ package com.example.be.core.domain.member.grade;
 import com.example.be.common.exception.member.grade.InvalidSpeakingGradeLevelException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 @Getter
@@ -22,7 +24,15 @@ public enum SpeakingGradeLevel {
 
 	@JsonCreator
 	public static SpeakingGradeLevel convert(String source) {
-		return Arrays.stream(SpeakingGradeLevel.values())
+		Set<String> stringValues = Arrays.stream(SpeakingGradeLevel.values())
+			.map(Enum::toString)
+			.collect(Collectors.toSet());
+
+		if (stringValues.contains(source)) {
+			return SpeakingGradeLevel.valueOf(source);
+		}
+
+		return Arrays.stream(values())
 			.filter(e -> e.level.equals(source))
 			.findAny()
 			.orElseThrow(InvalidSpeakingGradeLevelException::new);

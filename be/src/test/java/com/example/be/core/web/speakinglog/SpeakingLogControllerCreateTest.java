@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.ResultActions;
 class SpeakingLogControllerCreateTest extends InitControllerTest {
     @Nested
     @DisplayName("Speaking Log 생성할 때")
-    class createTest {
+    class CreateTest {
 
         @Nested
         @DisplayName("정상적인 요청이라면")

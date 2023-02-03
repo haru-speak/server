@@ -19,7 +19,7 @@ public enum SpeakingGradeLanguage {
 
 	@JsonCreator
 	public static SpeakingGradeLanguage convert(String source) {
-		return Arrays.stream(SpeakingGradeLanguage.values())
+		return Arrays.stream(values())
 			.filter(e -> e.language.equals(source.toLowerCase()))
 			.findAny()
 			.orElseThrow(InvalidSpeakingGradeLanguageException::new);

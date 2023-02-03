@@ -9,19 +9,15 @@ import com.example.be.core.application.dto.response.MemberSignUpResponse;
 import com.example.be.core.domain.member.MemberType;
 import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 @DisplayName("서비스 테스트 : Member 회원가입 테스트")
-public class MemberSignUpTest extends InitServiceTest {
+class MemberSignUpTest extends InitServiceTest {
 
 	@Autowired
 	private MemberService memberService;
