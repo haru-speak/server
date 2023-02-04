@@ -1,16 +1,15 @@
 package com.example.be.core.web.member;
 
-import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_MEMBER_INFO_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_MEMBER_INFO_SUCCESS;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.MemberService;
-import com.example.be.core.application.dto.request.MemberModifyRequest;
 import com.example.be.core.application.dto.response.GoalResponse;
 import com.example.be.core.application.dto.response.MemberResponse;
 import com.example.be.core.application.dto.response.SubjectResponse;
@@ -33,14 +32,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest(MemberController.class)
-@DisplayName("컨트롤러 테스트 : Member 개인정보 수정")
-class MemberControllerModifyTest extends InitControllerTest {
+@DisplayName("컨트롤러 테스트 : Member 마이 페이지 조회")
+class MemberControllerMyPageTest extends InitControllerTest {
 
 	@MockBean
 	private MemberService memberService;
 
 	@Nested
-	@DisplayName("Member 개인정보 수정 할 때")
+	@DisplayName("Member 개인정보를 조회 할 때")
 	class ModifyTest {
 
 		@Nested
@@ -48,19 +47,10 @@ class MemberControllerModifyTest extends InitControllerTest {
 		class NormalTest {
 
 			@Test
-			@DisplayName("멤버 개인정보 수정시 해당 멤버의 정보가 업데이트 된다.")
+			@DisplayName("해당 멤버의 정보가 조회된다.")
 			void modify_member() throws Exception {
 				//given
 				Long memberId = 1L;
-				List<Long> goals = Arrays.asList(1L, 2L);
-				List<Long> subjects = Arrays.asList(2L ,7L, 8L);
-
-				MemberModifyRequest request = new MemberModifyRequest("나단", null,
-					"https://s3.profile_img1.png", "영어를 잘하고 싶은 나단입니다.",
-					"university", "eng", "3",
-					"kor", "1", goals, subjects,
-					Boolean.FALSE, "opic");
-
 				List<GoalResponse> goalResponses = Arrays.asList(
 					GoalResponse.of(new Goal(1L, "일상 속 유용한 표현 배우기!")),
 					GoalResponse.of(new Goal(2L, "다른 사람들의 피드백!"))
@@ -90,14 +80,13 @@ class MemberControllerModifyTest extends InitControllerTest {
 					0
 				);
 
-				BaseResponse<MemberResponse> baseResponse = new BaseResponse<>(MODIFY_MEMBER_INFO_SUCCESS, response);
-				when(memberService.modify(refEq(memberId), refEq(request)))
+				BaseResponse<MemberResponse> baseResponse = new BaseResponse<>(FIND_MEMBER_INFO_SUCCESS, response);
+				when(memberService.findById(refEq(memberId)))
 					.thenReturn(response);
 
 				//when
-				ResultActions resultActions = mockMvc.perform(put("/member")
+				ResultActions resultActions = mockMvc.perform(get("/member/mypage")
 					.header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
-					.content(objectMapper.writeValueAsString(request))
 					.accept(MediaType.APPLICATION_JSON_VALUE)
 					.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -108,6 +97,5 @@ class MemberControllerModifyTest extends InitControllerTest {
 			}
 		}
 	}
-
 
 }
