@@ -2,8 +2,8 @@ package com.example.be.oauth.provider;
 
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.repository.member.MemberRepository;
-import com.example.be.oauth.provider.dto.KakaoAccountResponse;
-import com.example.be.oauth.provider.dto.LoginResponse;
+import com.example.be.oauth.provider.dto.response.KakaoAccountResponse;
+import com.example.be.oauth.provider.dto.response.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +25,8 @@ public class LoginService {
 	}
 
 	@Transactional
-	public LoginResponse login(final String code) {
-		KakaoAccountResponse memberInformation = kakaoProvider.getMemberInformation(code);
+	public LoginResponse login(final String code, final boolean appType) {
+		KakaoAccountResponse memberInformation = kakaoProvider.getMemberInformation(code, appType);
 		Boolean isNewbie = Boolean.FALSE;
 
 		if (!memberRepository.existsByUniqueId(memberInformation.getUniqueId())){

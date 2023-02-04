@@ -3,8 +3,8 @@ package com.example.be.oauth.provider;
 import com.example.be.oauth.config.properties.KakaoProperties;
 import com.example.be.oauth.provider.client.KakaoMemberInfoClient;
 import com.example.be.oauth.provider.client.KakaoTokenClient;
-import com.example.be.oauth.provider.dto.KakaoAccessTokenResponse;
-import com.example.be.oauth.provider.dto.KakaoAccountResponse;
+import com.example.be.oauth.provider.dto.response.KakaoAccessTokenResponse;
+import com.example.be.oauth.provider.dto.response.KakaoAccountResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +23,15 @@ public class KakaoProvider {
 	}
 
 
-	public KakaoAccountResponse getMemberInformation(String authorizeCode) {
-		KakaoAccessTokenResponse response = getAccessToken(authorizeCode);
-		return memberInfoClient.call(String.format("%s %s",
+	public KakaoAccountResponse getMemberInformation(String code, boolean appType) {
+		String accessToken = code;
+		if (!appType) {
+			KakaoAccessTokenResponse response = getAccessToken(code);
+			accessToken = response.getAccessToken();
+		}
+		return memberInfoClient.call(properties.getContentType(), String.format("%s %s",
 				properties.getTokenType(),
-				response.getAccessToken()));
+				accessToken));
 	}
 
 	private KakaoAccessTokenResponse getAccessToken(String authorizeCode) {

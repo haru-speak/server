@@ -1,4 +1,4 @@
-package com.example.be.oauth.provider.dto;
+package com.example.be.oauth.provider.dto.response;
 
 import com.example.be.oauth.config.KakaoAccountResponseDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
