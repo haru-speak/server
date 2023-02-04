@@ -1,7 +1,11 @@
 package com.example.be.core.application;
 
+import static com.example.be.core.domain.member.grade.SpeakingGradeType.GIVER;
+import static com.example.be.core.domain.member.grade.SpeakingGradeType.LEARNER;
+
 import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.common.exception.member.goal.NotFoundGoalIdException;
+import com.example.be.common.exception.member.grade.InvalidSizeSpeakingGrade;
 import com.example.be.common.exception.member.subject.NotFoundSubjectIdException;
 import com.example.be.core.application.dto.request.MemberModifyRequest;
 import com.example.be.core.application.dto.request.MemberSignUpRequest;
@@ -20,13 +24,16 @@ import com.example.be.core.repository.member.goal.GoalRepository;
 import com.example.be.core.repository.member.grade.SpeakingGradeRepository;
 import com.example.be.core.repository.member.subject.SubjectMemberRepository;
 import com.example.be.core.repository.member.subject.SubjectRepository;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 public class MemberService {
@@ -68,11 +75,8 @@ public class MemberService {
 			memberSignUpRequest.getTestType()
 		);
 
-		SpeakingGrade learnerInfo = saveSpeakingGrade(
-			SpeakingGradeType.LEARNER, memberSignUpRequest, member);
-
-		SpeakingGrade giverInfo = saveSpeakingGrade(
-			SpeakingGradeType.GIVER, memberSignUpRequest, member);
+		SpeakingGrade learnerInfo = saveSpeakingGrade(LEARNER, memberSignUpRequest, member);
+		SpeakingGrade giverInfo = saveSpeakingGrade(GIVER, memberSignUpRequest, member);
 
 		return new MemberSignUpResponse(
 			member.getId(),
@@ -81,8 +85,8 @@ public class MemberService {
 			learnerInfo.getLevel(),
 			giverInfo.getLanguage(),
 			giverInfo.getLevel(),
-			getGoalResponses(memberSignUpRequest, member),
-			getSubjectResponses(memberSignUpRequest, member),
+			getGoalResponses(saveGoalMembers(memberSignUpRequest, member)),
+			getSubjectResponses(saveSubjectMembers(memberSignUpRequest, member)),
 			member.getAlarmStatus(),
 			member.getTestType()
 		);
@@ -92,23 +96,22 @@ public class MemberService {
 		return !goals.contains(SPEAKING_TEST_GOAL_ID);
 	}
 
-	private List<GoalResponse> getGoalResponses(MemberSignUpRequest memberSignUpRequest, Member member) {
-		return saveGoalMembers(memberSignUpRequest, member)
+	private List<GoalResponse> getGoalResponses(List<GoalMember> goalMembers) {
+		return goalMembers
 			.stream().map(GoalMember::getGoal)
 			.map(GoalResponse::of)
 			.collect(Collectors.toList());
 	}
 
-	private List<SubjectResponse> getSubjectResponses(MemberSignUpRequest memberSignUpRequest,
-		Member member) {
-		return saveSubjectMembers(memberSignUpRequest, member)
+	private List<SubjectResponse> getSubjectResponses(List<SubjectMember> subjectMembers) {
+		return subjectMembers
 			.stream().map(SubjectMember::getSubject)
 			.map(SubjectResponse::of)
 			.collect(Collectors.toList());
 	}
 
-	private List<SubjectMember> saveSubjectMembers(MemberSignUpRequest memberSignUpRequest, Member member) {
-		return memberSignUpRequest.getSubjects()
+	private List<SubjectMember> saveSubjectMembers(MemberSignUpRequest request, Member member) {
+		return request.getSubjects()
 			.stream()
 			.map(subjectId -> subjectMemberRepository.save(
 				new SubjectMember(subjectRepository.findById(subjectId)
@@ -116,8 +119,8 @@ public class MemberService {
 			.collect(Collectors.toList());
 	}
 
-	private List<GoalMember> saveGoalMembers(MemberSignUpRequest memberSignUpRequest, Member member) {
-		return memberSignUpRequest.getGoals()
+	private List<GoalMember> saveGoalMembers(MemberSignUpRequest request, Member member) {
+		return request.getGoals()
 			.stream()
 			.map(goalId -> goalMemberRepository.save
 				(new GoalMember(goalRepository.findById(goalId)
@@ -126,7 +129,7 @@ public class MemberService {
 	}
 
 	private SpeakingGrade saveSpeakingGrade(SpeakingGradeType type, MemberSignUpRequest request, Member member) {
-		if (type == SpeakingGradeType.LEARNER) {
+		if (type == LEARNER) {
 			return speakingGradeRepository.save(
 				new SpeakingGrade(type, request.getLearnerLanguage(),
 					request.getLearnerLevel(), member));
@@ -140,6 +143,74 @@ public class MemberService {
 	public MemberResponse modify(Long memberId, MemberModifyRequest memberModifyRequest) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(NotFoundMemberIdException::new);
-		return null;
+
+		member.modifyMyInformation(
+			memberModifyRequest.getNickname(),
+			memberModifyRequest.getEmail(),
+			memberModifyRequest.getProfileImage(),
+			memberModifyRequest.getIntroduce(),
+			memberModifyRequest.getMemberType(),
+			memberModifyRequest.getAlarmStatus(),
+			memberModifyRequest.getTestType()
+		);
+
+		List<SpeakingGrade> learnerAndGiverInfo = modifyLearnerAndGiverSpeakingGrades(memberId, memberModifyRequest);
+
+		return new MemberResponse(
+			member.getId(),
+			member.getNickname(),
+			member.getEmail(),
+			member.getProfileImage(),
+			member.getIntroduce(),
+			member.getMemberType(),
+			learnerAndGiverInfo.get(0).getLanguage(),
+			learnerAndGiverInfo.get(0).getLevel(),
+			learnerAndGiverInfo.get(1).getLanguage(),
+			learnerAndGiverInfo.get(1).getLevel(),
+			getGoalResponses(modifyGoalMembers(memberModifyRequest, member)),
+			getSubjectResponses(modifySubjectMembers(memberModifyRequest, member)),
+			member.getAlarmStatus(),
+			member.getTestType());
+	}
+
+	private List<SubjectMember> modifySubjectMembers(MemberModifyRequest memberModifyRequest, Member member) {
+		subjectMemberRepository.deleteAllInBatchByMemberId(member.getId());
+		return memberModifyRequest.getSubjects()
+			.stream()
+			.map(s -> subjectMemberRepository.save(
+				new SubjectMember(subjectRepository.findById(s)
+						.orElseThrow(NotFoundSubjectIdException::new), member)))
+			.collect(Collectors.toList());
+	}
+
+	private List<GoalMember> modifyGoalMembers(MemberModifyRequest memberModifyRequest, Member member) {
+		goalMemberRepository.deleteAllInBatchByMemberId(member.getId());
+		return memberModifyRequest.getGoals()
+			.stream()
+			.map(g -> goalMemberRepository.save(
+				new GoalMember(goalRepository.findById(g)
+						.orElseThrow(NotFoundGoalIdException::new), member)))
+			.collect(Collectors.toList());
+	}
+
+	private List<SpeakingGrade> modifyLearnerAndGiverSpeakingGrades(Long memberId, MemberModifyRequest memberModifyRequest) {
+		List<SpeakingGrade> speakingGrades = speakingGradeRepository.findAllByMemberId(memberId);
+		if (speakingGrades.size() != 2) {
+			throw new InvalidSizeSpeakingGrade();
+		}
+		speakingGrades.sort(
+			(o1, o2) -> Math.toIntExact(o1.getId() - o2.getId())
+		);
+		SpeakingGrade learnerInfo = speakingGrades.get(0);
+		SpeakingGrade giverInfo = speakingGrades.get(1);
+		log.debug("[BEFORE MODIFY] 1st SpeakingGrade = {}, 2nd SpeakingGrade = {}", learnerInfo, giverInfo);
+		learnerInfo.modify(
+			memberModifyRequest.getLearnerLanguage(),
+			memberModifyRequest.getLearnerLevel());
+		giverInfo.modify(
+			memberModifyRequest.getGiverLanguage(),
+			memberModifyRequest.getGiverLevel());
+		log.debug("[AFTER MODIFY] 1st SpeakingGrade = {}, 2nd SpeakingGrade = {}", learnerInfo, giverInfo);
+		return Arrays.asList(learnerInfo, giverInfo);
 	}
 }

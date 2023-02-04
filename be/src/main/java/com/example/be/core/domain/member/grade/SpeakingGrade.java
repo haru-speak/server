@@ -38,4 +38,15 @@ public class SpeakingGrade {
 		this.level = level;
 		this.member = member;
 	}
+
+	public void modify(SpeakingGradeLanguage language, SpeakingGradeLevel level) {
+		this.language = language;
+		this.level = level;
+	}
+
+	@Override
+	public String toString() {
+		return "type: " + this.type + ", language: " + this.language
+			+ ", level: " + this.level + ", memberId: " + this.member.getId();
+	}
 }

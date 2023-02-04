@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SubjectMemberRepository extends JpaRepository<SubjectMember, Long> {
 
+	void deleteAllInBatchByMemberId(Long memberId);
 }
