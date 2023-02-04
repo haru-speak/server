@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +26,7 @@ public class LoginController {
 	}
 
 	@GetMapping("/login/kakao")
-	@ApiOperation(value = "OAuth 로그인입니다. (현재는 카카오 로그인만 지원)", hidden = true)
+	@ApiOperation(value = "OAuth 로그인입니다. (현재는 카카오 로그인만 지원)")
 	public BaseResponse<LoginResponse> login(@RequestParam @NotBlank final String code) {
 		LoginResponse response = loginService.login(code);
 		return new BaseResponse<>(OAUTH_LOGIN_SUCCESS, response);

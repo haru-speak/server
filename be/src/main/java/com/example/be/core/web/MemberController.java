@@ -57,5 +57,8 @@ public class MemberController {
 		return new BaseResponse<>(FIND_MEMBER_INFO_SUCCESS, response);
 	}
 
+	/**
+	 * Member Follow 기능
+	 */
 }
 
