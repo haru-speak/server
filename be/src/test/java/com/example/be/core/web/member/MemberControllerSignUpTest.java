@@ -47,7 +47,6 @@ class MemberControllerSignUpTest extends InitControllerTest {
 		@Nested
 		@DisplayName("정상적인 요청이라면")
 		class NormalTest {
-
 			@Test
 			@DisplayName("멤버 회원가입시 해당 멤버의 정보가 업데이트 된다.")
 			void sign_up_member() throws Exception {

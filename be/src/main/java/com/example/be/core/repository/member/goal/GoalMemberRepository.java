@@ -9,5 +9,4 @@ public interface GoalMemberRepository extends JpaRepository<GoalMember, Long> {
 	void deleteAllInBatchByMemberId(Long memberId);
 
 	List<GoalMember> findAllByMemberId(Long memberId);
-
 }

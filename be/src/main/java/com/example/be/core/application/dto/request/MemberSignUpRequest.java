@@ -18,7 +18,6 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberSignUpRequest {
 
-
 	@NotNull(message = "memberType 을 정확히 입력해주세요. "
 		+ "elementary_school, middle_school, high_school, university, office_worker, job_seeker, free 중 하나여야 합니다.")
 	@Schema(enumAsRef = true, description = "멤버의 타입 선택, NOT NULL",

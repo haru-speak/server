@@ -9,5 +9,4 @@ public interface SubjectMemberRepository extends JpaRepository<SubjectMember, Lo
 	void deleteAllInBatchByMemberId(Long memberId);
 
 	List<SubjectMember> findAllByMemberId(Long memberId);
-
 }

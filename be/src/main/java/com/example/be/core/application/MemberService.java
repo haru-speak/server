@@ -48,7 +48,7 @@ public class MemberService {
 	private final SubjectRepository subjectRepository;
 	private final SubjectMemberRepository subjectMemberRepository;
 	private final FollowRepository followRepository;
-
+  
 	public MemberService(MemberRepository memberRepository,
 		SpeakingGradeRepository speakingGradeRepository, GoalRepository goalRepository,
 		GoalMemberRepository goalMemberRepository, SubjectRepository subjectRepository,
@@ -97,7 +97,6 @@ public class MemberService {
 		return memberRepository.findById(memberId)
 			.orElseThrow(NotFoundMemberIdException::new);
 	}
-
 	private boolean hasNotSpeakingTestGoal(Set<Long> goals) {
 		return !goals.contains(SPEAKING_TEST_GOAL_ID);
 	}

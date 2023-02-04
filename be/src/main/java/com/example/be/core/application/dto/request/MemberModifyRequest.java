@@ -19,7 +19,6 @@ import org.hibernate.validator.constraints.URL;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberModifyRequest {
 
-
 	@NotBlank(message = "닉네임이 빈 값이어서는 안됩니다. 변경하지 않았다면, 기존 값입니다.")
 	@Schema(type = "String", description = "변경할 닉네임, 변경하지 않았다면, 기존 값입니다.")
 	private String nickname;
