@@ -1,4 +1,4 @@
-package com.example.be.common.exception.speakinglog;
+package com.example.be.common.exception.member;
 
 import com.example.be.common.exception.BaseException;
 import com.example.be.common.exception.ErrorCodeAndMessages;

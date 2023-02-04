@@ -13,14 +13,17 @@ import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.StudyController;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-@DisplayName("컨트롤러 테스트 : 스터디 생성")
+@WebMvcTest(StudyController.class)
+@DisplayName("컨트롤러 테스트 : Study 생성")
 class StudyControllerCreatTest extends InitControllerTest {
 
   @Nested
@@ -48,6 +51,7 @@ class StudyControllerCreatTest extends InitControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(post("/study")
+            .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
             .content(objectMapper.writeValueAsString(request))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));

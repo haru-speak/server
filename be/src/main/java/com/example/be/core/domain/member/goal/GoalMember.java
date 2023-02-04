@@ -1,4 +1,4 @@
-package com.example.be.core.domain.goal;
+package com.example.be.core.domain.member.goal;
 
 import com.example.be.core.domain.member.Member;
 import javax.persistence.Column;
@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @Entity
@@ -25,15 +24,14 @@ public class GoalMember {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "goal_id")
+    private Goal goal;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "goal_id")
-    private Goal goal;
-
-    public GoalMember(Member member, Goal goal) {
-        this.member = member;
+    public GoalMember(Goal goal, Member member) {
         this.goal = goal;
+        this.member = member;
     }
 }

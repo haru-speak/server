@@ -13,18 +13,21 @@ import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.SpeakingLogController;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+@WebMvcTest(SpeakingLogController.class)
 @DisplayName("컨트롤러 테스트 : SpeakingLog 생성")
 class SpeakingLogControllerCreateTest extends InitControllerTest {
     @Nested
     @DisplayName("Speaking Log 생성할 때")
-    class createTest {
+    class CreateTest {
 
         @Nested
         @DisplayName("정상적인 요청이라면")
@@ -46,6 +49,7 @@ class SpeakingLogControllerCreateTest extends InitControllerTest {
 
                 //when
                 ResultActions resultActions = mockMvc.perform(post("/speaking-log")
+                    .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
                     .content(objectMapper.writeValueAsString(request))
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType(MediaType.APPLICATION_JSON_VALUE));

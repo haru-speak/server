@@ -1,7 +1,7 @@
 package com.example.be.core.application;
 
 import com.example.be.common.exception.assignment.NotFoundAssignmentIdException;
-import com.example.be.common.exception.speakinglog.NotFoundMemberIdException;
+import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.dto.request.AssignmentRequest;
 import com.example.be.core.application.dto.response.AssignmentDetailResponse;
@@ -18,7 +18,6 @@ import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

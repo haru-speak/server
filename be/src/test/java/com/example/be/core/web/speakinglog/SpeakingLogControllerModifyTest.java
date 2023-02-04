@@ -12,13 +12,16 @@ import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.SpeakingLogController;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+@WebMvcTest(SpeakingLogController.class)
 @DisplayName("컨트롤러 테스트 : SpeakingLog 수정")
 class SpeakingLogControllerModifyTest extends InitControllerTest {
 
@@ -62,6 +65,7 @@ class SpeakingLogControllerModifyTest extends InitControllerTest {
                 //when
                 ResultActions resultActions = mockMvc.perform(
                     put("/speaking-log/{speakingLogId}", speakingLogId)
+                        .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(request)));

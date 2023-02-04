@@ -10,31 +10,25 @@ import lombok.Getter;
 public class MemberResponse {
 
   @Schema(type = "Long", description = "멤버 ID, NOT NULL")
-  @NotNull
-  @Positive
   private final Long memberId;
 
   @Schema(type = "String", description = "이름, NOT NULL")
-  @NotBlank
   private final String nickname;
 
-  @Schema(type = "String", description = "이메일, NOT NULL")
-  @NotBlank
+  @Schema(type = "String", description = "이메일, NULL")
   private final String email;
 
-  @Schema(type = "String", description = "비밀번호, NOT NULL")
-  @NotBlank
-  private final String password;
-
-  @Schema(type = "String", description = "프로필 이미지, NOT NULL")
+  @Schema(type = "String", description = "프로필 이미지, NULL")
   private final String profileImage;
 
-  public MemberResponse(Long memberId, String nickname, String email, String password, String profileImage) {
+  @Schema(type = "String", description = "유니크 ID")
+  private final String uniqueId;
+
+  public MemberResponse(Long memberId, String nickname, String email, String profileImage, String uniqueId) {
     this.memberId = memberId;
     this.nickname = nickname;
     this.email = email;
-    this.password = password;
     this.profileImage = profileImage;
+    this.uniqueId = uniqueId;
   }
-
 }

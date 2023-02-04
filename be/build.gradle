@@ -45,6 +45,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // Test
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // TestContainers

@@ -16,13 +16,16 @@ import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.core.domain.speakinglog.SpeakingLogType;
 import com.example.be.core.web.InitControllerTest;
+import com.example.be.core.web.SpeakingLogController;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+@WebMvcTest(SpeakingLogController.class)
 @DisplayName("컨트롤러 테스트 : SpeakingLog 전체 조회")
 class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 
@@ -42,6 +45,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 				@DisplayName("ALL TYPE 스피킹 로그 조회시 해당 날짜의 ALL TYPE 스피킹 로그가 조회된다")
 				void find_all_type_speaking_log_with_date() throws Exception {
 					//given
+					Long memberId = 1L;
 					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest("all", "20230108");
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, LocalDate.parse("20230108", BASIC_ISO_DATE),null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
@@ -51,6 +55,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 
 					//when
 					ResultActions resultActions = mockMvc.perform(get("/speaking-log?type=all&date=20230108")
+						.header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -66,6 +71,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 				@DisplayName("타입 없이 스피킹 로그 조회시 해당 날짜의 MY TYPE 스피킹 로그가 조회된다.")
 				void find_no_type_speaking_log_with_date() throws Exception {
 					//given
+					Long memberId = 1L;
 					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest(null, "20230108");
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, LocalDate.parse("20230108", BASIC_ISO_DATE), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
@@ -75,6 +81,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 
 					//when
 					ResultActions resultActions = mockMvc.perform(get("/speaking-log?date=20230108")
+						.header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -95,6 +102,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 				@DisplayName("ALL TYPE 스피킹 로그 조회시 오늘 날짜의 ALL TYPE 스피킹 로그가 조회된다")
 				void find_all_type_speaking_log_with_no_date() throws Exception {
 					//given
+					Long memberId = 1L;
 					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest("all", null);
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, LocalDate.now(), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
@@ -104,6 +112,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 
 					//when
 					ResultActions resultActions = mockMvc.perform(get("/speaking-log?type=all")
+						.header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -119,6 +128,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 				@DisplayName("타입 없이 스피킹 로그 조회시 오늘 날짜의 MY TYPE 스피킹 로그가 조회된다")
 				void find_no_type_speaking_log_with_no_date() throws Exception {
 					//given
+					Long memberId = 1L;
 					SpeakingLogConditionRequest speakingLogConditionRequest = new SpeakingLogConditionRequest(null, null);
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, LocalDate.now(), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
@@ -128,6 +138,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 
 					//when
 					ResultActions resultActions = mockMvc.perform(get("/speaking-log")
+						.header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -153,10 +164,12 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 				@DisplayName("스피킹 로그 조회시 Error가 발생한다.")
 				void find_wrong_type_speaking_log() throws Exception {
 					//given
+					Long memberId = 1L;
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_TYPE_ERROR, null);
 
 					//when
 					ResultActions resultActions = mockMvc.perform(get("/speaking-log?type=nathan")
+						.header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -174,10 +187,12 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 				@DisplayName("스피킹 로그 조회시 Error가 발생한다.")
 				void find_wrong_date_format_speaking_log() throws Exception {
 					//given
+					Long memberId = 1L;
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(SPEAKING_LOG_DATE_FORMAT_ERROR, null);
 
 					//when
 					ResultActions resultActions = mockMvc.perform(get("/speaking-log?date=2023^^0108")
+						.header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
 						.accept(MediaType.APPLICATION_JSON_VALUE)
 						.contentType(MediaType.APPLICATION_JSON_VALUE));
 

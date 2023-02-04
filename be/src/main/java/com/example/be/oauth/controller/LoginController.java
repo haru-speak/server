@@ -27,7 +27,7 @@ public class LoginController {
 	}
 
 	@GetMapping("/login/kakao")
-	@ApiOperation(value = "OAuth 로그인입니다. (현재는 카카오 로그인만 지원)")
+	@ApiOperation(value = "OAuth 로그인입니다. (현재는 카카오 로그인만 지원)", hidden = true)
 	public BaseResponse<LoginResponse> login(@RequestParam @NotBlank final String code) {
 		LoginResponse response = loginService.login(code);
 		return new BaseResponse<>(OAUTH_LOGIN_SUCCESS, response);

@@ -1,4 +1,4 @@
-package com.example.be.core.tool;
+package com.example.be.tool;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.AnonymousAWSCredentials;

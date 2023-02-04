@@ -3,7 +3,6 @@ package com.example.be.common.exception;
 import static com.example.be.common.exception.ErrorCodeAndMessages.BAD_REQUEST_ERROR;
 
 import com.example.be.common.response.BaseResponse;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +22,12 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	private BaseResponse<Void> handleBadRequest(HttpMessageNotReadableException e) {
-		log.error("HttpMessageNotReadableException: {}", e.getMessage());
-		return BaseResponse.error(BAD_REQUEST_ERROR.getCode(),
-			":".split(Objects.requireNonNull(e.getMessage()))[0]);
+		Throwable mostSpecificCause = e.getMostSpecificCause();
+		String errorMessage = e.getMessage();
+		if (mostSpecificCause != null) {
+			errorMessage = mostSpecificCause.getMessage();
+		}
+		return BaseResponse.error(BAD_REQUEST_ERROR.getCode(), errorMessage);
 	}
 
 	/**

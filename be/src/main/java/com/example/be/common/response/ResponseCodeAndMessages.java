@@ -33,6 +33,12 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	REISSUE_ACCESS_TOKEN_SUCCESS("S-OA002", "ACCESS TOKEN 재발급에 성공했습니다."),
 
 	/**
+	 * Member
+	 */
+	SIGN_UP_MEMBER_SUCCESS("S-M001", "멤버의 회원 등록에 성공했습니다."),
+	MODIFY_MEMBER_INFO_SUCCESS("S-M002", "멤버의 회원 정보 변경에 성공했습니다."),
+
+	/**
 	 Study
 	 */
 	CREATE_STUDY_SUCCESS("S-S001", "스터디 생성을 성공했습니다."),
