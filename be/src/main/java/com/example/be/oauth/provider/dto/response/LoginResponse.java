@@ -1,4 +1,4 @@
-package com.example.be.oauth.provider.dto;
+package com.example.be.oauth.provider.dto.response;
 
 import lombok.Getter;
 

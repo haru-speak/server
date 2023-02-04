@@ -1,6 +1,6 @@
 package com.example.be.oauth.provider.client;
 
-import com.example.be.oauth.provider.dto.KakaoAccessTokenResponse;
+import com.example.be.oauth.provider.dto.response.KakaoAccessTokenResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

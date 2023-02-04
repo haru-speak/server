@@ -6,7 +6,7 @@ import com.example.be.core.domain.member.Member;
 import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.oauth.provider.JwtProvider;
 import com.example.be.oauth.provider.LoginService;
-import com.example.be.oauth.provider.dto.LoginResponse;
+import com.example.be.oauth.provider.dto.response.LoginResponse;
 import com.example.be.tool.OAuthMocks;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import java.io.IOException;
@@ -51,7 +51,7 @@ class OAuthLoginIntegrationTest {
 		WireMock.setScenarioState("Kakao Login Success", "Started");
 
 		//when
-		LoginResponse response = loginService.login("code");
+		LoginResponse response = loginService.login("code", Boolean.FALSE);
 		String accessToken = response.getAccessToken();
 		String refreshToken = response.getRefreshToken();
 		Long memberId = response.getMemberId();
@@ -77,7 +77,7 @@ class OAuthLoginIntegrationTest {
 		));
 
 		//when
-		LoginResponse response = loginService.login("code");
+		LoginResponse response = loginService.login("code", Boolean.FALSE);
 		String accessToken = response.getAccessToken();
 		String refreshToken = response.getRefreshToken();
 		Long memberId = response.getMemberId();
