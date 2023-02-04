@@ -7,7 +7,6 @@ import com.example.be.core.application.MemberService;
 import com.example.be.core.application.dto.request.MemberSignUpRequest;
 import com.example.be.core.application.dto.response.MemberSignUpResponse;
 import com.example.be.core.domain.member.MemberType;
-import com.example.be.core.domain.member.SpeakingTestType;
 import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import java.util.Arrays;

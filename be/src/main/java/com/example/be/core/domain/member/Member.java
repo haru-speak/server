@@ -24,6 +24,8 @@ public class Member extends BaseEntity {
 
 	private String nickname;
 
+	private String introduce;
+
 	@Column(unique = true)
 	private String email;
 
@@ -52,5 +54,16 @@ public class Member extends BaseEntity {
 
 	public void updateProfileImage(String profileImage) {
 		this.profileImage = profileImage;
+	}
+
+	public void modifyMyInformation(String nickname, String email, String profileImage, String introduce,
+		MemberType memberType, Boolean alarmStatus, SpeakingTestType testType) {
+		this.nickname = nickname;
+		this.email = email;
+		this.profileImage = profileImage;
+		this.introduce = introduce;
+		this.memberType = memberType;
+		this.alarmStatus = alarmStatus;
+		this.testType = testType;
 	}
 }

@@ -5,9 +5,7 @@ import com.example.be.core.domain.member.SpeakingTestType;
 import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -23,7 +21,8 @@ public class MemberSignUpRequest {
 	@NotNull(message = "memberType 을 정확히 입력해주세요. "
 		+ "elementary_school, middle_school, high_school, university, office_worker, job_seeker, free 중 하나여야 합니다.")
 	@Schema(enumAsRef = true, description = "멤버의 타입 선택, NOT NULL",
-		allowableValues = {"\"elementary_school\"", "\"middle_school\"", "\"high_school\"", "\"university\"", "\"office_worker\"", "\"job_seeker\"", "\"free\""})
+		allowableValues = {"\"elementary_school\"", "\"middle_school\"", "\"high_school\"",
+			"\"university\"", "\"office_worker\"", "\"job_seeker\"", "\"free\""})
 	private MemberType memberType;
 
 	@NotNull(message = "learnerLanguage 를 정확히 입력해주세요. "

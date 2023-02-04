@@ -1,18 +1,17 @@
 package com.example.be.core.web.member;
 
-import static com.example.be.common.response.ResponseCodeAndMessages.SIGN_UP_MEMBER_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_MEMBER_INFO_SUCCESS;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.MemberService;
-import com.example.be.core.application.dto.request.MemberSignUpRequest;
 import com.example.be.core.application.dto.response.GoalResponse;
-import com.example.be.core.application.dto.response.MemberSignUpResponse;
+import com.example.be.core.application.dto.response.MemberResponse;
 import com.example.be.core.application.dto.response.SubjectResponse;
 import com.example.be.core.domain.member.MemberType;
 import com.example.be.core.domain.member.SpeakingTestType;
@@ -32,33 +31,26 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-
 @WebMvcTest(MemberController.class)
-@DisplayName("컨트롤러 테스트 : Member 회원가입")
-class MemberControllerSignUpTest extends InitControllerTest {
+@DisplayName("컨트롤러 테스트 : Member 마이 페이지 조회")
+class MemberControllerMyPageTest extends InitControllerTest {
 
 	@MockBean
 	private MemberService memberService;
 
 	@Nested
-	@DisplayName("Member 회원가입을 할 때")
-	class SignUpTest {
+	@DisplayName("Member 개인정보를 조회 할 때")
+	class ModifyTest {
 
 		@Nested
 		@DisplayName("정상적인 요청이라면")
 		class NormalTest {
+
 			@Test
-			@DisplayName("멤버 회원가입시 해당 멤버의 정보가 업데이트 된다.")
-			void sign_up_member() throws Exception {
-			    //given
+			@DisplayName("해당 멤버의 정보가 조회된다.")
+			void modify_member() throws Exception {
+				//given
 				Long memberId = 1L;
-				List<Long> goals = Arrays.asList(1L, 2L);
-				List<Long> subjects = Arrays.asList(2L ,7L, 8L);
-
-				MemberSignUpRequest request = new MemberSignUpRequest("university",
-					"eng", "1", "kor", "2",
-					goals, subjects, Boolean.FALSE, "opic");
-
 				List<GoalResponse> goalResponses = Arrays.asList(
 					GoalResponse.of(new Goal(1L, "일상 속 유용한 표현 배우기!")),
 					GoalResponse.of(new Goal(2L, "다른 사람들의 피드백!"))
@@ -69,8 +61,12 @@ class MemberControllerSignUpTest extends InitControllerTest {
 					SubjectResponse.of(new Subject(8L, "동네"))
 				);
 
-				MemberSignUpResponse response = new MemberSignUpResponse(
+				MemberResponse response = new MemberResponse(
 					memberId,
+					"나단",
+					null,
+					"https://s3.profile_img1.png",
+					"영어를 잘하고 싶은 나단입니다.",
 					MemberType.UNIVERSITY,
 					SpeakingGradeLanguage.ENG,
 					SpeakingGradeLevel.LEVEL_FOUR,
@@ -79,18 +75,18 @@ class MemberControllerSignUpTest extends InitControllerTest {
 					goalResponses,
 					subjectResponses,
 					Boolean.FALSE,
-					null
+					SpeakingTestType.OPIC,
+					0,
+					0
 				);
 
-				BaseResponse<MemberSignUpResponse> baseResponse = new BaseResponse<>(
-					SIGN_UP_MEMBER_SUCCESS, response);
-				when(memberService.signUp(refEq(memberId), refEq(request)))
+				BaseResponse<MemberResponse> baseResponse = new BaseResponse<>(FIND_MEMBER_INFO_SUCCESS, response);
+				when(memberService.findById(refEq(memberId)))
 					.thenReturn(response);
 
-			    //when
-				ResultActions resultActions = mockMvc.perform(post("/member")
+				//when
+				ResultActions resultActions = mockMvc.perform(get("/member/mypage")
 					.header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
-					.content(objectMapper.writeValueAsString(request))
 					.accept(MediaType.APPLICATION_JSON_VALUE)
 					.contentType(MediaType.APPLICATION_JSON_VALUE));
 
@@ -101,4 +97,5 @@ class MemberControllerSignUpTest extends InitControllerTest {
 			}
 		}
 	}
+
 }

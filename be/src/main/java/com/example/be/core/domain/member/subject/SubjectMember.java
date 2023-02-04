@@ -1,7 +1,6 @@
 package com.example.be.core.domain.member.subject;
 
 import com.example.be.core.domain.member.Member;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,5 +33,4 @@ public class SubjectMember {
 		this.subject = subject;
 		this.member = member;
 	}
-
 }

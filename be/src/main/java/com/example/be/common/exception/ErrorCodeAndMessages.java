@@ -37,6 +37,11 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	ASSIGNMENT_ID_NOT_FOUND_ERROR("E-NF004", "과제 아이디를 찾을 수 없습니다."),
 	GOAL_ID_NOT_FOUND_ERROR("E-NF005", "목표 아이디를 찾을 수 없습니다."),
 	SUBJECT_ID_NOT_FOUND_ERROR("E-NF006", "주제 아이디를 찾을 수 없습니다."),
+  
+	/**
+	 * 500 Server Error
+	 */
+	SPEAKING_GRADE_COUNT_ERROR("E-SE001", "스피킹 등급의 개수가 2개가 아닙니다."),
 	;
 
 	private final String code;

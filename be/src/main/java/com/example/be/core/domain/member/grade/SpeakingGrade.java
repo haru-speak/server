@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class SpeakingGrade {
 	private SpeakingGradeLevel level;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
 	private Member member;
 
 	public SpeakingGrade(SpeakingGradeType type, SpeakingGradeLanguage language,
@@ -37,5 +39,16 @@ public class SpeakingGrade {
 		this.language = language;
 		this.level = level;
 		this.member = member;
+	}
+
+	public void modify(SpeakingGradeLanguage language, SpeakingGradeLevel level) {
+		this.language = language;
+		this.level = level;
+	}
+
+	@Override
+	public String toString() {
+		return "type: " + this.type + ", language: " + this.language
+			+ ", level: " + this.level + ", memberId: " + this.member.getId();
 	}
 }

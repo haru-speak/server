@@ -6,7 +6,6 @@ import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import java.util.List;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class MemberSignUpResponse {
