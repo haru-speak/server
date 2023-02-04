@@ -6,6 +6,7 @@ import com.example.be.core.domain.assignment.AssignmentMember;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
 import com.example.be.core.domain.study.Study;
+import com.example.be.core.domain.study.StudyDay;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.repository.assignment.AssignmentMemberRepository;
 import com.example.be.core.repository.assignment.AssignmentRepository;
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -150,7 +152,7 @@ public class DataBaseConfigurator implements InitializingBean {
 					"study-posterImage" + i,
 					"study-language" + i,
 					i,
-					"study-timePerWeek" + i,
+					EnumSet.of(StudyDay.MONDAY),
 					"study-rule" + i,
 					"study-region" + i,
 					i,

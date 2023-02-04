@@ -1,7 +1,6 @@
 package com.example.be.core.application.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 
@@ -22,7 +21,6 @@ public class AssignmentResponse {
 
   @Schema(type = "date", description = "제출 기한, NOT NULL")
   private final LocalDateTime deadline;
-
   public AssignmentResponse(Long assignmentId, String assignmentTitle, Long studyId,
       String studyTitle, LocalDateTime deadline) {
     this.assignmentId = assignmentId;

@@ -1,8 +1,12 @@
 package com.example.be.core.domain.study;
 
 import com.example.be.core.domain.BaseEntity;
+import java.util.EnumSet;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +40,8 @@ public class Study extends BaseEntity {
 
     private Integer level;
 
-    private String timePerWeek;
+    @Convert(converter = SetStudyDayConverter.class)
+    private EnumSet<StudyDay> studyDay;
 
     private String rule;
 
@@ -51,14 +56,14 @@ public class Study extends BaseEntity {
     private String grade;
 
     public Study(String title, String content, String posterImage, String language, Integer level,
-        String timePerWeek, String rule, String region, Integer maxCapacity, Integer minCapacity,
-        String speakingTest, String grade) {
+        EnumSet<StudyDay> studyDay, String rule, String region, Integer maxCapacity,
+        Integer minCapacity, String speakingTest, String grade) {
         this.title = title;
         this.content = content;
         this.posterImage = posterImage;
         this.language = language;
         this.level = level;
-        this.timePerWeek = timePerWeek;
+        this.studyDay = studyDay;
         this.rule = rule;
         this.region = region;
         this.maxCapacity = maxCapacity;
@@ -68,14 +73,14 @@ public class Study extends BaseEntity {
     }
 
     public void modify(String title, String content, String posterImage, String language, Integer level,
-        String timePerWeek, String rule, String region, Integer maxCapacity, Integer minCapacity,
-        String speakingTest, String grade) {
+        EnumSet<StudyDay> studyDay, String rule, String region, Integer maxCapacity,
+        Integer minCapacity, String speakingTest, String grade) {
         this.title = title;
         this.content = content;
         this.posterImage = posterImage;
         this.language = language;
         this.level = level;
-        this.timePerWeek = timePerWeek;
+        this.studyDay = studyDay;
         this.rule = rule;
         this.region = region;
         this.maxCapacity = maxCapacity;

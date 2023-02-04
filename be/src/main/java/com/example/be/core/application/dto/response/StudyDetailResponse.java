@@ -1,7 +1,9 @@
 package com.example.be.core.application.dto.response;
 
+import com.example.be.core.domain.study.StudyDay;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
+import java.util.EnumSet;
 import java.util.List;
 import javax.validation.constraints.Positive;
 import lombok.Getter;
@@ -43,8 +45,8 @@ public class StudyDetailResponse {
   @Schema(type = "String", description = "지역, NULL")
   private final String region;
 
-  @Schema(type = "String", description = "주 횟수와 요일, NOT NULL")
-  private final String timePerWeek;
+  @Schema(type = "String", description = "스터디 하는 요일, NOT NULL")
+  private final String studyDay;
 
   @Schema(type = "String", description = "포스터 이미지, NOT NULL")
   private final String posterImage;
@@ -57,7 +59,7 @@ public class StudyDetailResponse {
 
   public StudyDetailResponse(Long studyId, String title, String content, Integer level,
       String language, String speakingTest, String grade, Integer maxCapacity, Integer minCapacity,
-      String rule, String region, String timePerWeek, String posterImage, Integer likeCount,
+      String rule, String region, String studyDay, String posterImage, Integer likeCount,
       Boolean isLiked) {
     this.studyId = studyId;
     this.title = title;
@@ -70,7 +72,7 @@ public class StudyDetailResponse {
     this.minCapacity = minCapacity;
     this.rule = rule;
     this.region = region;
-    this.timePerWeek = timePerWeek;
+    this.studyDay = studyDay;
     this.posterImage = posterImage;
     this.likeCount = likeCount;
     this.isLiked = isLiked;

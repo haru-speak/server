@@ -8,6 +8,7 @@ import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.application.dto.response.StudyResponse;
 import com.example.be.core.domain.member.Member;
+import com.example.be.core.domain.study.SetStudyDayConverter;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.repository.member.MemberRepository;
@@ -35,9 +36,10 @@ public class StudyService {
   private final StudyMemberRepository studyMemberRepository;
   
   private final MemberRepository memberRepository;
-  
+
   private static final Integer ZERO = 0;
-  
+  SetStudyDayConverter setStudyDayConverter = new SetStudyDayConverter();
+
   public StudyService(StudyRepository studyRepository,
       StudyFavoriteRepository studyFavoriteRepository,
       StudyCommentRepository studyCommentRepository,
@@ -63,7 +65,7 @@ public class StudyService {
         studyRequest.getPosterImage(),
         studyRequest.getLanguage(),
         studyRequest.getLevel(),
-        studyRequest.getTimePerWeek(),
+        setStudyDayConverter.convertToEntityAttribute(studyRequest.getStudyDay()),
         studyRequest.getRule(),
         studyRequest.getRegion(),
         studyRequest.getMinCapacity(),
@@ -93,7 +95,7 @@ public class StudyService {
         study.getMinCapacity(),
         study.getRule(),
         studyRequest.getRegion(),
-        study.getTimePerWeek(),
+        study.getStudyDay().toString(),
         study.getPosterImage(),
         ZERO,
         Boolean.FALSE
@@ -144,7 +146,7 @@ public class StudyService {
         study.getMinCapacity(),
         study.getRule(),
         study.getRegion(),
-        study.getTimePerWeek(),
+        study.getStudyDay().toString(),
         study.getPosterImage(),
         getStudyLikeCount(study),
         hasStudyFavorite(loginMemberId, study)
@@ -164,7 +166,7 @@ public class StudyService {
         studyRequest.getPosterImage(),
         studyRequest.getLanguage(),
         studyRequest.getLevel(),
-        studyRequest.getTimePerWeek(),
+        setStudyDayConverter.convertToEntityAttribute(studyRequest.getStudyDay()),
         studyRequest.getRule(),
         studyRequest.getRegion(),
         studyRequest.getMaxCapacity(),
@@ -188,7 +190,7 @@ public class StudyService {
         study.getMinCapacity(),
         study.getRule(),
         study.getRegion(),
-        study.getTimePerWeek(),
+        study.getStudyDay().toString(),
         study.getPosterImage(),
         getStudyLikeCount(study),
         hasStudyFavorite(loginMemberId, study)
