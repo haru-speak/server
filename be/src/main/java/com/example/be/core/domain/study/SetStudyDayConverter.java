@@ -14,7 +14,7 @@ public class SetStudyDayConverter implements AttributeConverter<EnumSet<StudyDay
     @Override
     public String convertToDatabaseColumn(EnumSet<StudyDay> attribute) {
         StringBuilder sb = new StringBuilder();
-        attribute.stream().forEach(e -> sb.append(e.name() + ","));
+        attribute.stream().forEach(e -> sb.append(e.getStudyDay() + ","));
         String result = sb.toString();
         if (result.charAt(result.length() - 1) == ',') result = result.substring(0, result.length() - 1);
         log.debug("[DB 에서 사용될 StudyDay 정보] : {}", result);

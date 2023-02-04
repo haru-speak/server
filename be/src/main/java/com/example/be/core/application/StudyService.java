@@ -146,7 +146,7 @@ public class StudyService {
         study.getMinCapacity(),
         study.getRule(),
         study.getRegion(),
-        study.getStudyDay().toString(),
+        setStudyDayConverter.convertToDatabaseColumn(study.getStudyDay()),
         study.getPosterImage(),
         getStudyLikeCount(study),
         hasStudyFavorite(loginMemberId, study)
@@ -190,7 +190,7 @@ public class StudyService {
         study.getMinCapacity(),
         study.getRule(),
         study.getRegion(),
-        study.getStudyDay().toString(),
+        setStudyDayConverter.convertToDatabaseColumn(study.getStudyDay()),
         study.getPosterImage(),
         getStudyLikeCount(study),
         hasStudyFavorite(loginMemberId, study)
