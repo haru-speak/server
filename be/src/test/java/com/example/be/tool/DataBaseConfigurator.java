@@ -124,8 +124,8 @@ public class DataBaseConfigurator implements InitializingBean {
 				new Member(
 					"member" + i,
 					"member-email" + i + "@google.com",
-					"password1234" + i,
-					"profileImage" + i
+					"uniqueId1234" + i,
+					"https://s3.profile_img" + i + ".png"
 				));
 		}
 	}
