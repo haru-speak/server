@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
 			.excludePathPatterns(
 				"/error/**",
 				"/login/**",
+				"/app/**",
 				"/swagger-ui/**",
 				"/swagger-resources/**",
 				"/v3/api-docs/**",
