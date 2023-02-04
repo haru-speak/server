@@ -61,9 +61,7 @@ public class MemberService {
 
 	@Transactional
 	public MemberSignUpResponse signUp(Long memberId, MemberSignUpRequest memberSignUpRequest) {
-		Member member = memberRepository.findById(memberId)
-			.orElseThrow(NotFoundMemberIdException::new);
-
+		Member member = getMember(memberId);
 
 		if (hasNotSpeakingTestGoal(new HashSet<>(memberSignUpRequest.getGoals()))) {
 			memberSignUpRequest.updateSpeakingTestType(null);
@@ -90,6 +88,11 @@ public class MemberService {
 			member.getAlarmStatus(),
 			member.getTestType()
 		);
+	}
+
+	private Member getMember(Long memberId) {
+		return memberRepository.findById(memberId)
+			.orElseThrow(NotFoundMemberIdException::new);
 	}
 
 	private boolean hasNotSpeakingTestGoal(Set<Long> goals) {
@@ -141,8 +144,7 @@ public class MemberService {
 
 	@Transactional
 	public MemberResponse modify(Long memberId, MemberModifyRequest memberModifyRequest) {
-		Member member = memberRepository.findById(memberId)
-			.orElseThrow(NotFoundMemberIdException::new);
+		Member member = getMember(memberId);
 
 		member.modifyMyInformation(
 			memberModifyRequest.getNickname(),
@@ -194,13 +196,8 @@ public class MemberService {
 	}
 
 	private List<SpeakingGrade> modifyLearnerAndGiverSpeakingGrades(Long memberId, MemberModifyRequest memberModifyRequest) {
-		List<SpeakingGrade> speakingGrades = speakingGradeRepository.findAllByMemberId(memberId);
-		if (speakingGrades.size() != 2) {
-			throw new InvalidSizeSpeakingGrade();
-		}
-		speakingGrades.sort(
-			(o1, o2) -> Math.toIntExact(o1.getId() - o2.getId())
-		);
+		List<SpeakingGrade> speakingGrades = getSpeakingGrades(memberId);
+
 		SpeakingGrade learnerInfo = speakingGrades.get(0);
 		SpeakingGrade giverInfo = speakingGrades.get(1);
 		log.debug("[BEFORE MODIFY] 1st SpeakingGrade = {}, 2nd SpeakingGrade = {}", learnerInfo, giverInfo);
@@ -212,5 +209,38 @@ public class MemberService {
 			memberModifyRequest.getGiverLevel());
 		log.debug("[AFTER MODIFY] 1st SpeakingGrade = {}, 2nd SpeakingGrade = {}", learnerInfo, giverInfo);
 		return Arrays.asList(learnerInfo, giverInfo);
+	}
+
+	private List<SpeakingGrade> getSpeakingGrades(Long memberId) {
+		List<SpeakingGrade> speakingGrades = speakingGradeRepository.findAllByMemberId(memberId);
+		if (speakingGrades.size() != 2) {
+			throw new InvalidSizeSpeakingGrade();
+		}
+		speakingGrades.sort(
+			(o1, o2) -> Math.toIntExact(o1.getId() - o2.getId())
+		);
+		return speakingGrades;
+	}
+
+	public MemberResponse findById(Long memberId) {
+		Member member = getMember(memberId);
+		List<SpeakingGrade> speakingGrades = getSpeakingGrades(memberId);
+
+		return new MemberResponse(
+			member.getId(),
+			member.getNickname(),
+			member.getEmail(),
+			member.getProfileImage(),
+			member.getIntroduce(),
+			member.getMemberType(),
+			speakingGrades.get(0).getLanguage(),
+			speakingGrades.get(0).getLevel(),
+			speakingGrades.get(1).getLanguage(),
+			speakingGrades.get(1).getLevel(),
+			getGoalResponses(goalMemberRepository.findAllByMemberId(memberId)),
+			getSubjectResponses(subjectMemberRepository.findAllByMemberId(memberId)),
+			member.getAlarmStatus(),
+			member.getTestType()
+		);
 	}
 }

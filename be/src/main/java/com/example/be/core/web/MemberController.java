@@ -1,5 +1,6 @@
 package com.example.be.core.web;
 
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_MEMBER_INFO_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_MEMBER_INFO_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.SIGN_UP_MEMBER_SUCCESS;
 
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +48,13 @@ public class MemberController {
 		@RequestBody @Valid final MemberModifyRequest memberModifyRequest) {
 		MemberResponse response = memberService.modify(memberId, memberModifyRequest);
 		return new BaseResponse<>(MODIFY_MEMBER_INFO_SUCCESS, response);
+	}
+
+	@GetMapping("/mypage")
+	@ApiOperation(value = "멤버의 마이 페이지 정보입니다.")
+	public BaseResponse<MemberResponse> myPage(@Login @Positive final Long memberId) {
+		MemberResponse response = memberService.findById(memberId);
+		return new BaseResponse<>(FIND_MEMBER_INFO_SUCCESS, response);
 	}
 
 }
