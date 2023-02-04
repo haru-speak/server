@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,8 +21,10 @@ public class Follow {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Member followerId;
+	@JoinColumn(name = "follower_id", nullable = false)
+	private Member follower;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Member followingId;
+	@JoinColumn(name = "following_id", nullable = false)
+	private Member following;
 }

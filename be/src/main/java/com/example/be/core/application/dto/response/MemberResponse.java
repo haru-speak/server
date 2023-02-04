@@ -24,12 +24,15 @@ public class MemberResponse {
   private final List<SubjectResponse> subjects;
   private final Boolean alarmStatus;
   private final SpeakingTestType testType;
+  private final Integer followerCount;
+  private final Integer followingCount;
 
   public MemberResponse(Long memberId, String nickname, String email, String profileImage,
       String introduce, MemberType memberType, SpeakingGradeLanguage learnerLanguage,
       SpeakingGradeLevel learnerLevel, SpeakingGradeLanguage giverLanguage,
       SpeakingGradeLevel giverLevel, List<GoalResponse> goals, List<SubjectResponse> subjects,
-      Boolean alarmStatus, SpeakingTestType testType) {
+      Boolean alarmStatus, SpeakingTestType testType, Integer followerCount,
+      Integer followingCount) {
     this.memberId = memberId;
     this.nickname = nickname;
     this.email = email;
@@ -44,5 +47,7 @@ public class MemberResponse {
     this.subjects = subjects;
     this.alarmStatus = alarmStatus;
     this.testType = testType;
+    this.followerCount = followerCount;
+    this.followingCount = followingCount;
   }
 }

@@ -18,6 +18,7 @@ import com.example.be.core.domain.member.goal.GoalMember;
 import com.example.be.core.domain.member.grade.SpeakingGrade;
 import com.example.be.core.domain.member.grade.SpeakingGradeType;
 import com.example.be.core.domain.member.subject.SubjectMember;
+import com.example.be.core.repository.member.FollowRepository;
 import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.member.goal.GoalMemberRepository;
 import com.example.be.core.repository.member.goal.GoalRepository;
@@ -46,17 +47,19 @@ public class MemberService {
 	private final GoalMemberRepository goalMemberRepository;
 	private final SubjectRepository subjectRepository;
 	private final SubjectMemberRepository subjectMemberRepository;
+	private final FollowRepository followRepository;
 
 	public MemberService(MemberRepository memberRepository,
 		SpeakingGradeRepository speakingGradeRepository, GoalRepository goalRepository,
 		GoalMemberRepository goalMemberRepository, SubjectRepository subjectRepository,
-		SubjectMemberRepository subjectMemberRepository) {
+		SubjectMemberRepository subjectMemberRepository, FollowRepository followRepository) {
 		this.memberRepository = memberRepository;
 		this.speakingGradeRepository = speakingGradeRepository;
 		this.goalRepository = goalRepository;
 		this.goalMemberRepository = goalMemberRepository;
 		this.subjectRepository = subjectRepository;
 		this.subjectMemberRepository = subjectMemberRepository;
+		this.followRepository = followRepository;
 	}
 
 	@Transactional
@@ -157,6 +160,8 @@ public class MemberService {
 		);
 
 		List<SpeakingGrade> learnerAndGiverInfo = modifyLearnerAndGiverSpeakingGrades(memberId, memberModifyRequest);
+		Integer followerCount = followRepository.countByFollowerId(memberId);
+		Integer followingCount = followRepository.countByFollowingId(memberId);
 
 		return new MemberResponse(
 			member.getId(),
@@ -172,7 +177,10 @@ public class MemberService {
 			getGoalResponses(modifyGoalMembers(memberModifyRequest, member)),
 			getSubjectResponses(modifySubjectMembers(memberModifyRequest, member)),
 			member.getAlarmStatus(),
-			member.getTestType());
+			member.getTestType(),
+			followerCount,
+			followingCount
+		);
 	}
 
 	private List<SubjectMember> modifySubjectMembers(MemberModifyRequest memberModifyRequest, Member member) {
@@ -225,7 +233,8 @@ public class MemberService {
 	public MemberResponse findById(Long memberId) {
 		Member member = getMember(memberId);
 		List<SpeakingGrade> speakingGrades = getSpeakingGrades(memberId);
-
+		Integer followerCount = followRepository.countByFollowerId(memberId);
+		Integer followingCount = followRepository.countByFollowingId(memberId);
 		return new MemberResponse(
 			member.getId(),
 			member.getNickname(),
@@ -240,7 +249,9 @@ public class MemberService {
 			getGoalResponses(goalMemberRepository.findAllByMemberId(memberId)),
 			getSubjectResponses(subjectMemberRepository.findAllByMemberId(memberId)),
 			member.getAlarmStatus(),
-			member.getTestType()
+			member.getTestType(),
+			followerCount,
+			followingCount
 		);
 	}
 }
