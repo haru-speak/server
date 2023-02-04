@@ -9,10 +9,12 @@ import com.example.be.common.exception.member.grade.InvalidSizeSpeakingGrade;
 import com.example.be.common.exception.member.subject.NotFoundSubjectIdException;
 import com.example.be.core.application.dto.request.MemberModifyRequest;
 import com.example.be.core.application.dto.request.MemberSignUpRequest;
+import com.example.be.core.application.dto.response.FollowResponse;
 import com.example.be.core.application.dto.response.GoalResponse;
 import com.example.be.core.application.dto.response.MemberResponse;
 import com.example.be.core.application.dto.response.MemberSignUpResponse;
 import com.example.be.core.application.dto.response.SubjectResponse;
+import com.example.be.core.domain.member.Follow;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.member.goal.GoalMember;
 import com.example.be.core.domain.member.grade.SpeakingGrade;
@@ -251,6 +253,19 @@ public class MemberService {
 			member.getTestType(),
 			followerCount,
 			followingCount
+		);
+	}
+
+	@Transactional
+	public FollowResponse follow(Long followerId, Long followingId) {
+
+		log.debug("follower id = {}, following id = {}", followerId, followingId);
+		Member follower = getMember(followerId);
+		Member following = getMember(followingId);
+		Follow follow = followRepository.save(new Follow(follower, following));
+		return new FollowResponse(
+			follow.getFollower().getId(),
+			follow.getFollowing().getId()
 		);
 	}
 }
