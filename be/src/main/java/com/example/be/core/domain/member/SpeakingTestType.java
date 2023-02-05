@@ -1,9 +1,8 @@
 package com.example.be.core.domain.member;
 
-import com.example.be.common.exception.member.InvalidSpeakingTestType;
+import com.example.be.common.exception.member.InvalidSpeakingTestTypeException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
-import java.util.Set;
 
 public enum SpeakingTestType {
 
@@ -26,6 +25,6 @@ public enum SpeakingTestType {
 		return Arrays.stream(values())
 			.filter(e -> e.name.equals(source.toUpperCase()))
 			.findAny()
-			.orElseThrow(InvalidSpeakingTestType::new);
+			.orElseThrow(InvalidSpeakingTestTypeException::new);
 	}
 }

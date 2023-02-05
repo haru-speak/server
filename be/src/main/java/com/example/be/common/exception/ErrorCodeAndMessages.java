@@ -37,6 +37,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	ASSIGNMENT_ID_NOT_FOUND_ERROR("E-NF004", "과제 아이디를 찾을 수 없습니다."),
 	GOAL_ID_NOT_FOUND_ERROR("E-NF005", "목표 아이디를 찾을 수 없습니다."),
 	SUBJECT_ID_NOT_FOUND_ERROR("E-NF006", "주제 아이디를 찾을 수 없습니다."),
+	FOLLOW_RELATIONSHIP_NOT_FOUND_ERROR("E-NF007", "팔로우 관계에 대해 찾을 수 없습니다."),
   
 	/**
 	 * 500 Server Error

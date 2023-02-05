@@ -3,9 +3,10 @@ package com.example.be.core.application;
 import static com.example.be.core.domain.member.grade.SpeakingGradeType.GIVER;
 import static com.example.be.core.domain.member.grade.SpeakingGradeType.LEARNER;
 
+import com.example.be.common.exception.member.NotFoundFollowRelationshipException;
 import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.common.exception.member.goal.NotFoundGoalIdException;
-import com.example.be.common.exception.member.grade.InvalidSizeSpeakingGrade;
+import com.example.be.common.exception.member.grade.InvalidSizeSpeakingGradeException;
 import com.example.be.common.exception.member.subject.NotFoundSubjectIdException;
 import com.example.be.core.application.dto.request.MemberModifyRequest;
 import com.example.be.core.application.dto.request.MemberSignUpRequest;
@@ -223,7 +224,7 @@ public class MemberService {
 	private List<SpeakingGrade> getSpeakingGrades(Long memberId) {
 		List<SpeakingGrade> speakingGrades = speakingGradeRepository.findAllByMemberId(memberId);
 		if (speakingGrades.size() != 2) {
-			throw new InvalidSizeSpeakingGrade();
+			throw new InvalidSizeSpeakingGradeException();
 		}
 		speakingGrades.sort(
 			(o1, o2) -> Math.toIntExact(o1.getId() - o2.getId())
@@ -259,10 +260,23 @@ public class MemberService {
 	@Transactional
 	public FollowResponse follow(Long followerId, Long followingId) {
 
-		log.debug("follower id = {}, following id = {}", followerId, followingId);
+		log.debug("[FOLLOW] follower id = {}, following id = {}", followerId, followingId);
 		Member follower = getMember(followerId);
 		Member following = getMember(followingId);
 		Follow follow = followRepository.save(new Follow(follower, following));
+		return new FollowResponse(
+			follow.getFollower().getId(),
+			follow.getFollowing().getId()
+		);
+	}
+
+	@Transactional
+	public FollowResponse cancelFollow(Long followerId, Long followingId) {
+
+		log.debug("[CANCEL FOLLOW] follower id = {}, following id = {}", followerId, followingId);
+		Follow follow = followRepository.findByFollowerIdAndFollowingId(followerId, followingId)
+			.orElseThrow(NotFoundFollowRelationshipException::new);
+		followRepository.delete(follow);
 		return new FollowResponse(
 			follow.getFollower().getId(),
 			follow.getFollowing().getId()

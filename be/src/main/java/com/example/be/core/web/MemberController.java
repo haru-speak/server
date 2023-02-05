@@ -1,5 +1,6 @@
 package com.example.be.core.web;
 
+import static com.example.be.common.response.ResponseCodeAndMessages.CANCEL_FOLLOW_MEMBER_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_MEMBER_INFO_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FOLLOW_MEMBER_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_MEMBER_INFO_SUCCESS;
@@ -17,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,6 +68,14 @@ public class MemberController {
 		@PathVariable @Positive final Long followingId) {
 		FollowResponse response = memberService.follow(memberId, followingId);
 		return new BaseResponse<>(FOLLOW_MEMBER_SUCCESS, response);
+	}
+
+	@DeleteMapping("/follow/{followingId}")
+	@ApiOperation(value = "멤버의 팔로우 취소입니다.")
+	public BaseResponse<FollowResponse> cancelFollow(@Login @Positive final Long memberId,
+		@PathVariable @Positive final Long followingId) {
+		FollowResponse response = memberService.cancelFollow(memberId, followingId);
+		return new BaseResponse<>(CANCEL_FOLLOW_MEMBER_SUCCESS, response);
 	}
 }
 
