@@ -53,8 +53,8 @@ public class AssignmentService {
             assignmentRequest.getTitle(),
             assignmentRequest.getDeadLine(),
             assignmentRequest.getContent(),
-            assignmentRequest.getVoiceRecord()
-        )
+            assignmentRequest.getVoiceRecord(),
+            assignmentRequest.getPhoto())
     );
 
     List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudyId(assignmentRequest.getStudyId());
@@ -63,7 +63,6 @@ public class AssignmentService {
         assignmentMemberRepository.save(
             new AssignmentMember(
                 studyMember.getMember(),
-                savedAssignment,
                 null,
                 "미제출"
             )
@@ -123,7 +122,8 @@ public class AssignmentService {
         assignmentRequest.getTitle(),
         assignmentRequest.getDeadLine(),
         assignmentRequest.getContent(),
-        assignmentRequest.getVoiceRecord()
+        assignmentRequest.getVoiceRecord(),
+        assignmentRequest.getPhoto()
     );
 
     return new AssignmentDetailResponse(

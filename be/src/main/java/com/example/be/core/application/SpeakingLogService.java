@@ -92,6 +92,7 @@ public class SpeakingLogService {
 				speakingLog.getId(),
 				speakingLog.getTitle(),
 				speakingLog.getVoiceRecord(),
+				speakingLog.getVoiceText(),
 				getFavoriteCount(speakingLog.getId()),
 				getCommentCount(speakingLog.getId()),
 				favoriteRepository.findByMemberIdAndSpeakingLog(memberId, speakingLog).isPresent(),

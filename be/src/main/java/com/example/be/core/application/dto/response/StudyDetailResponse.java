@@ -1,7 +1,9 @@
 package com.example.be.core.application.dto.response;
 
+import com.example.be.core.domain.study.StudyDay;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
+import java.util.EnumSet;
 import java.util.List;
 import javax.validation.constraints.Positive;
 import lombok.Getter;
@@ -25,20 +27,26 @@ public class StudyDetailResponse {
   @Schema(type = "String", description = "언어, NOT NULL")
   private final String language;
 
-  @Schema(type = "String", description = "목표, NOT NULL")
-  private final String goal;
+  @Schema(type = "String", description = "스피킹 시험, NOT NULL")
+  private final String speakingTest;
 
-  @Schema(type = "String", description = "자격증, NOT NULL")
-  private final String certificate;
+  @Schema(type = "String", description = "스피킹 시험에서 받는 등급, NOT NULL")
+  private final String grade;
 
   @Schema(type = "int", description = "최대 인원, NOT NULL")
-  private final Integer capacity;
+  private final Integer maxCapacity;
 
-  @Schema(type = "String", description = "규칙, NOT NULL")
+  @Schema(type = "int", description = "최소 인원, NOT NULL")
+  private final Integer minCapacity;
+
+  @Schema(type = "String", description = "대면, 비대면 규칙, NOT NULL")
   private final String rule;
 
-  @Schema(type = "Integer", description = "주 횟수, NOT NULL")
-  private final Integer timePerWeek;
+  @Schema(type = "String", description = "지역, NULL")
+  private final String region;
+
+  @Schema(type = "String", description = "스터디 하는 요일, NOT NULL")
+  private final String studyDay;
 
   @Schema(type = "String", description = "포스터 이미지, NOT NULL")
   private final String posterImage;
@@ -49,23 +57,24 @@ public class StudyDetailResponse {
   @Schema(type = "Boolean", description = "좋아요 여부, NOT NULL")
   private final Boolean isLiked;
 
-  @Schema(type = "List<StudyCommentResponse>", description = "댓글 리스트, NULLABLE")
-  private final List<StudyCommentResponse> comments;
-
-  public StudyDetailResponse(Long studyId, String title, String content, Integer level, String language, String goal, String certificate, Integer capacity, String rule, Integer timePerWeek, String posterImage, Integer likeCount, Boolean isLiked, List<StudyCommentResponse> comments) {
+  public StudyDetailResponse(Long studyId, String title, String content, Integer level,
+      String language, String speakingTest, String grade, Integer maxCapacity, Integer minCapacity,
+      String rule, String region, String studyDay, String posterImage, Integer likeCount,
+      Boolean isLiked) {
     this.studyId = studyId;
     this.title = title;
     this.content = content;
     this.level = level;
     this.language = language;
-    this.goal = goal;
-    this.certificate = certificate;
-    this.capacity = capacity;
+    this.speakingTest = speakingTest;
+    this.grade = grade;
+    this.maxCapacity = maxCapacity;
+    this.minCapacity = minCapacity;
     this.rule = rule;
-    this.timePerWeek = timePerWeek;
+    this.region = region;
+    this.studyDay = studyDay;
     this.posterImage = posterImage;
     this.likeCount = likeCount;
     this.isLiked = isLiked;
-    this.comments = comments;
   }
 }

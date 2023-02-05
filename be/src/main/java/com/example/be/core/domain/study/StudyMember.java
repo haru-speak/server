@@ -32,8 +32,11 @@ public class StudyMember {
     @JoinColumn(name = "study_id")
     private Study study;
 
-    public StudyMember(Member member, Study study) {
+    private Boolean leader;
+
+    public StudyMember(Member member, Study study, Boolean leader) {
         this.member = member;
         this.study = study;
+        this.leader = leader;
     }
 }

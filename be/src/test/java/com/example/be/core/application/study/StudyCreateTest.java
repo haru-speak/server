@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.core.domain.study.StudyDay;
+import java.util.EnumSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -32,9 +34,11 @@ class StudyCreateTest extends InitServiceTest {
                     "study",
                     "study",
                     "study",
+                    5,
                     1,
-                    "study",
-                    1,
+                    "대면",
+                    "서울",
+                    "월,화,수",
                     "study"
                 );
 

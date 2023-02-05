@@ -12,9 +12,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.core.domain.study.StudyDay;
 import com.example.be.core.web.InitControllerTest;
 import com.example.be.core.web.StudyController;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -43,9 +45,9 @@ class StudyControllerModifyTest extends InitControllerTest {
         Long studyId = 1L;
         Integer likeCount = 10;
         StudyRequest request = new StudyRequest("스터디1", "내용1", 3, "english",
-            "토익 800점", "toeic", 5, "비대면", 3, "asdzxcv");
-        StudyDetailResponse response = new StudyDetailResponse(memberId, "스터디1", "내용1", 3, "english",
-            "토익 800점", "toeic", 5, "비대면", 3, "asdzxcv", likeCount, false, new ArrayList<>());
+            "OPIC", "AL", 5, 1, "대면", "서울", "월,화,수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg");
+        StudyDetailResponse response = new StudyDetailResponse(studyId, "스터디 1", "스터디 1 입니다", 3, "english",
+            "OPIC", "AL", 5, 1, "대면", "서울", "월,화,수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg",likeCount, true);
         BaseResponse<StudyDetailResponse> baseResponse = new BaseResponse<>(MODIFY_STUDY_SUCCESS, response);
 
         when(studyService.modify(refEq(studyId), refEq(request)))

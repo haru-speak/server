@@ -5,10 +5,10 @@ import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
-import com.example.be.core.application.dto.response.StudyCommentResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.application.dto.response.StudyResponse;
 import com.example.be.core.domain.member.Member;
+import com.example.be.core.domain.study.SetStudyDayConverter;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.repository.member.MemberRepository;
@@ -16,7 +16,6 @@ import com.example.be.core.repository.study.StudyCommentRepository;
 import com.example.be.core.repository.study.StudyFavoriteRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +36,10 @@ public class StudyService {
   private final StudyMemberRepository studyMemberRepository;
   
   private final MemberRepository memberRepository;
-  
+
   private static final Integer ZERO = 0;
-  
+  SetStudyDayConverter setStudyDayConverter = new SetStudyDayConverter();
+
   public StudyService(StudyRepository studyRepository,
       StudyFavoriteRepository studyFavoriteRepository,
       StudyCommentRepository studyCommentRepository,
@@ -65,18 +65,21 @@ public class StudyService {
         studyRequest.getPosterImage(),
         studyRequest.getLanguage(),
         studyRequest.getLevel(),
-        studyRequest.getTimePerWeek(),
+        setStudyDayConverter.convertToEntityAttribute(studyRequest.getStudyDay()),
         studyRequest.getRule(),
-        studyRequest.getCapacity(),
-        studyRequest.getGoal(),
-        studyRequest.getCertificate()
+        studyRequest.getRegion(),
+        studyRequest.getMinCapacity(),
+        studyRequest.getMaxCapacity(),
+        studyRequest.getSpeakingTest(),
+        studyRequest.getGrade()
     );
     studyRepository.save(study);
 
     studyMemberRepository.save(
         new StudyMember(
             member,
-            study
+            study,
+            Boolean.TRUE
         )
     );
 
@@ -86,15 +89,16 @@ public class StudyService {
         study.getContent(),
         study.getLevel(),
         study.getLanguage(),
-        study.getGoal(),
-        study.getCertificate(),
-        study.getCapacity(),
+        study.getSpeakingTest(),
+        study.getGrade(),
+        study.getMaxCapacity(),
+        study.getMinCapacity(),
         study.getRule(),
-        study.getTimePerWeek(),
+        studyRequest.getRegion(),
+        study.getStudyDay().toString(),
         study.getPosterImage(),
         ZERO,
-        Boolean.FALSE,
-        new ArrayList<>()
+        Boolean.FALSE
     );
   }
 
@@ -112,7 +116,6 @@ public class StudyService {
             study.getContent(),
             study.getPosterImage(),
             getStudyLikeCount(study),
-            getStudyCommentCount(study),
             hasStudyFavorite(loginMemberId, study)
         )).collect(Collectors.toList());
 
@@ -137,15 +140,16 @@ public class StudyService {
         study.getContent(),
         study.getLevel(),
         study.getLanguage(),
-        study.getGoal(),
-        study.getCertificate(),
-        study.getCapacity(),
+        study.getSpeakingTest(),
+        study.getGrade(),
+        study.getMaxCapacity(),
+        study.getMinCapacity(),
         study.getRule(),
-        study.getTimePerWeek(),
+        study.getRegion(),
+        setStudyDayConverter.convertToDatabaseColumn(study.getStudyDay()),
         study.getPosterImage(),
         getStudyLikeCount(study),
-        hasStudyFavorite(loginMemberId, study),
-        getStudyComments(studyId)
+        hasStudyFavorite(loginMemberId, study)
     );
   }
 
@@ -162,11 +166,13 @@ public class StudyService {
         studyRequest.getPosterImage(),
         studyRequest.getLanguage(),
         studyRequest.getLevel(),
-        studyRequest.getTimePerWeek(),
+        setStudyDayConverter.convertToEntityAttribute(studyRequest.getStudyDay()),
         studyRequest.getRule(),
-        studyRequest.getCapacity(),
-        studyRequest.getGoal(),
-        studyRequest.getCertificate()
+        studyRequest.getRegion(),
+        studyRequest.getMaxCapacity(),
+        studyRequest.getMinCapacity(),
+        studyRequest.getSpeakingTest(),
+        studyRequest.getGrade()
     );
 
     // 임시 (아직 로그인 구현 X)
@@ -178,15 +184,16 @@ public class StudyService {
         study.getContent(),
         study.getLevel(),
         study.getLanguage(),
-        study.getGoal(),
-        study.getCertificate(),
-        study.getCapacity(),
+        study.getSpeakingTest(),
+        study.getGrade(),
+        study.getMaxCapacity(),
+        study.getMinCapacity(),
         study.getRule(),
-        study.getTimePerWeek(),
+        study.getRegion(),
+        setStudyDayConverter.convertToDatabaseColumn(study.getStudyDay()),
         study.getPosterImage(),
         getStudyLikeCount(study),
-        hasStudyFavorite(loginMemberId, study),
-        getStudyComments(studyId)
+        hasStudyFavorite(loginMemberId, study)
     );
   }
 
@@ -201,17 +208,7 @@ public class StudyService {
     return studyFavoriteRepository.countByStudyId(study.getId());
   }
 
-  private Integer getStudyCommentCount(Study study) {
-    return studyCommentRepository.countByStudyId(study.getId());
-  }
-
   private boolean hasStudyFavorite(Long loginMemberId, Study study) {
     return studyFavoriteRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent();
-  }
-
-  private List<StudyCommentResponse> getStudyComments(Long studyId) {
-    return studyCommentRepository.findAllByStudyId(studyId).stream()
-        .map(StudyCommentResponse::from)
-        .collect(Collectors.toList());
   }
 }

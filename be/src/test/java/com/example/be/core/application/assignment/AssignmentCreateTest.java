@@ -35,7 +35,7 @@ class AssignmentCreateTest extends InitServiceTest {
             "연의 과제",
             LocalDateTime.of(2022, 1, 19, 0, 0),
             "연의 과제입니다",
-            "dummy-voice-record-data");
+            "dummy-voice-record-data", "photo");
         //when
         AssignmentDetailResponse response = assignmentService.create(request, memberId);
 

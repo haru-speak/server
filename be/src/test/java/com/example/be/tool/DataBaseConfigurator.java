@@ -8,6 +8,7 @@ import com.example.be.core.domain.member.goal.Goal;
 import com.example.be.core.domain.member.subject.Subject;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
 import com.example.be.core.domain.study.Study;
+import com.example.be.core.domain.study.StudyDay;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.repository.assignment.AssignmentMemberRepository;
 import com.example.be.core.repository.assignment.AssignmentRepository;
@@ -23,6 +24,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -162,11 +164,13 @@ public class DataBaseConfigurator implements InitializingBean {
 					"study-posterImage" + i,
 					"study-language" + i,
 					i,
-					i,
+					EnumSet.of(StudyDay.MONDAY),
 					"study-rule" + i,
+					"study-region" + i,
 					i,
-					"study-goal" + i,
-					"study-certificate" + i
+					i,
+					"study-speakingTest" + i,
+					"study-grade" + i
 				));
 
 			for (int j = 1; j <= NUMBER_OF_MEMBER; j++) {
@@ -175,7 +179,8 @@ public class DataBaseConfigurator implements InitializingBean {
 				studyMemberRepository.save(
 					new StudyMember(
 						member,
-						study
+						study,
+						Boolean.TRUE
 					)
 				);
 			}
@@ -196,17 +201,15 @@ public class DataBaseConfigurator implements InitializingBean {
 					"assignment-title" + i,
 					LocalDateTime.now(),
 					"assignment-content" + i,
-					"https://dummy-voice-record" + i
-				)
+					"https://dummy-voice-record" + i,
+            "photo" + i )
 			);
 			studyMembers.forEach(it ->
 				assignmentMemberRepository.save(
-					new AssignmentMember(
+					new AssignmentMember (
 						it.getMember(),
-						assignment,
-						"https://dummy-voice-record",
-						"미제출"
-					)
+							assignment,
+						"미제출")
 				)
 			);
 		}

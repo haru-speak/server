@@ -1,8 +1,12 @@
 package com.example.be.core.domain.study;
 
 import com.example.be.core.domain.BaseEntity;
+import java.util.EnumSet;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,39 +40,52 @@ public class Study extends BaseEntity {
 
     private Integer level;
 
-    private Integer timePerWeek;
+    @Convert(converter = SetStudyDayConverter.class)
+    private EnumSet<StudyDay> studyDay;
 
     private String rule;
 
-    private Integer capacity;
+    private String region;
 
-    private String goal;
+    private Integer maxCapacity;
 
-    private String certificate;
+    private Integer minCapacity;
 
-    public Study(String title, String content, String posterImage, String language, Integer level, Integer timePerWeek, String rule, Integer capacity, String goal, String certificate) {
+    private String speakingTest;
+
+    private String grade;
+
+    public Study(String title, String content, String posterImage, String language, Integer level,
+        EnumSet<StudyDay> studyDay, String rule, String region, Integer maxCapacity,
+        Integer minCapacity, String speakingTest, String grade) {
         this.title = title;
         this.content = content;
         this.posterImage = posterImage;
         this.language = language;
         this.level = level;
-        this.timePerWeek = timePerWeek;
+        this.studyDay = studyDay;
         this.rule = rule;
-        this.capacity = capacity;
-        this.goal = goal;
-        this.certificate = certificate;
+        this.region = region;
+        this.maxCapacity = maxCapacity;
+        this.minCapacity = minCapacity;
+        this.speakingTest = speakingTest;
+        this.grade = grade;
     }
 
-    public void modify(String title, String content, String posterImage, String language, Integer level, Integer timePerWeek, String rule, Integer capacity, String goal, String certificate) {
+    public void modify(String title, String content, String posterImage, String language, Integer level,
+        EnumSet<StudyDay> studyDay, String rule, String region, Integer maxCapacity,
+        Integer minCapacity, String speakingTest, String grade) {
         this.title = title;
         this.content = content;
         this.posterImage = posterImage;
         this.language = language;
         this.level = level;
-        this.timePerWeek = timePerWeek;
+        this.studyDay = studyDay;
         this.rule = rule;
-        this.capacity = capacity;
-        this.goal = goal;
-        this.certificate = certificate;
+        this.region = region;
+        this.maxCapacity = maxCapacity;
+        this.minCapacity = minCapacity;
+        this.speakingTest = speakingTest;
+        this.grade = grade;
     }
 }

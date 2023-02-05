@@ -5,6 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.core.domain.study.StudyDay;
+import com.example.be.core.domain.study.StudyType;
+import java.util.EnumSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,7 +29,7 @@ class StudyModifyTest extends InitServiceTest {
         //given
         Long studyId = 1L;
         StudyRequest request = new StudyRequest("수정 제목", "수정 내용", 5, "수정 언어", "수정 목표", "수정 자격증",
-            1, "수정 방식", 1, "수정 포스터 이미지");
+            5, 1, "대면", "서울", "월,화,수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg");
 
         //when
         studyService.modify(studyId, request);
@@ -37,10 +40,10 @@ class StudyModifyTest extends InitServiceTest {
         assertThat(response.getContent()).isEqualTo(request.getContent());
         assertThat(response.getLevel()).isEqualTo(request.getLevel());
         assertThat(response.getLanguage()).isEqualTo(request.getLanguage());
-        assertThat(response.getGoal()).isEqualTo(request.getGoal());
-        assertThat(response.getCapacity()).isEqualTo(request.getCapacity());
+        assertThat(response.getSpeakingTest()).isEqualTo(request.getSpeakingTest());
+        assertThat(response.getGrade()).isEqualTo(request.getGrade());
         assertThat(response.getRule()).isEqualTo(request.getRule());
-        assertThat(response.getTimePerWeek()).isEqualTo(request.getTimePerWeek());
+        assertThat(response.getStudyDay()).isEqualTo(request.getStudyDay());
         assertThat(response.getPosterImage()).isEqualTo(request.getPosterImage());
       }
     }
