@@ -25,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest(MemberController.class)
+@DisplayName("컨트롤러 테스트 : Member 팔로우 요청 및 취소")
 class MemberControllerFollowTest extends InitControllerTest {
 
 	@MockBean
