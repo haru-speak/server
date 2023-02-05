@@ -27,11 +27,12 @@ public class SpeakingLogModifyTest extends InitServiceTest {
             @DisplayName("스피킹 로그의 제목, 음성파일 URL, 음성파일 텍스트가 변경된다.")
             void normal_modify() throws Exception {
                 //given
+                Long memberId = 1L;
                 Long speakingLogId = 1L;
                 SpeakingLogModifyRequest speakingLogModifyRequest = new SpeakingLogModifyRequest("동동동동", "동동동동", "동동동동");
 
                 //when
-                speakingLogService.modify(speakingLogId, speakingLogModifyRequest);
+                speakingLogService.modify(memberId, speakingLogId, speakingLogModifyRequest);
 
                 //then
                 SpeakingLog after = speakingLogRepository.findById(1L).get();
@@ -49,11 +50,13 @@ public class SpeakingLogModifyTest extends InitServiceTest {
             @DisplayName("스피킹 로그 ID를 찾을 수 없을 때 NotFoundSpeakingLogIdException 예외를 보낸다.")
             void abnormal_modify() throws Exception {
                 //given
+                Long memberId = 1L;
                 Long speakingLogId = 987654321L;
                 SpeakingLogModifyRequest speakingLogModifyRequest = new SpeakingLogModifyRequest("동동동동", "동동동동", "동동동동");
 
                 //when & then
-                assertThatThrownBy(() -> speakingLogService.modify(speakingLogId, speakingLogModifyRequest))
+                assertThatThrownBy(() -> speakingLogService.modify(memberId, speakingLogId,
+					speakingLogModifyRequest))
                     .isInstanceOf(BaseException.class)
                     .isExactlyInstanceOf(NotFoundSpeakingLogIdException.class);
             }

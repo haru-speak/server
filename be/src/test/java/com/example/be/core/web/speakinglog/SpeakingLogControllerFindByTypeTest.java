@@ -50,7 +50,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, LocalDate.parse("20230108", BASIC_ISO_DATE),null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
-					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
+					when(speakingLogService.find(refEq(memberId), refEq(speakingLogConditionRequest)))
 						.thenReturn(speakingLogsResponse);
 
 					//when
@@ -64,7 +64,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
-					verify(speakingLogService).find(refEq(speakingLogConditionRequest));
+					verify(speakingLogService).find(refEq(memberId), refEq(speakingLogConditionRequest));
 				}
 
 				@Test
@@ -76,7 +76,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, LocalDate.parse("20230108", BASIC_ISO_DATE), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
-					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
+					when(speakingLogService.find(refEq(memberId), refEq(speakingLogConditionRequest)))
 						.thenReturn(speakingLogsResponse);
 
 					//when
@@ -90,7 +90,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
-					verify(speakingLogService).find(refEq(speakingLogConditionRequest));
+					verify(speakingLogService).find(refEq(memberId), refEq(speakingLogConditionRequest));
 				}
 			}
 
@@ -107,7 +107,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.ALL, LocalDate.now(), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
-					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
+					when(speakingLogService.find(refEq(memberId), refEq(speakingLogConditionRequest)))
 						.thenReturn(speakingLogsResponse);
 
 					//when
@@ -121,7 +121,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
-					verify(speakingLogService).find(refEq(speakingLogConditionRequest));
+					verify(speakingLogService).find(refEq(memberId), refEq(speakingLogConditionRequest));
 				}
 
 				@Test
@@ -133,7 +133,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 					SpeakingLogsResponse speakingLogsResponse = new SpeakingLogsResponse(SpeakingLogType.MY, LocalDate.now(), null);
 					BaseResponse<SpeakingLogsResponse> baseResponse = new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, speakingLogsResponse);
 
-					when(speakingLogService.find(refEq(speakingLogConditionRequest)))
+					when(speakingLogService.find(refEq(memberId), refEq(speakingLogConditionRequest)))
 						.thenReturn(speakingLogsResponse);
 
 					//when
@@ -147,7 +147,7 @@ class SpeakingLogControllerFindByTypeTest extends InitControllerTest {
 						.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
 					// enum : Singleton, LocalDate.of() : equals() & hashCode()  overriding
-					verify(speakingLogService).find(refEq(speakingLogConditionRequest));
+					verify(speakingLogService).find(refEq(memberId), refEq(speakingLogConditionRequest));
 				}
 			}
 		}

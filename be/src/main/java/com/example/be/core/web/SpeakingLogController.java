@@ -14,8 +14,6 @@ import com.example.be.core.application.dto.request.SpeakingLogRequest;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
 import com.example.be.oauth.Login;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -41,43 +39,43 @@ public class SpeakingLogController {
 	}
 
 	@PostMapping
-	@ApiOperation(value = "스피킹 로그 생성입니다.")
+	@ApiOperation(value = "스피킹 로그 생성입니다. [RequestBody : SpeakingLogRequest]")
 	public BaseResponse<SpeakingLogDetailResponse> create(@Login @Positive final Long memberId,
 		@RequestBody @Valid final SpeakingLogRequest speakingLogRequest) {
-		SpeakingLogDetailResponse response = speakingLogService.create(speakingLogRequest, memberId);
+		SpeakingLogDetailResponse response = speakingLogService.create(memberId, speakingLogRequest);
 		return new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@GetMapping
 	@ApiOperation(value = "스피킹 로그 타입에 따른 전체 조회입니다.")
-	public BaseResponse<SpeakingLogsResponse> find(
+	public BaseResponse<SpeakingLogsResponse> find(@Login @Positive final Long memberId,
 		@Valid final SpeakingLogConditionRequest speakingLogConditionRequest) {
-		SpeakingLogsResponse response = speakingLogService.find(speakingLogConditionRequest);
+		SpeakingLogsResponse response = speakingLogService.find(memberId, speakingLogConditionRequest);
 		return new BaseResponse<>(FIND_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@GetMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 상세 조회입니다.")
 	public BaseResponse<SpeakingLogDetailResponse> findById(@Login @Positive final Long memberId,
-		@PathVariable @Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId) {
-		SpeakingLogDetailResponse response = speakingLogService.findById(speakingLogId, memberId);
+		@PathVariable @Positive final Long speakingLogId) {
+		SpeakingLogDetailResponse response = speakingLogService.findById(memberId, speakingLogId);
 		return new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@PutMapping("/{speakingLogId}")
-	@ApiOperation(value = "스피킹 로그 수정입니다.")
-	public BaseResponse<SpeakingLogDetailResponse> modify(
-		@PathVariable @Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId,
+	@ApiOperation(value = "스피킹 로그 수정입니다. [RequestBody : SpeakingLogModifyRequest]")
+	public BaseResponse<SpeakingLogDetailResponse> modify(@Login @Positive final Long memberId,
+		@PathVariable @Positive final Long speakingLogId,
 		@RequestBody @Valid final SpeakingLogModifyRequest speakingLogModifyRequest) {
-		SpeakingLogDetailResponse response = speakingLogService.modify(speakingLogId, speakingLogModifyRequest);
+		SpeakingLogDetailResponse response = speakingLogService.modify(memberId, speakingLogId, speakingLogModifyRequest);
 		return new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, response);
 	}
 
 	@DeleteMapping("/{speakingLogId}")
 	@ApiOperation(value = "스피킹 로그 삭제입니다.")
-	public BaseResponse<Void> delete(@PathVariable
-	@Positive(message = "SpeakingLog id 값은 항상 양수여야 합니다.") final Long speakingLogId) {
-		speakingLogService.delete(speakingLogId);
+	public BaseResponse<Void> delete(@Login @Positive final Long memberId,
+		@PathVariable @Positive final Long speakingLogId) {
+		speakingLogService.delete(memberId, speakingLogId);
 		return new BaseResponse<>(DELETE_SPEAKING_LOG_SUCCESS, null);
 	}
 }

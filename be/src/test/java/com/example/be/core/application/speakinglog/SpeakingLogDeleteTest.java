@@ -25,12 +25,13 @@ class SpeakingLogDeleteTest extends InitServiceTest {
             void normal_delete() throws Exception {
 
                 //given
+                Long memberId = 1L;
                 Long speakingLogId = 1L;
                 List<SpeakingLog> before = speakingLogRepository.findAll();
                 assertThat(before.size()).isEqualTo(15);
 
                 //when
-                speakingLogService.delete(speakingLogId);
+                speakingLogService.delete(memberId, speakingLogId);
 
                 //then
                 List<SpeakingLog> after = speakingLogRepository.findAll();

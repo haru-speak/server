@@ -44,7 +44,7 @@ class SpeakingLogControllerCreateTest extends InitControllerTest {
                         "https://dummy_record_adsf_1234","dummy_text_asdf_1234", likeCount, false,  new ArrayList<>());
                 BaseResponse<SpeakingLogDetailResponse> baseResponse = new BaseResponse<>(CREATE_SPEAKING_LOG_SUCCESS, response);
 
-                when(speakingLogService.create(refEq(request), refEq(memberId)))
+                when(speakingLogService.create(refEq(memberId), refEq(request)))
                     .thenReturn(response);
 
                 //when
@@ -59,7 +59,7 @@ class SpeakingLogControllerCreateTest extends InitControllerTest {
                     .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)))
                     .andDo(print());
 
-                verify(speakingLogService).create(refEq(request), refEq(memberId));
+                verify(speakingLogService).create(refEq(memberId), refEq(request));
             }
         }
     }

@@ -25,6 +25,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 		+ "1, 2, 3, 4, 5 중 하나여야 합니다."),
 	SPEAKING_TEST_TYPE_ERROR("E-BR009", "올바르지 않은 SpeakingTestType 형식입니다."
 		+ "OPIC, TOEFL, TOEIC_SPEAKING 중 하나여야 합니다."),
+	SPEAKING_LOG_NOT_MATCH_MEMBER_ERROR("E-BR010", "SpeakingLog의 작성자가 해당 멤버가 아닙니다."),
 
 
 	/**

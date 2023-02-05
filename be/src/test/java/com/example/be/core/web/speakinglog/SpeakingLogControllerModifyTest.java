@@ -59,7 +59,7 @@ class SpeakingLogControllerModifyTest extends InitControllerTest {
 
                 BaseResponse<SpeakingLogDetailResponse> baseResponse = new BaseResponse<>(MODIFY_SPEAKING_LOG_SUCCESS, response);
 
-                when(speakingLogService.modify(refEq(speakingLogId), refEq(request)))
+                when(speakingLogService.modify(refEq(memberId), refEq(speakingLogId), refEq(request)))
                     .thenReturn(response);
 
                 //when
@@ -74,7 +74,7 @@ class SpeakingLogControllerModifyTest extends InitControllerTest {
                 resultActions.andExpect(status().isOk())
                     .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
-                verify(speakingLogService).modify(refEq(speakingLogId), refEq(request));
+                verify(speakingLogService).modify(refEq(memberId), refEq(speakingLogId), refEq(request));
             }
         }
     }

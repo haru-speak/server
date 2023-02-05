@@ -43,7 +43,7 @@ class SpeakingLogControllerDetailFindTest extends InitControllerTest {
 					"dummy-record-abcd-1234", "dummy-text-abcd-1234", likeCount, Boolean.TRUE, new ArrayList<>());
 				BaseResponse<SpeakingLogDetailResponse> baseResponse = new BaseResponse<>(FIND_DETAIL_SPEAKING_LOG_SUCCESS, response);
 
-				when(speakingLogService.findById(refEq(speakingLogId), refEq(memberId)))
+				when(speakingLogService.findById(refEq(memberId), refEq(speakingLogId)))
 					.thenReturn(response);
 
 				//when
@@ -56,7 +56,7 @@ class SpeakingLogControllerDetailFindTest extends InitControllerTest {
 				resultActions.andExpect(status().isOk())
 					.andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
-				verify(speakingLogService).findById(refEq(speakingLogId), refEq(memberId));
+				verify(speakingLogService).findById(refEq(memberId), refEq(speakingLogId));
 			}
 		}
 	}

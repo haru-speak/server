@@ -60,7 +60,8 @@ class SpeakingLogDetailFindTest extends InitServiceTest {
 				Long memberId = 1L;
 
 				//when
-				SpeakingLogDetailResponse response = speakingLogService.findById(speakingLogId, memberId);
+				SpeakingLogDetailResponse response = speakingLogService.findById(memberId,
+					speakingLogId);
 
 				//then
 				assertThat(response.getMemberId()).isEqualTo(1L);
@@ -89,7 +90,7 @@ class SpeakingLogDetailFindTest extends InitServiceTest {
 					Long memberId = 1L;
 
 					//when & then
-					assertThatThrownBy(() -> speakingLogService.findById(speakingLogId, memberId))
+					assertThatThrownBy(() -> speakingLogService.findById(memberId, speakingLogId))
 						.isInstanceOf(BaseException.class)
 						.isExactlyInstanceOf(NotFoundSpeakingLogIdException.class)
 						.hasMessage(SPEAKING_LOG_ID_NOT_FOUND_ERROR.getMessage());

@@ -26,11 +26,12 @@ class SpeakingLogFindAllTest extends InitServiceTest {
             @DisplayName("전체 스피킹 로그가 조회된다.")
             void normal_find_all() {
                 //given
+                Long memberId = 1L;
                 String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
                 //when
-                SpeakingLogsResponse response = speakingLogService.find(new SpeakingLogConditionRequest("ALL", today));
+                SpeakingLogsResponse response = speakingLogService.find(memberId, new SpeakingLogConditionRequest("ALL", today));
                 //then
-                assertThat(response.getSpeakingLogsResponse().size()).isEqualTo(15);
+                assertThat(response.getSpeakingLogsResponse()).hasSize(15);
             }
         }
     }

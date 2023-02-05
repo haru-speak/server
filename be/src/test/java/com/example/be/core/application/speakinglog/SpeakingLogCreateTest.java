@@ -33,7 +33,7 @@ class SpeakingLogCreateTest extends InitServiceTest {
 					"dummy-voice-record-data", "dummy-voice-text-data");
 
 				//when
-				SpeakingLogDetailResponse response = speakingLogService.create(request, memberId);
+				SpeakingLogDetailResponse response = speakingLogService.create(memberId, request);
 
 				//then
 				assertThat(response.getMemberId()).isEqualTo(1L);
@@ -59,7 +59,7 @@ class SpeakingLogCreateTest extends InitServiceTest {
 					"dummy-voice-record-data", "dummy-voice-text-data");
 
 				//when & then
-				assertThatThrownBy(() -> speakingLogService.create(request, memberId))
+				assertThatThrownBy(() -> speakingLogService.create(memberId, request))
 					.isInstanceOf(BaseException.class)
 					.isExactlyInstanceOf(NotFoundMemberIdException.class);
 			}

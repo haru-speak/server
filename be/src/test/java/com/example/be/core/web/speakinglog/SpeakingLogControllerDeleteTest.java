@@ -48,7 +48,7 @@ class SpeakingLogControllerDeleteTest extends InitControllerTest {
                 resultActions.andExpect(status().isOk())
                         .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
-                verify(speakingLogService).delete(refEq(speakingLogId));
+                verify(speakingLogService).delete(refEq(memberId), refEq(speakingLogId));
             }
         }
     }

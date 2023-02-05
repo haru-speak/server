@@ -2,6 +2,7 @@ package com.example.be.core.application;
 
 import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.common.exception.speakinglog.NotFoundSpeakingLogIdException;
+import com.example.be.common.exception.speakinglog.NotMatchSpeakingLogAndMemberException;
 import com.example.be.core.application.dto.request.SpeakingLogConditionRequest;
 import com.example.be.core.application.dto.request.SpeakingLogModifyRequest;
 import com.example.be.core.application.dto.request.SpeakingLogRequest;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -47,9 +49,10 @@ public class SpeakingLogService {
 	}
 
 	@Transactional
-	public SpeakingLogDetailResponse create(SpeakingLogRequest speakingLogRequest, Long loginMemberId) {
+	public SpeakingLogDetailResponse create(Long memberId,
+		SpeakingLogRequest speakingLogRequest) {
 		log.debug("[스피킹 로그 생성] speakingLogRequest = {}", speakingLogRequest);
-		Member member = memberRepository.findById(loginMemberId)
+		Member member = memberRepository.findById(memberId)
 			.orElseThrow(NotFoundMemberIdException::new);
 
 		SpeakingLog savedSpeakingLog = speakingLogRepository.save(
@@ -73,7 +76,7 @@ public class SpeakingLogService {
 		);
 	}
 
-	public SpeakingLogsResponse find(SpeakingLogConditionRequest speakingLogConditionRequest) {
+	public SpeakingLogsResponse find(Long memberId, SpeakingLogConditionRequest speakingLogConditionRequest) {
 		log.debug("[스피킹 로그 전체 조회] SpeakingLogConditionRequest = {}",speakingLogConditionRequest.toString());
 
 		LocalDateTime startDateTime = LocalDateTime.of(speakingLogConditionRequest.getDate().minusDays(1),
@@ -84,9 +87,6 @@ public class SpeakingLogService {
 		List<SpeakingLog> speakingLogs = speakingLogRepository.findAllByCreatedAtBetween(
 			startDateTime, endDateTime);
 
-		// 임시 (아직 로그인 구현 X)
-		Long loginMemberId = 1L;
-
 		List<SpeakingLogResponse> speakingLogResponses = speakingLogs.stream().map(speakingLog ->
 			new SpeakingLogResponse(
 				speakingLog.getId(),
@@ -94,7 +94,7 @@ public class SpeakingLogService {
 				speakingLog.getVoiceRecord(),
 				getFavoriteCount(speakingLog.getId()),
 				getCommentCount(speakingLog.getId()),
-				favoriteRepository.findByMemberIdAndSpeakingLog(loginMemberId, speakingLog).isPresent(),
+				favoriteRepository.findByMemberIdAndSpeakingLog(memberId, speakingLog).isPresent(),
 				speakingLog.getMember().getProfileImage(),
 				speakingLog.getId()
 			)).collect(Collectors.toList());
@@ -107,15 +107,13 @@ public class SpeakingLogService {
 	}
 
 
-	public SpeakingLogDetailResponse findById(Long speakingLogId, Long loginMemberId) {
+	public SpeakingLogDetailResponse findById(Long memberId, Long speakingLogId) {
 		log.debug("[스피킹 로그 상세 조회] SpeakingLogId = {}", speakingLogId);
 
 		SpeakingLog speakingLog = speakingLogRepository.findById(speakingLogId)
 			.orElseThrow(NotFoundSpeakingLogIdException::new);
 
-		// 임시 (아직 로그인 구현 X)
-
-		Optional<Favorite> favoriteOfLoginMember = favoriteRepository.findByMemberIdAndSpeakingLog(loginMemberId, speakingLog);
+		Optional<Favorite> favoriteOfLoginMember = favoriteRepository.findByMemberIdAndSpeakingLog(memberId, speakingLog);
 
 		return new SpeakingLogDetailResponse(
 			speakingLog.getMember().getId(),
@@ -145,7 +143,7 @@ public class SpeakingLogService {
 
 
 	@Transactional
-	public SpeakingLogDetailResponse modify(Long speakingLogId, SpeakingLogModifyRequest speakingLogModifyRequest) {
+	public SpeakingLogDetailResponse modify(Long memberId, Long speakingLogId, SpeakingLogModifyRequest speakingLogModifyRequest) {
 		log.debug("[스피킹 로그 수정] SpeakingLogId = {}, speakingLogRequest = {}", speakingLogId, speakingLogModifyRequest);
 
 		SpeakingLog speakingLog = speakingLogRepository.findById(speakingLogId)
@@ -156,8 +154,7 @@ public class SpeakingLogService {
 			speakingLogModifyRequest.getVoiceRecord(),
 			speakingLogModifyRequest.getVoiceText());
 
-		//임시 로그인 아이디
-		Optional<Favorite> favoriteOfLoginMember = favoriteRepository.findByMemberIdAndSpeakingLog(1L, speakingLog);
+		Optional<Favorite> favoriteOfLoginMember = favoriteRepository.findByMemberIdAndSpeakingLog(memberId, speakingLog);
 
 		return new SpeakingLogDetailResponse(
 			speakingLog.getMember().getId(),
@@ -171,9 +168,16 @@ public class SpeakingLogService {
 	}
 
 	@Transactional
-	public void delete(Long speakingLogId) {
+	public void delete(Long memberId, Long speakingLogId) {
 		log.debug("[스피킹 로그 삭제] SpeakingLogId = {}", speakingLogId);
 
+		SpeakingLog speakingLog = speakingLogRepository.findById(speakingLogId)
+			.orElseThrow(NotFoundSpeakingLogIdException::new);
+
+		if (!Objects.equals(speakingLog.getMember().getId(), memberId)) {
+			throw new NotMatchSpeakingLogAndMemberException();
+		}
 		speakingLogRepository.deleteById(speakingLogId);
+
 	}
 }
