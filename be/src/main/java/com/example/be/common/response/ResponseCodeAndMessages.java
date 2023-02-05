@@ -38,6 +38,8 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	SIGN_UP_MEMBER_SUCCESS("S-M001", "멤버의 회원 등록에 성공했습니다."),
 	MODIFY_MEMBER_INFO_SUCCESS("S-M002", "멤버의 회원 정보 변경에 성공했습니다."),
 	FIND_MEMBER_INFO_SUCCESS("S-M003", "멤버의 개인 정보 조회에 성공했습니다."),
+	FOLLOW_MEMBER_SUCCESS("S-M004", "멤버의 팔로우 요청에 성공했습니다."),
+	CANCEL_FOLLOW_MEMBER_SUCCESS("S-M005", "멤버의 팔로우 취소에 성공했습니다."),
 
 	/**
 	 Study

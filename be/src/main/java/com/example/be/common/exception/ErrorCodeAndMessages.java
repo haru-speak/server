@@ -32,11 +32,12 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	 */
 	NOT_FOUND_ERROR("E-NF000", "존재하지 않습니다."),
 	SPEAKING_LOG_ID_NOT_FOUND_ERROR("E-NF001", "스피킹 로그 아이디를 찾을 수 없습니다."),
-	LOGIN_MEMBER_NOT_FOUND_ERROR("E-NF002", "로그인 된 멤버를 찾을 수 없습니다."),
+	MEMBER_NOT_FOUND_ERROR("E-NF002", "해당 멤버를 찾을 수 없습니다."),
 	STUDY_ID_NOT_FOUND_ERROR("E-NF003", "스터디 아이디를 찾을 수 없습니다."),
 	ASSIGNMENT_ID_NOT_FOUND_ERROR("E-NF004", "과제 아이디를 찾을 수 없습니다."),
 	GOAL_ID_NOT_FOUND_ERROR("E-NF005", "목표 아이디를 찾을 수 없습니다."),
 	SUBJECT_ID_NOT_FOUND_ERROR("E-NF006", "주제 아이디를 찾을 수 없습니다."),
+	FOLLOW_RELATIONSHIP_NOT_FOUND_ERROR("E-NF007", "팔로우 관계에 대해 찾을 수 없습니다."),
   
 	/**
 	 * 500 Server Error
