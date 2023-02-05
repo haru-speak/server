@@ -1,5 +1,6 @@
 package com.example.be.core.domain.assignment;
 
+import com.example.be.core.domain.BaseEntity;
 import com.example.be.core.domain.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AssignmentSpeakingLogFavorite {
+public class AssignmentSpeakingLogFavorite extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

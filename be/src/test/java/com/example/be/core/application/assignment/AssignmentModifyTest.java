@@ -29,7 +29,7 @@ class AssignmentModifyTest extends InitServiceTest {
           "수정한 제목",
           LocalDateTime.of(2022, 1, 30, 0, 0),
           "수정한 내용",
-          "dummy-voice-record-data");
+          "dummy-voice-record-data", "photo");
 
       //when
       AssignmentDetailResponse response = assignmentService.modify(assignmentId, request);

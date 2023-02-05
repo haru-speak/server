@@ -1,5 +1,6 @@
 package com.example.be.core.domain.assignment;
 
+import com.example.be.core.domain.BaseEntity;
 import com.example.be.core.domain.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE assignment_speaking_log SET deleted = true WHERE assignment_speaking_log_comment_id = ?")
-public class AssignmentSpeakingLogComment {
+public class AssignmentSpeakingLogComment extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

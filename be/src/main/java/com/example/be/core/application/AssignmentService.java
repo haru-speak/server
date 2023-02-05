@@ -18,7 +18,6 @@ import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,8 +53,8 @@ public class AssignmentService {
             assignmentRequest.getTitle(),
             assignmentRequest.getDeadLine(),
             assignmentRequest.getContent(),
-            assignmentRequest.getVoiceRecord()
-        )
+            assignmentRequest.getVoiceRecord(),
+            assignmentRequest.getPhoto())
     );
 
     List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudyId(assignmentRequest.getStudyId());
@@ -64,7 +63,6 @@ public class AssignmentService {
         assignmentMemberRepository.save(
             new AssignmentMember(
                 studyMember.getMember(),
-                savedAssignment,
                 null,
                 "미제출"
             )
@@ -124,7 +122,8 @@ public class AssignmentService {
         assignmentRequest.getTitle(),
         assignmentRequest.getDeadLine(),
         assignmentRequest.getContent(),
-        assignmentRequest.getVoiceRecord()
+        assignmentRequest.getVoiceRecord(),
+        assignmentRequest.getPhoto()
     );
 
     return new AssignmentDetailResponse(

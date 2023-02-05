@@ -189,17 +189,15 @@ public class DataBaseConfigurator implements InitializingBean {
 					"assignment-title" + i,
 					LocalDateTime.now(),
 					"assignment-content" + i,
-					"https://dummy-voice-record" + i
-				)
+					"https://dummy-voice-record" + i,
+            "photo" + i )
 			);
 			studyMembers.forEach( it ->
 				assignmentMemberRepository.save(
-					new AssignmentMember(
+					new AssignmentMember (
 						it.getMember(),
-						assignment,
-						"https://dummy-voice-record",
-						"미제출"
-					)
+							assignment,
+						"미제출")
 				)
 			);
 		}

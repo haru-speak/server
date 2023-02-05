@@ -27,16 +27,21 @@ public class AssignmentRequest {
   @NotBlank
   private String content;
 
-  @Schema(type = "String", description = "음성 기록 URL, NOT NULL")
+  @Schema(type = "String", description = "음성 기록 URL, NULL")
   @NotBlank
   private String voiceRecord;
 
+  @Schema(type = "String", description = "과제 설명 사진, NULL")
+  @NotBlank
+  private String photo;
+
   public AssignmentRequest(Long studyId, String title, LocalDateTime deadLine, String content,
-      String voiceRecord) {
+      String voiceRecord, String photo) {
     this.studyId = studyId;
     this.title = title;
     this.deadLine = deadLine;
     this.content = content;
     this.voiceRecord = voiceRecord;
+    this.photo = photo;
   }
 }

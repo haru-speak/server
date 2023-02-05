@@ -1,5 +1,6 @@
 package com.example.be.core.domain.assignment;
 
+import com.example.be.core.domain.BaseEntity;
 import com.example.be.core.domain.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AssignmentMember {
+public class AssignmentMember extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,16 +33,11 @@ public class AssignmentMember {
     @JoinColumn(name = "assignment_id")
     private Assignment assignment;
 
-    @Lob
-    private String voiceRecord;
-
     private String isSubmitted;
 
-    public AssignmentMember(Member member, Assignment assignment, String voiceRecord,
-        String isSubmitted) {
+    public AssignmentMember(Member member, Assignment assignment, String isSubmitted) {
         this.member = member;
         this.assignment = assignment;
-        this.voiceRecord = voiceRecord;
         this.isSubmitted = isSubmitted;
     }
 }

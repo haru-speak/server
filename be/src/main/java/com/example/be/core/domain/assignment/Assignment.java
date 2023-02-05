@@ -43,20 +43,25 @@ public class Assignment extends BaseEntity {
     @Lob
     private String voiceRecord;
 
+    @Lob
+    private String photo;
+
     public Assignment(Study study, String title, LocalDateTime deadLine, String content,
-        String voiceRecord) {
+        String voiceRecord, String photo) {
         this.study = study;
         this.title = title;
         this.deadLine = deadLine;
         this.content = content;
         this.voiceRecord = voiceRecord;
+        this.photo = photo;
     }
 
     public void modify (String title, LocalDateTime deadLine, String content,
-        String voiceRecord) {
+        String voiceRecord, String photo) {
         this.title = title;
         this.deadLine = deadLine;
         this.content = content;
         this.voiceRecord = voiceRecord;
+        this.photo = photo;
     }
 }
