@@ -11,22 +11,27 @@ public class AssignmentResponse {
   private final Long assignmentId;
 
   @Schema(type = "String", description = "과제 제목, NOT NULL")
-  private final String assignmentTitle;
+  private final String title;
 
-  @Schema(type = "Long", description = "스터디 ID, NOT NULL")
-  private final Long studyId;
+  @Schema(type = "String", description = "과제 내용, NOT NULL")
+  private final String content;
 
-  @Schema(type = "String", description = "스터디 제목, NOT NULL")
-  private final String studyTitle;
+  @Schema(type = "String", description = "음성 기록 URL, NULL")
+  private final String voiceRecord;
 
-  @Schema(type = "date", description = "제출 기한, NOT NULL")
-  private final LocalDateTime deadline;
-  public AssignmentResponse(Long assignmentId, String assignmentTitle, Long studyId,
-      String studyTitle, LocalDateTime deadline) {
+  @Schema(type = "String", description = "과제 설명 사진, NULL")
+  private final String photo;
+
+  @Schema(type = "date", description = "과제 제출 기한, NOT NULL")
+  private final LocalDateTime deadLine;
+
+  public AssignmentResponse(Long assignmentId, String title, String content,
+      String voiceRecord, String photo, LocalDateTime deadLine) {
     this.assignmentId = assignmentId;
-    this.assignmentTitle = assignmentTitle;
-    this.studyId = studyId;
-    this.studyTitle = studyTitle;
-    this.deadline = deadline;
+    this.title = title;
+    this.deadLine = deadLine;
+    this.content = content;
+    this.voiceRecord = voiceRecord;
+    this.photo = photo;
   }
 }
