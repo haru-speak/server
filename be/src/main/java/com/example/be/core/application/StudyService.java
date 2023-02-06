@@ -282,8 +282,7 @@ public class StudyService {
   }
 
   private List<StudyMember> getStudyMembers(Long studyId) {
-    List<StudyMember> members = studyMemberRepository.findStudyMembersByStudyId(
+    return studyMemberRepository.findStudyMembersByStudyId(
         studyId);
-    return members;
   }
 }
