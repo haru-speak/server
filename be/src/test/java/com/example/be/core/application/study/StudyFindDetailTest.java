@@ -27,10 +27,11 @@ class StudyFindDetailTest extends InitServiceTest {
             @DisplayName("해당 스터디 아이디로 스터디 상세 조회를 성공한다.")
             void find_detail() throws Exception {
                 //given
+                Long memberId = 1L;
                 Long studyId = 1L;
 
                 //when
-                StudyDetailResponse response = studyService.findById(studyId);
+                StudyDetailResponse response = studyService.findById(memberId, studyId);
 
                 //then
                 assertThat(response.getTitle()).isEqualTo("study-title1");
@@ -46,10 +47,11 @@ class StudyFindDetailTest extends InitServiceTest {
             @DisplayName("예외 NotFoundStudyIdException 이 발생한다.")
             void fail_find_detail() throws Exception {
                 //given
+                Long memberId = 1L;
                 Long studyId = 987654321L;
 
                 //when & then
-                assertThatThrownBy(() -> studyService.findById(studyId))
+                assertThatThrownBy(() -> studyService.findById(memberId,studyId))
                     .isInstanceOf(BaseException.class)
                     .isExactlyInstanceOf(NotFoundStudyIdException.class)
                     .hasMessage(STUDY_ID_NOT_FOUND_ERROR.getMessage());

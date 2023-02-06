@@ -24,9 +24,10 @@ class StudyFindAllTest extends InitServiceTest {
       @DisplayName("전체 스터디가 조회된다.")
       void normal_find_all() {
         //given
+        Long memberId = 1L;
         StudyConditionRequest request = new StudyConditionRequest("ALL");
         //when
-        StudiesResponse response = studyService.find(request);
+        StudiesResponse response = studyService.find(memberId, request);
         //then
         assertThat(response.getStudyResponses().size()).isEqualTo(4);
       }

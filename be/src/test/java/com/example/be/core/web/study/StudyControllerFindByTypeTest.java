@@ -44,7 +44,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
         StudiesResponse response = new StudiesResponse(ALL, null);
         BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
 
-        when(studyService.find(refEq(request)))
+        when(studyService.find(refEq(memberId), refEq(request)))
             .thenReturn(response);
 
         //when
@@ -58,7 +58,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)))
             .andDo(print());
 
-        verify(studyService).find(refEq(request));
+        verify(studyService).find(refEq(memberId), refEq(request));
       }
 
       @Test
@@ -70,7 +70,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
         StudiesResponse response = new StudiesResponse(MY, null);
         BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
 
-        when(studyService.find(refEq(request)))
+        when(studyService.find(refEq(memberId), refEq(request)))
             .thenReturn(response);
 
         //when
@@ -84,7 +84,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)))
             .andDo(print());
 
-        verify(studyService).find(refEq(request));
+        verify(studyService).find(refEq(memberId), refEq(request));
       }
     }
   }

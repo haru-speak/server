@@ -28,14 +28,16 @@ class StudyModifyTest extends InitServiceTest {
       void normal_modify() throws Exception {
         //given
         Long studyId = 1L;
+        Long memberId = 1L;
+
         StudyRequest request = new StudyRequest("수정 제목", "수정 내용", 5, "수정 언어", "수정 목표", "수정 자격증",
             5, 1, "대면", "서울", "월,화,수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg");
 
         //when
-        studyService.modify(studyId, request);
+        studyService.modify(memberId, studyId, request);
 
         //then
-        StudyDetailResponse response = studyService.findById(1L);
+        StudyDetailResponse response = studyService.findById(memberId, studyId);
         assertThat(response.getTitle()).isEqualTo(request.getTitle());
         assertThat(response.getContent()).isEqualTo(request.getContent());
         assertThat(response.getLevel()).isEqualTo(request.getLevel());

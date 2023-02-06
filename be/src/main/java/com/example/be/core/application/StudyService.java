@@ -2,21 +2,25 @@ package com.example.be.core.application;
 
 import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
+import com.example.be.common.exception.study.NotMatchStudyAndMemberException;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
+import com.example.be.core.application.dto.response.MemberProfilesResponse;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.application.dto.response.StudyResponse;
 import com.example.be.core.domain.member.Member;
-import com.example.be.core.domain.study.SetStudyDayConverter;
+import com.example.be.core.domain.study.StudyDayConverter;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.study.StudyCommentRepository;
-import com.example.be.core.repository.study.StudyFavoriteRepository;
+import com.example.be.core.repository.study.StudyInterestRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,7 +33,7 @@ public class StudyService {
 
   private final StudyRepository studyRepository;
   
-  private final StudyFavoriteRepository studyFavoriteRepository;
+  private final StudyInterestRepository studyInterestRepository;
   
   private final StudyCommentRepository studyCommentRepository;
   
@@ -38,15 +42,15 @@ public class StudyService {
   private final MemberRepository memberRepository;
 
   private static final Integer ZERO = 0;
-  SetStudyDayConverter setStudyDayConverter = new SetStudyDayConverter();
+  StudyDayConverter studyDayConverter = new StudyDayConverter();
 
   public StudyService(StudyRepository studyRepository,
-      StudyFavoriteRepository studyFavoriteRepository,
+      StudyInterestRepository studyInterestRepository,
       StudyCommentRepository studyCommentRepository,
       StudyMemberRepository studyMemberRepository,
       MemberRepository memberRepository) {
     this.studyRepository = studyRepository;
-    this.studyFavoriteRepository = studyFavoriteRepository;
+    this.studyInterestRepository = studyInterestRepository;
     this.studyCommentRepository = studyCommentRepository;
     this.studyMemberRepository = studyMemberRepository;
     this.memberRepository = memberRepository;
@@ -65,7 +69,7 @@ public class StudyService {
         studyRequest.getPosterImage(),
         studyRequest.getLanguage(),
         studyRequest.getLevel(),
-        setStudyDayConverter.convertToEntityAttribute(studyRequest.getStudyDay()),
+        studyDayConverter.convertToEntityAttribute(studyRequest.getStudyDay()),
         studyRequest.getRule(),
         studyRequest.getRegion(),
         studyRequest.getMinCapacity(),
@@ -83,6 +87,11 @@ public class StudyService {
         )
     );
 
+    MemberProfilesResponse memberProfilesResponse = new MemberProfilesResponse(
+        member.getProfileImage(),
+        new ArrayList<>()
+    );
+
     return new StudyDetailResponse(
         study.getId(),
         study.getTitle(),
@@ -98,26 +107,30 @@ public class StudyService {
         study.getStudyDay().toString(),
         study.getPosterImage(),
         ZERO,
-        Boolean.FALSE
+        Boolean.FALSE,
+        Boolean.TRUE,
+        memberProfilesResponse
     );
   }
 
-  public StudiesResponse find(StudyConditionRequest studyConditionRequest) {
+  public StudiesResponse find(Long memberId, StudyConditionRequest studyConditionRequest) {
     log.debug("스터디 전체 조회 type = {}", studyConditionRequest.toString());
 
-    // 임시 (아직 로그인 구현 X)
-    Long loginMemberId = 1L;
-
     List<Study> studies = studyRepository.findAll();
-    List<StudyResponse> studyResponses = studies.stream().map(study ->
-        new StudyResponse(
-            study.getId(),
-            study.getTitle(),
-            study.getContent(),
-            study.getPosterImage(),
-            getStudyLikeCount(study),
-            hasStudyFavorite(loginMemberId, study)
-        )).collect(Collectors.toList());
+    List<StudyResponse> studyResponses = studies.stream().map(study -> {
+      Integer memberCount = studyMemberRepository.countStudyMemberByStudyId(study.getId());
+      return new StudyResponse(
+          study.getId(),
+          study.getTitle(),
+          study.getContent(),
+          study.getMaxCapacity(),
+          study.getMinCapacity(),
+          study.getPosterImage(),
+          memberCount,
+          isStudyInterested(memberId, study),
+          study.getCreatedAt()
+      );
+    }).collect(Collectors.toList());
 
     return new StudiesResponse(
         studyConditionRequest.getType(),
@@ -125,14 +138,30 @@ public class StudyService {
     );
   }
 
-  public StudyDetailResponse findById(Long studyId) {
+  public StudyDetailResponse findById(Long memberId, Long studyId) {
     log.debug("[스터디 상세 조회] studyId = {}", studyId);
 
-    Study study = studyRepository.findById(studyId)
-        .orElseThrow(NotFoundStudyIdException::new);
+    Study study = getStudy(studyId);
 
-    // 임시 (아직 로그인 구현 X)
-    Long loginMemberId = 1L;
+    String leaderImg = "";
+    List<String> otherImg = new ArrayList<>();
+    boolean isLeader = Boolean.FALSE;
+
+    List<StudyMember> members = getStudyMembers(studyId);
+
+    for (StudyMember member : members) {
+      if (member.getLeader().equals(Boolean.TRUE)) {
+        leaderImg = member.getMember().getProfileImage();
+        isLeader = leaderCheck(memberId, isLeader, member);
+      }else{
+        otherImg.add(member.getMember().getProfileImage());
+      }
+    }
+
+    MemberProfilesResponse memberProfilesResponse = new MemberProfilesResponse(
+        leaderImg,
+        otherImg
+    );
 
     return new StudyDetailResponse(
         study.getId(),
@@ -146,19 +175,40 @@ public class StudyService {
         study.getMinCapacity(),
         study.getRule(),
         study.getRegion(),
-        setStudyDayConverter.convertToDatabaseColumn(study.getStudyDay()),
+        studyDayConverter.convertToDatabaseColumn(study.getStudyDay()),
         study.getPosterImage(),
-        getStudyLikeCount(study),
-        hasStudyFavorite(loginMemberId, study)
+        getStudyInterestCount(study),
+        isStudyInterested(memberId, study),
+        isLeader,
+        memberProfilesResponse
     );
   }
 
   @Transactional
-  public StudyDetailResponse modify(Long studyId, StudyRequest studyRequest) {
+  public StudyDetailResponse modify(Long memberId, Long studyId, StudyRequest studyRequest) {
     log.debug("[스터디 수정] StudyId = {}, StudyRequest = {}", studyId, studyRequest);
 
-    Study study = studyRepository.findById(studyId)
-        .orElseThrow(NotFoundStudyIdException::new);
+    Study study = getStudy(studyId);
+
+    String leaderImg = "";
+    List<String> otherImg = new ArrayList<>();
+    boolean isLeader = Boolean.FALSE;
+
+    List<StudyMember> members = getStudyMembers(studyId);
+
+    for (StudyMember member : members) {
+      if (member.getLeader().equals(Boolean.TRUE)) {
+        leaderImg = member.getMember().getProfileImage();
+        isLeader = leaderCheck(memberId, isLeader, member);
+      }else{
+        otherImg.add(member.getMember().getProfileImage());
+      }
+    }
+
+    MemberProfilesResponse memberProfilesResponse = new MemberProfilesResponse(
+        leaderImg,
+        otherImg
+    );
 
     study.modify(
         studyRequest.getTitle(),
@@ -166,7 +216,7 @@ public class StudyService {
         studyRequest.getPosterImage(),
         studyRequest.getLanguage(),
         studyRequest.getLevel(),
-        setStudyDayConverter.convertToEntityAttribute(studyRequest.getStudyDay()),
+        studyDayConverter.convertToEntityAttribute(studyRequest.getStudyDay()),
         studyRequest.getRule(),
         studyRequest.getRegion(),
         studyRequest.getMaxCapacity(),
@@ -175,8 +225,7 @@ public class StudyService {
         studyRequest.getGrade()
     );
 
-    // 임시 (아직 로그인 구현 X)
-    Long loginMemberId = 1L;
+
 
     return new StudyDetailResponse(
         study.getId(),
@@ -190,25 +239,50 @@ public class StudyService {
         study.getMinCapacity(),
         study.getRule(),
         study.getRegion(),
-        setStudyDayConverter.convertToDatabaseColumn(study.getStudyDay()),
+        studyDayConverter.convertToDatabaseColumn(study.getStudyDay()),
         study.getPosterImage(),
-        getStudyLikeCount(study),
-        hasStudyFavorite(loginMemberId, study)
+        getStudyInterestCount(study),
+        isStudyInterested(memberId, study),
+        isLeader,
+        memberProfilesResponse
     );
   }
 
   @Transactional
-  public void delete(Long studyId) {
+  public void delete(Long memberId, Long studyId) {
     log.debug("[스터디 삭제] studyId = {}", studyId);
+
+    StudyMember studyLeader = studyMemberRepository.findStudyMemberByStudyIdAndLeaderIsTrue(studyId);
+
+    if (!Objects.equals(studyLeader.getMember().getId(), memberId)) {
+      throw new NotMatchStudyAndMemberException();
+    }
 
     studyRepository.deleteById(studyId);
   }
 
-  private Integer getStudyLikeCount(Study study) {
-    return studyFavoriteRepository.countByStudyId(study.getId());
+  private Integer getStudyInterestCount(Study study) {
+    return studyInterestRepository.countByStudyId(study.getId());
   }
 
-  private boolean hasStudyFavorite(Long loginMemberId, Study study) {
-    return studyFavoriteRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent();
+  private boolean isStudyInterested(Long loginMemberId, Study study) {
+    return studyInterestRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent();
+  }
+
+  private static boolean leaderCheck(Long loginMemberId, boolean isLeader, StudyMember member) {
+    if (loginMemberId.equals(member.getId())){
+      isLeader = Boolean.TRUE;
+    }
+    return isLeader;
+  }
+
+  private Study getStudy(Long studyId) {
+    return studyRepository.findById(studyId)
+        .orElseThrow(NotFoundStudyIdException::new);
+  }
+
+  private List<StudyMember> getStudyMembers(Long studyId) {
+    return studyMemberRepository.findStudyMembersByStudyId(
+        studyId);
   }
 }

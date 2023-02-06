@@ -5,8 +5,6 @@ import java.util.EnumSet;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,11 +38,12 @@ public class Study extends BaseEntity {
 
     private Integer level;
 
-    @Convert(converter = SetStudyDayConverter.class)
+    @Convert(converter = StudyDayConverter.class)
     private EnumSet<StudyDay> studyDay;
 
     private String rule;
 
+    @Convert(converter = StudyRegionConverter.class)
     private String region;
 
     private Integer maxCapacity;

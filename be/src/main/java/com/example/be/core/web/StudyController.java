@@ -12,7 +12,9 @@ import com.example.be.core.application.dto.request.StudyConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.oauth.Login;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.constraints.Positive;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,38 +36,41 @@ public class StudyController {
 
   @PostMapping
   @ApiOperation(value = "스터디 생성입니다.")
-  public BaseResponse<StudyDetailResponse> create(@RequestBody final StudyRequest studyRequest) {
-    StudyDetailResponse response = studyService.create(studyRequest, 1L);
+  public BaseResponse<StudyDetailResponse> create(@Login @Positive final Long memberId, @RequestBody final StudyRequest studyRequest) {
+    StudyDetailResponse response = studyService.create(studyRequest, memberId);
     return new BaseResponse<>(CREATE_STUDY_SUCCESS, response);
   }
 
   @GetMapping
   @ApiOperation(value = "스터디 타입에 따른 전체 조회입니다")
-  public BaseResponse<StudiesResponse> find(final StudyConditionRequest studyConditionRequest) {
-    StudiesResponse response = studyService.find(studyConditionRequest);
+  public BaseResponse<StudiesResponse> find(@Login @Positive final Long memberId, final StudyConditionRequest studyConditionRequest) {
+    StudiesResponse response = studyService.find(memberId,studyConditionRequest);
     return new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
   }
 
   @GetMapping("/{studyId}")
   @ApiOperation(value = "스터디 상세 조회입니다.")
-  public BaseResponse<StudyDetailResponse> findById(@PathVariable final Long studyId) {
-    StudyDetailResponse response = studyService.findById(studyId);
+  public BaseResponse<StudyDetailResponse> findById(@Login @Positive final Long memberId, @PathVariable final Long studyId) {
+    StudyDetailResponse response = studyService.findById(memberId,studyId);
     return new BaseResponse<>(FIND_DETAIL_STUDY_SUCCESS, response);
   }
 
   @PutMapping("/{studyId}")
   @ApiOperation(value = "스터디 수정입니다.")
   public BaseResponse<StudyDetailResponse> modify(
+      @Login @Positive final Long memberId,
       @PathVariable final Long studyId,
       @RequestBody final StudyRequest studyRequest) {
-    StudyDetailResponse response = studyService.modify(studyId, studyRequest);
+    StudyDetailResponse response = studyService.modify(memberId, studyId, studyRequest);
     return new BaseResponse<>(MODIFY_STUDY_SUCCESS, response);
   }
 
   @DeleteMapping("/{studyId}")
   @ApiOperation(value = "스터디 삭제입니다.")
-  public BaseResponse<Void> delete(@PathVariable final Long studyId) {
-    studyService.delete(studyId);
+  public BaseResponse<Void> delete(
+      @Login @Positive final Long memberId,
+      @PathVariable final Long studyId) {
+    studyService.delete(memberId, studyId);
     return new BaseResponse<>(DELETE_STUDY_SUCCESS, null);
   }
 }
