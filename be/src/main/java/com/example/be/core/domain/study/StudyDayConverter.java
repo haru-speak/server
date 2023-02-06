@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 
 @Slf4j
 @Converter
-public class SetStudyDayConverter implements AttributeConverter<EnumSet<StudyDay>, String> {
+public class StudyDayConverter implements AttributeConverter<EnumSet<StudyDay>, String> {
 
     @Override
     public String convertToDatabaseColumn(EnumSet<StudyDay> attribute) {

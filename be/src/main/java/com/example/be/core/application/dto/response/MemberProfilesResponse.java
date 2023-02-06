@@ -10,7 +10,7 @@ public class MemberProfilesResponse {
     @Schema(type = "String", description = "스터디 리더 이미지, NOT NULL")
     private final String leader;
 
-    @Schema(type = "String", description = "스터디 리더가 아닌 멤버들의 이미지, NOT NULL")
+    @Schema(type = "List<String>", description = "스터디 리더가 아닌 멤버들의 이미지, NOT NULL")
     private final List<String> otherMembers;
 
     public MemberProfilesResponse(String leader, List<String> otherMembers) {
