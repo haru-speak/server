@@ -1,5 +1,6 @@
 package com.example.be.core.application.dto.response;
 
+import com.example.be.core.domain.assignment.Assignment;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -38,5 +39,17 @@ public class AssignmentDetailResponse {
     this.createdAt = createdAt;
     this.deadline = deadline;
     this.isSubmitted = isSubmitted;
+  }
+
+  public static AssignmentDetailResponse create(Assignment assignment) {
+    return new AssignmentDetailResponse(
+        assignment.getId(),
+        assignment.getTitle(),
+        assignment.getContent(),
+        assignment.getVoiceRecord(),
+        assignment.getCreatedAt(),
+        assignment.getDeadLine(),
+        Boolean.FALSE
+    );
   }
 }

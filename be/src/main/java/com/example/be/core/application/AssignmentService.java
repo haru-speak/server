@@ -68,17 +68,8 @@ public class AssignmentService {
             )
         ));
 
-
     log.debug("[과제 생성] 성공 : assignment ID = {}", savedAssignment.getId());
-    return new AssignmentDetailResponse(
-        savedAssignment.getId(),
-        savedAssignment.getTitle(),
-        savedAssignment.getContent(),
-        savedAssignment.getVoiceRecord(),
-        savedAssignment.getCreatedAt(),
-        savedAssignment.getDeadLine(),
-        false
-    );
+    return AssignmentDetailResponse.create(savedAssignment);
   }
 
   public AssignmentsResponse find(Long memberId) {
