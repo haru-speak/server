@@ -74,8 +74,10 @@ public class AssignmentService {
         savedAssignment.getId(),
         savedAssignment.getTitle(),
         savedAssignment.getContent(),
+        savedAssignment.getVoiceRecord(),
+        savedAssignment.getCreatedAt(),
         savedAssignment.getDeadLine(),
-        savedAssignment.getVoiceRecord()
+        false
     );
   }
 
@@ -87,10 +89,11 @@ public class AssignmentService {
         new AssignmentResponse(
             assignmentMember.getAssignment().getId(),
             assignmentMember.getAssignment().getTitle(),
-            assignmentMember.getAssignment().getStudy().getId(),
-            assignmentMember.getAssignment().getStudy().getTitle(),
+            assignmentMember.getAssignment().getContent(),
+            assignmentMember.getAssignment().getVoiceRecord(),
+            assignmentMember.getAssignment().getPhoto(),
             assignmentMember.getAssignment().getDeadLine()
-        )).collect(Collectors.toList());
+            )).collect(Collectors.toList());
     return new AssignmentsResponse(
         assignmentResponses
     );
@@ -105,8 +108,9 @@ public class AssignmentService {
     return new AssignmentResponse(
         assignmentId,
         assignment.getTitle(),
-        assignment.getStudy().getId(),
-        assignment.getStudy().getTitle(),
+        assignment.getContent(),
+        assignment.getVoiceRecord(),
+        assignment.getPhoto(),
         assignment.getDeadLine()
     );
   }
@@ -130,8 +134,10 @@ public class AssignmentService {
         assignment.getId(),
         assignment.getTitle(),
         assignment.getContent(),
+        assignment.getVoiceRecord(),
+        assignment.getCreatedAt(),
         assignment.getDeadLine(),
-        assignment.getVoiceRecord()
+        false
     );
   }
 
