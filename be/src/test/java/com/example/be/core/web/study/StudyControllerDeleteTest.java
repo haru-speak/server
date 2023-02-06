@@ -49,7 +49,7 @@ class StudyControllerDeleteTest extends InitControllerTest {
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)))
             .andDo(print());
 
-        verify(studyService).delete(refEq(studyId));
+        verify(studyService).delete(refEq(memberId), refEq(studyId));
       }
     }
   }

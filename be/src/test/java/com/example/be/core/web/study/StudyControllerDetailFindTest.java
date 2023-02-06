@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
+import com.example.be.core.application.dto.response.MemberProfilesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.domain.study.StudyDay;
 import com.example.be.core.web.InitControllerTest;
@@ -42,12 +43,12 @@ class StudyControllerDetailFindTest extends InitControllerTest {
         Long memberId = 1L;
         Long studyId = 1L;
         Integer likeCount = 10;
-        StudyDetailResponse response = new StudyDetailResponse(studyId, "스터디 1", "스터디 1 입니다", 3, "english",
-            "OPIC", "AL", 5, 1, "대면", "서울", "월,화,수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg",likeCount, true);
+        StudyDetailResponse response = new StudyDetailResponse(memberId, "스터디1", "내용1", 3, "english",
+            "OPIC", "AL", 5, 1, "대면", "서울","월,화,수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg",likeCount, false, Boolean.TRUE, new MemberProfilesResponse("leader", new ArrayList<>()));
         BaseResponse<StudyDetailResponse> baseResponse = new BaseResponse<>(
             FIND_DETAIL_STUDY_SUCCESS, response);
 
-        when(studyService.findById(studyId))
+        when(studyService.findById(memberId, studyId))
             .thenReturn(response);
 
         //when
@@ -61,7 +62,7 @@ class StudyControllerDetailFindTest extends InitControllerTest {
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)))
             .andDo(print());
 
-        verify(studyService).findById(refEq(studyId));
+        verify(studyService).findById(refEq(memberId), refEq(studyId));
       }
     }
   }

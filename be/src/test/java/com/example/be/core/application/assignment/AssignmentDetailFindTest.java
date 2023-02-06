@@ -33,8 +33,7 @@ class AssignmentDetailFindTest extends InitServiceTest {
                 AssignmentResponse response = assignmentService.findById(assignmentId);
 
                 //then
-                assertThat(response.getAssignmentTitle()).isEqualTo("assignment-title1");
-                assertThat(response.getStudyTitle()).isEqualTo("study-title1");
+                assertThat(response.getTitle()).isEqualTo("assignment-title1");
             }
         }
 

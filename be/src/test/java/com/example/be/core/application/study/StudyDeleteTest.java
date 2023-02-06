@@ -24,12 +24,13 @@ class StudyDeleteTest extends InitServiceTest {
       @DisplayName("삭제 전과 삭제 후의 스터디 수 차이가 발생한다.")
       void normal_delete() throws Exception {
         //given
+        Long memberId = 1L;
         Long studyId = 1L;
         List<Study> before = studyRepository.findAll();
         assertThat(before.size()).isEqualTo(4);
 
         //when
-        studyService.delete(studyId);
+        studyService.delete(memberId, studyId);
 
         //then
         List<Study> after = studyRepository.findAll();
