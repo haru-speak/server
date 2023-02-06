@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> {
     List<StudyMember> findStudyMembersByStudyId(Long studyId);
+
+    Integer countStudyMemberByStudyId(Long studyId);
 }

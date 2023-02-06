@@ -1,9 +1,6 @@
 package com.example.be.core.application.dto.response;
 
-import com.example.be.core.domain.study.StudyDay;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDate;
-import java.util.EnumSet;
 import java.util.List;
 import javax.validation.constraints.Positive;
 import lombok.Getter;
@@ -51,16 +48,22 @@ public class StudyDetailResponse {
   @Schema(type = "String", description = "포스터 이미지, NOT NULL")
   private final String posterImage;
 
-  @Schema(type = "Int", description = "좋아요 개수, NOT NULL")
-  private final Integer likeCount;
+  @Schema(type = "Int", description = "관심 개수, NOT NULL")
+  private final Integer interestCount;
 
-  @Schema(type = "Boolean", description = "좋아요 여부, NOT NULL")
-  private final Boolean isLiked;
+  @Schema(type = "Boolean", description = "관심 여부, NOT NULL")
+  private final Boolean isInterested;
+
+  @Schema(type = "Boolean", description = "조회를 한 현재 유저가 스터디 리더인지 여부, NOT NULL")
+  private final Boolean isLeader;
+
+  @Schema(type = "MemberProfilesResponse", description = "스터디에 참여중인 멤버들의 프로필 이미지, NOT NULL")
+  private final MemberProfilesResponse memberProfiles;
 
   public StudyDetailResponse(Long studyId, String title, String content, Integer level,
       String language, String speakingTest, String grade, Integer maxCapacity, Integer minCapacity,
-      String rule, String region, String studyDay, String posterImage, Integer likeCount,
-      Boolean isLiked) {
+      String rule, String region, String studyDay, String posterImage, Integer interestCount,
+      Boolean isInterested, Boolean isLeader, MemberProfilesResponse memberProfiles) {
     this.studyId = studyId;
     this.title = title;
     this.content = content;
@@ -74,7 +77,9 @@ public class StudyDetailResponse {
     this.region = region;
     this.studyDay = studyDay;
     this.posterImage = posterImage;
-    this.likeCount = likeCount;
-    this.isLiked = isLiked;
+    this.interestCount = interestCount;
+    this.isInterested = isInterested;
+    this.isLeader = isLeader;
+    this.memberProfiles = memberProfiles;
   }
 }

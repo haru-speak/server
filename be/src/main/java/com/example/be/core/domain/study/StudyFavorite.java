@@ -13,6 +13,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
+/**
+ * 스터디에 좋아요와 찜 기능이 둘 다 있지 않아 StudyInterest 로 합쳐지므로 해당 파일은 삭제 해야할 것 같음
+ */
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
