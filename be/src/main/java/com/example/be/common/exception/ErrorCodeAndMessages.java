@@ -26,6 +26,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	SPEAKING_TEST_TYPE_ERROR("E-BR009", "올바르지 않은 SpeakingTestType 형식입니다."
 		+ "OPIC, TOEFL, TOEIC_SPEAKING 중 하나여야 합니다."),
 	SPEAKING_LOG_NOT_MATCH_MEMBER_ERROR("E-BR010", "SpeakingLog의 작성자가 해당 멤버가 아닙니다."),
+	FEIGN_CLIENT_WITH_WRONG_TOKEN_ERROR("E-BR011", "잘못된 형식의 토큰입니다. 토큰 정보를 다시 확인해주세요"),
 
 
 	/**

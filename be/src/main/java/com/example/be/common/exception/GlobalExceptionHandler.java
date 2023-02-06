@@ -1,8 +1,10 @@
 package com.example.be.common.exception;
 
 import static com.example.be.common.exception.ErrorCodeAndMessages.BAD_REQUEST_ERROR;
+import static com.example.be.common.exception.ErrorCodeAndMessages.FEIGN_CLIENT_WITH_WRONG_TOKEN_ERROR;
 
 import com.example.be.common.response.BaseResponse;
+import feign.FeignException;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -62,8 +64,19 @@ public class GlobalExceptionHandler {
 		return BaseResponse.error(BAD_REQUEST_ERROR.getCode(), e.getMessage());
 	}
 
+	/**
+	 * 400 BAD REQUEST : FeignException
+	 */
+	@ExceptionHandler(FeignException.class)
+	private BaseResponse<Void> handleFeignException(FeignException e) {
+		log.error("FeignException: {}", e.getMessage());
+		return BaseResponse.error(FEIGN_CLIENT_WITH_WRONG_TOKEN_ERROR.getCode(),
+			FEIGN_CLIENT_WITH_WRONG_TOKEN_ERROR.getMessage());
+	}
+
 	@ExceptionHandler(BaseException.class)
 	public BaseResponse<Void> handleConversionFailed(BaseException e) {
+
 		log.warn("Error Code={}, Error Message={}", e.getCode(), e.getMessage());
 		return BaseResponse.error(e.getCode(), e.getMessage());
 	}

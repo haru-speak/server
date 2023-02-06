@@ -29,9 +29,8 @@ public class KakaoProvider {
 			KakaoAccessTokenResponse response = getAccessToken(code);
 			accessToken = response.getAccessToken();
 		}
-		return memberInfoClient.call(properties.getContentType(), String.format("%s %s",
-				properties.getTokenType(),
-				accessToken));
+		return memberInfoClient.call(properties.getContentType(),
+			String.format("%s %s", properties.getTokenType(), accessToken));
 	}
 
 	private KakaoAccessTokenResponse getAccessToken(String authorizeCode) {
