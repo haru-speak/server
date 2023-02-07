@@ -45,7 +45,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	/**
 	 * 500 Server Error
 	 */
-	SPEAKING_GRADE_COUNT_ERROR("E-SE001", "스피킹 등급의 개수가 2개가 아닙니다."),
+	SPEAKING_GRADE_COUNT_ERROR("E-SE001", "Learner 혹은 Giver의 SpeakingGrade 설정이 이루어지지 않았습니다. 회원가입을 다시 진행해주세요,"),
 	;
 
 	private final String code;

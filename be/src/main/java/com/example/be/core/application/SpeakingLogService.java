@@ -84,21 +84,26 @@ public class SpeakingLogService {
 
 		LocalDateTime endDateTime = LocalDateTime.of(speakingLogConditionRequest.getDate(), LocalTime.of(23,59,59));
 
-		List<SpeakingLog> speakingLogs = speakingLogRepository.findAllByCreatedAtBetween(
-			startDateTime, endDateTime);
+		List<SpeakingLog> speakingLogs = speakingLogRepository.findAllByCreatedAtBetween(startDateTime, endDateTime);
+		/**
+		 * TODO: type에 따라 SpeakingLog 조회가 되어야 함
+		 */
 
-		List<SpeakingLogResponse> speakingLogResponses = speakingLogs.stream().map(speakingLog ->
-			new SpeakingLogResponse(
-				speakingLog.getId(),
-				speakingLog.getTitle(),
-				speakingLog.getVoiceRecord(),
-				speakingLog.getVoiceText(),
-				getFavoriteCount(speakingLog.getId()),
-				getCommentCount(speakingLog.getId()),
-				favoriteRepository.findByMemberIdAndSpeakingLog(memberId, speakingLog).isPresent(),
-				speakingLog.getMember().getProfileImage(),
-				speakingLog.getId()
-			)).collect(Collectors.toList());
+		List<SpeakingLogResponse> speakingLogResponses = speakingLogs.stream()
+			.map(speakingLog ->
+				new SpeakingLogResponse(
+					speakingLog.getId(),
+					speakingLog.getTitle(),
+					speakingLog.getVoiceRecord(),
+					speakingLog.getVoiceText(),
+					getFavoriteCount(speakingLog.getId()),
+					getCommentCount(speakingLog.getId()),
+					favoriteRepository.findByMemberIdAndSpeakingLog(memberId, speakingLog)
+						.isPresent(),
+					speakingLog.getMember().getProfileImage(),
+					speakingLog.getId()
+				))
+			.collect(Collectors.toList());
 
 		return new SpeakingLogsResponse(
 			speakingLogConditionRequest.getType(),

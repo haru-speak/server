@@ -19,51 +19,52 @@ import lombok.ToString;
 public class MemberSignUpRequest {
 
 	@NotNull(message = "memberType 을 정확히 입력해주세요. "
-		+ "elementary_school, middle_school, high_school, university, office_worker, job_seeker, free 중 하나여야 합니다.")
+		+ "\"elementary_school\", \"middle_school\", \"high_school\", \"university\", \"office_worker\", \"job_seeker\", \"free\" 중 하나여야 합니다.")
 	@Schema(enumAsRef = true, description = "멤버의 타입 선택, NOT NULL",
 		allowableValues = {"\"elementary_school\"", "\"middle_school\"", "\"high_school\"",
 			"\"university\"", "\"office_worker\"", "\"job_seeker\"", "\"free\""})
 	private MemberType memberType;
 
 	@NotNull(message = "learnerLanguage 를 정확히 입력해주세요. "
-		+ "ENG, KOR 중 하나여야 합니다.")
+		+ "\"ENG\", \"KOR\" 중 하나여야 합니다.")
 	@Schema(enumAsRef = true, description = "Learner Language 선택, NOT NULL",
 		allowableValues = {"\"ENG\"", "\"KOR\""})
 	private SpeakingGradeLanguage learnerLanguage;
 
 	@NotNull(message = "learnerLevel 을 정확히 입력해주세요. "
-		+ "1, 2, 3, 4, 5 중 하나여야 합니다.")
+		+ "\"1\", \"2\", \"3\", \"4\", \"5\" 중 하나여야 합니다.")
 	@Schema(enumAsRef = true, description = "Learner Language Level, NOT NULL",
 		allowableValues = {"\"1\"", "\"2\"", "\"3\"", "\"4\"", "\"5\""})
 	private SpeakingGradeLevel learnerLevel;
 
-	@NotNull(message = "giverLanguage 를 정확히 입력해주세요. ENG, KOR 중 하나여야 합니다.")
+	@NotNull(message = "giverLanguage 를 정확히 입력해주세요. \"ENG\", \"KOR\" 중 하나여야 합니다.")
 	@Schema(enumAsRef = true, description = "Giver Language 선택, NOT NULL",
 		allowableValues = {"\"ENG\"", "\"KOR\""})
 	private SpeakingGradeLanguage giverLanguage;
 
 	@NotNull(message = "giverLevel 을 정확히 입력해주세요. "
-		+ "1, 2, 3, 4, 5 중 하나여야 합니다.")
+		+ "\"1\", \"2\", \"3\", \"4\", \"5\" 중 하나여야 합니다.")
 	@Schema(enumAsRef = true, description = "Giver Language Level, NOT NULL",
 		allowableValues = {"\"1\"", "\"2\"", "\"3\"", "\"4\"", "\"5\""})
 	private SpeakingGradeLevel giverLevel;
 
-	@NotNull(message = "하나 이상의 목표가 선택되어야 합니다.")
+	@NotNull(message = "하나 이상의 목표가 선택되어야 합니다. 목표는 현재 1 ~ 5까지 존재합니다. (ex. [2, 3])")
 	@Size(min = 1, message = "하나 이상의 목표가 선택되어야 합니다.")
 	@Schema(subTypes = {Long.class}, description = "목표 다중 선택 가능(0부터 순서대로 기입, 1개 이상), NOT NULL")
 	private List<Long> goals;
 
-	@NotNull(message = "셋 이상의 주제가 선택되어야 합니다.")
+	@NotNull(message = "셋 이상의 주제가 선택되어야 합니다. 주제는 현재 1 ~ 9까지 존재합니다. (ex. [1, 4, 7])")
 	@Size(min = 3, message = "셋 이상의 주제가 선택되어야 합니다.")
 	@Schema(subTypes = {Long.class}, minLength = 3, description = "주제 다중 선택 가능(3개 이상), NOT NULL")
 	private List<Long> subjects;
 
-	@NotNull(message = "alarmStatus 를 정확히 입력해주세요. TRUE, FALSE 중 하나여야 합니다.")
+	@NotNull(message = "alarmStatus 를 정확히 입력해주세요. true, false 중 하나여야 합니다.")
 	@Schema(type = "Boolean")
 	private Boolean alarmStatus;
 
 
-	@Schema(enumAsRef = true, description = "스피킹 시험의 종류(한 개만 선택 가능): OPIC, TOEFL, TOEIC_SPEAKING")
+	@Schema(enumAsRef = true, description = "스피킹 시험의 종류(한 개만 선택 가능): \"OPIC\", \"TOEFL\", \"TOEIC_SPEAKING\""
+		+ " - 현재는 목표 id 5 (시험 목표)를 선택한 경우에만 정상적으로 저장됩니다.(그 외의 경우엔 아예 입력하지 않아도 됩니다.)")
 	private SpeakingTestType testType;
 
 	public MemberSignUpRequest(String memberType, String learnerLanguage,

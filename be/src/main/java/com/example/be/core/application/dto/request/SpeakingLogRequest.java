@@ -18,7 +18,7 @@ public class SpeakingLogRequest {
     @Schema(type = "String", description = "제목, 4자 이상 ~ 30자 이내")
     private String title;
 
-    @NotNull(message = "voiceRecord가 빈 값이어서는 안됩니다.")
+    @NotNull(message = "voiceRecord가 빈 값이어서는 안됩니다. file path url 형식을 지켜주세요 (ex. https://~)")
     @URL(message = "올바른 voiceRecord를 입력해야 합니다.")
     @Schema(type = "String", description = "음성 녹음 URL, NOT NULL")
     private String voiceRecord;
