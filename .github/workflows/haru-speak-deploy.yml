@@ -39,7 +39,7 @@ jobs:
         run: chmod +x gradlew
       
       - name: Spring-application build 
-        run: ./gradlew bootJar
+        run: ./gradlew build
       
 
        # Docker
