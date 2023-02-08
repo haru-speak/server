@@ -25,13 +25,14 @@ class AssignmentDeleteTest extends InitServiceTest {
             @DisplayName("삭제 된 과제 아이디는 찾을 수 없다.")
             void delete_assignment() throws Exception {
                 //given
+                Long memberId = 1L;
                 Long assignmentId = 1L;
 
                 //when
-                assignmentService.delete(assignmentId);
+                assignmentService.delete(memberId, assignmentId);
 
                 //then
-                assertThatThrownBy(() -> assignmentService.delete(assignmentId))
+                assertThatThrownBy(() -> assignmentService.delete(memberId, assignmentId))
                     .isInstanceOf(BaseException.class)
                     .isExactlyInstanceOf(NotFoundAssignmentIdException.class)
                     .hasMessage(ASSIGNMENT_ID_NOT_FOUND_ERROR.getMessage());

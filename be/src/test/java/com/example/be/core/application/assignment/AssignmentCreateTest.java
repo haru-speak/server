@@ -37,7 +37,7 @@ class AssignmentCreateTest extends InitServiceTest {
             "연의 과제입니다",
             "dummy-voice-record-data", "photo");
         //when
-        AssignmentDetailResponse response = assignmentService.create(request, memberId);
+        AssignmentDetailResponse response = assignmentService.create(memberId, request);
 
         //then
         List<AssignmentMember> assignmentMembers = assignmentMemberRepository.findAssignmentMembersByMemberId(2L);

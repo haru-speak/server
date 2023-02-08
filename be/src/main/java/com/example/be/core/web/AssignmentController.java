@@ -44,9 +44,9 @@ public class AssignmentController {
 
   @GetMapping("/{assignmentId}")
   @ApiOperation(value = "과제 상세 조회입니다.")
-  public BaseResponse<AssignmentResponse> findById(@Login @Positive final Long memberId,
+  public BaseResponse<AssignmentDetailResponse> findById(@Login @Positive final Long memberId,
       @PathVariable @Positive final Long assignmentId) {
-    AssignmentResponse response = assignmentService.findById(memberId, assignmentId);
+    AssignmentDetailResponse response = assignmentService.findById(memberId, assignmentId);
     return new BaseResponse<>(FIND_DETAIL_ASSIGNMENT_SUCCESS, response);
   }
 

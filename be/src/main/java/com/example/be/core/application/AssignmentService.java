@@ -55,8 +55,8 @@ public class AssignmentService {
             assignmentRequest.getDeadLine(),
             assignmentRequest.getContent(),
             assignmentRequest.getVoiceRecord(),
-            assignmentRequest.getPhoto())
-    );
+            assignmentRequest.getPhoto()
+        ));
 
     List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudyId(assignmentRequest.getStudyId());
 
@@ -91,19 +91,20 @@ public class AssignmentService {
     );
   }
 
-  public AssignmentResponse findById(Long memberId, Long assignmentId) {
+  public AssignmentDetailResponse findById(Long memberId, Long assignmentId) {
     log.debug("[과제 개별 조회] assignmentId = {}", assignmentId);
 
     Assignment assignment = assignmentRepository.findById(assignmentId)
         .orElseThrow(NotFoundAssignmentIdException::new);
 
-    return new AssignmentResponse(
-        assignmentId,
+    return new AssignmentDetailResponse(
+        assignment.getId(),
         assignment.getTitle(),
         assignment.getContent(),
         assignment.getVoiceRecord(),
-        assignment.getPhoto(),
-        assignment.getDeadLine()
+        assignment.getCreatedAt(),
+        assignment.getDeadLine(),
+        Boolean.FALSE
     );
   }
 

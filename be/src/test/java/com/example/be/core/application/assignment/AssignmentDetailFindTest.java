@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.example.be.common.exception.BaseException;
 import com.example.be.common.exception.assignment.NotFoundAssignmentIdException;
 import com.example.be.core.application.InitServiceTest;
+import com.example.be.core.application.dto.response.AssignmentDetailResponse;
 import com.example.be.core.application.dto.response.AssignmentResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,20 +18,21 @@ class AssignmentDetailFindTest extends InitServiceTest {
 
     @Nested
     @DisplayName("과제 상세 조회할 때")
-    class detail_find {
+    class Detail_find {
 
         @Nested
         @DisplayName("정상적인 요청이라면")
-        class normal_test {
+        class Normal_test {
 
             @Test
             @DisplayName("과제 상세 조회를 성공한다.")
             void detail_find_test() throws Exception {
                 //given
+                Long memberId = 1L;
                 Long assignmentId = 1L;
 
                 //when
-                AssignmentResponse response = assignmentService.findById(assignmentId, assignmentId);
+                AssignmentDetailResponse response = assignmentService.findById(memberId, assignmentId);
 
                 //then
                 assertThat(response.getTitle()).isEqualTo("assignment-title1");
@@ -45,10 +47,11 @@ class AssignmentDetailFindTest extends InitServiceTest {
             @DisplayName("ASSIGNMENT_ID_NOT_FOUND_ERROR 예외를 보낸다.")
             void fail_detail_find_test() throws Exception {
                 //given
+                Long memberId = 1L;
                 Long assignmentId = 987654321L;
 
                 //when & then
-                assertThatThrownBy(() -> assignmentService.findById(assignmentId, assignmentId))
+                assertThatThrownBy(() -> assignmentService.findById(memberId, assignmentId))
                     .isInstanceOf(BaseException.class)
                     .isExactlyInstanceOf(NotFoundAssignmentIdException.class)
                     .hasMessage(ASSIGNMENT_ID_NOT_FOUND_ERROR.getMessage());

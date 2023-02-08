@@ -3,6 +3,7 @@ package com.example.be.core.application.assignment;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.be.core.application.InitServiceTest;
+import com.example.be.core.application.dto.request.AssignmentModifyRequest;
 import com.example.be.core.application.dto.request.AssignmentRequest;
 import com.example.be.core.application.dto.response.AssignmentDetailResponse;
 import com.example.be.core.domain.assignment.Assignment;
@@ -22,17 +23,18 @@ class AssignmentModifyTest extends InitServiceTest {
     @DisplayName("과제의 제목, 내용이 변경된다.")
     void normal_modify() throws Exception {
       //given
+      Long memberId = 1L;
       Long assignmentId = 1L;
       Long studyId = 1L;
 
-      AssignmentRequest request = new AssignmentRequest(studyId,
-          "수정한 제목",
-          LocalDateTime.of(2022, 1, 30, 0, 0),
+      AssignmentModifyRequest request = new AssignmentModifyRequest(
+          "수정한 제목", LocalDateTime.of(2022, 1, 30, 0, 0),
           "수정한 내용",
-          "dummy-voice-record-data", "photo");
+          "dummy-voice-record-data",
+          "photo");
 
       //when
-      AssignmentDetailResponse response = assignmentService.modify(assignmentId, request);
+      AssignmentDetailResponse response = assignmentService.modify(memberId, assignmentId, request);
 
       //then
       Assignment after = assignmentRepository.findById(1L).get();
