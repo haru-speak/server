@@ -58,6 +58,12 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	FIND_DETAIL_ASSIGNMENT_SUCCESS("S-A003", "과제 개별 조회를 성공했습니다."),
 	MODIFY_ASSIGNMENT_SUCCESS("S-A004", "과제 수정을 성공했습니다"),
 	DELETE_ASSIGNMENT_SUCCESS("S-A005", "과제 삭제를 성공했습니다"),
+
+	/**
+	 * Goal & Subject
+	 */
+	FIND_ALL_GOALS_SUCCESS("S-GS001", "목표 조회를 성공했습니다."),
+	FIND_ALL_SUBJECTS_SUCCESS("S-GS002", "주제 조회를 성공했습니다."),
   ;
 
 	private final String code;

@@ -1,4 +1,4 @@
-package com.example.be.core.application;
+package com.example.be.core.application.member;
 
 import static com.example.be.core.domain.member.grade.SpeakingGradeType.GIVER;
 import static com.example.be.core.domain.member.grade.SpeakingGradeType.LEARNER;

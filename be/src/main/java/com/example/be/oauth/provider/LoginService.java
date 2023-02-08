@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LoginService {
 
-	private static final String BASIC_PROFILE_IMAGE = "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/b5ddbdeb-00bf-425a-9321-e36d25323bc0.jpg";
+	private static final String BASIC_PROFILE_IMAGE = "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/static/basic_profile_image.jpg";
 	private final KakaoProvider kakaoProvider;
 	private final JwtProvider jwtProvider;
 	private final MemberRepository memberRepository;

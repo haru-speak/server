@@ -12,10 +12,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
-import com.example.be.core.application.MemberService;
+import com.example.be.core.application.member.MemberService;
 import com.example.be.core.application.dto.response.FollowResponse;
 import com.example.be.core.web.InitControllerTest;
-import com.example.be.core.web.MemberController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

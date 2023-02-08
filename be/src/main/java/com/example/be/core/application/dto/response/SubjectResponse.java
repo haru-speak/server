@@ -8,13 +8,19 @@ public class SubjectResponse {
 
 	private final Long subjectId;
 	private final String content;
+	private final String image;
 
-	private SubjectResponse(Long subjectId, String content) {
+	private SubjectResponse(Long subjectId, String content, String image) {
 		this.subjectId = subjectId;
 		this.content = content;
+		this.image = image;
 	}
 
 	public static SubjectResponse of(Subject subject) {
-		return new SubjectResponse(subject.getId(), subject.getContent());
+		return new SubjectResponse(
+			subject.getId(),
+			subject.getContent(),
+			subject.getImage()
+		);
 	}
 }
