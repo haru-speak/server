@@ -4,8 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
 import org.hibernate.validator.constraints.URL;
 
+@Getter
 public class AssignmentModifyRequest {
 
   @NotNull(message = "제목이 빈 값이어서는 안됩니다.")

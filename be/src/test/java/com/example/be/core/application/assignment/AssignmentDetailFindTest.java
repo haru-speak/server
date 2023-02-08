@@ -30,7 +30,7 @@ class AssignmentDetailFindTest extends InitServiceTest {
                 Long assignmentId = 1L;
 
                 //when
-                AssignmentResponse response = assignmentService.findById(assignmentId);
+                AssignmentResponse response = assignmentService.findById(assignmentId, assignmentId);
 
                 //then
                 assertThat(response.getTitle()).isEqualTo("assignment-title1");
@@ -48,7 +48,7 @@ class AssignmentDetailFindTest extends InitServiceTest {
                 Long assignmentId = 987654321L;
 
                 //when & then
-                assertThatThrownBy(() -> assignmentService.findById(assignmentId))
+                assertThatThrownBy(() -> assignmentService.findById(assignmentId, assignmentId))
                     .isInstanceOf(BaseException.class)
                     .isExactlyInstanceOf(NotFoundAssignmentIdException.class)
                     .hasMessage(ASSIGNMENT_ID_NOT_FOUND_ERROR.getMessage());

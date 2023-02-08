@@ -3,6 +3,7 @@ package com.example.be.core.application;
 import com.example.be.common.exception.assignment.NotFoundAssignmentIdException;
 import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
+import com.example.be.core.application.dto.request.AssignmentModifyRequest;
 import com.example.be.core.application.dto.request.AssignmentRequest;
 import com.example.be.core.application.dto.response.AssignmentDetailResponse;
 import com.example.be.core.application.dto.response.AssignmentResponse;
@@ -90,7 +91,7 @@ public class AssignmentService {
     );
   }
 
-  public AssignmentResponse findById(Long assignmentId) {
+  public AssignmentResponse findById(Long memberId, Long assignmentId) {
     log.debug("[과제 개별 조회] assignmentId = {}", assignmentId);
 
     Assignment assignment = assignmentRepository.findById(assignmentId)
@@ -107,18 +108,18 @@ public class AssignmentService {
   }
 
   @Transactional
-  public AssignmentDetailResponse modify(Long assignmentId, AssignmentRequest assignmentRequest) {
-    log.debug("[과제 수정] assignmentId = {} assignmentRequest = {}",assignmentId, assignmentRequest);
+  public AssignmentDetailResponse modify(Long memberId, Long assignmentId, AssignmentModifyRequest assignmentModifyRequest) {
+    log.debug("[과제 수정] assignmentId = {} assignmentModifyRequest = {}",assignmentId, assignmentModifyRequest);
 
     Assignment assignment = assignmentRepository.findById(assignmentId)
         .orElseThrow(NotFoundAssignmentIdException::new);
 
     assignment.modify(
-        assignmentRequest.getTitle(),
-        assignmentRequest.getDeadLine(),
-        assignmentRequest.getContent(),
-        assignmentRequest.getVoiceRecord(),
-        assignmentRequest.getPhoto()
+        assignmentModifyRequest.getTitle(),
+        assignmentModifyRequest.getDeadLine(),
+        assignmentModifyRequest.getContent(),
+        assignmentModifyRequest.getVoiceRecord(),
+        assignmentModifyRequest.getPhoto()
     );
 
     return new AssignmentDetailResponse(
@@ -133,7 +134,7 @@ public class AssignmentService {
   }
 
   @Transactional
-  public void delete(Long assignmentId) {
+  public void delete(Long memberId, Long assignmentId) {
     log.debug("[과제 삭제] assignmentId = {}", assignmentId);
 
     Assignment assignment = assignmentRepository.findById(assignmentId)
