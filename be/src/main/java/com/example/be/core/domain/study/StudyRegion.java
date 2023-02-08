@@ -1,5 +1,7 @@
 package com.example.be.core.domain.study;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
@@ -21,7 +23,7 @@ public enum StudyRegion {
     JEJU("제주"),
     ETC("기타");
 
-    private String region;
+    private final String region;
 
     StudyRegion(String region) {
         this.region = region;

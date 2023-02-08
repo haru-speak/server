@@ -6,6 +6,7 @@ import com.example.be.core.application.InitServiceTest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.domain.study.StudyDay;
+import com.example.be.core.domain.study.StudyRegion;
 import java.util.EnumSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -37,7 +38,7 @@ class StudyCreateTest extends InitServiceTest {
                     5,
                     1,
                     "대면",
-                    "서울",
+                    StudyRegion.SEOUL,
                     "월,화,수",
                     "study"
                 );

@@ -5,6 +5,8 @@ import java.util.EnumSet;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,8 +45,8 @@ public class Study extends BaseEntity {
 
     private String rule;
 
-    @Convert(converter = StudyRegionConverter.class)
-    private String region;
+    @Enumerated(EnumType.STRING)
+    private StudyRegion region;
 
     private Integer maxCapacity;
 
@@ -55,7 +57,7 @@ public class Study extends BaseEntity {
     private String grade;
 
     public Study(String title, String content, String posterImage, String language, Integer level,
-        EnumSet<StudyDay> studyDay, String rule, String region, Integer maxCapacity,
+        EnumSet<StudyDay> studyDay, String rule, StudyRegion region, Integer maxCapacity,
         Integer minCapacity, String speakingTest, String grade) {
         this.title = title;
         this.content = content;
@@ -72,7 +74,7 @@ public class Study extends BaseEntity {
     }
 
     public void modify(String title, String content, String posterImage, String language, Integer level,
-        EnumSet<StudyDay> studyDay, String rule, String region, Integer maxCapacity,
+        EnumSet<StudyDay> studyDay, String rule, StudyRegion region, Integer maxCapacity,
         Integer minCapacity, String speakingTest, String grade) {
         this.title = title;
         this.content = content;

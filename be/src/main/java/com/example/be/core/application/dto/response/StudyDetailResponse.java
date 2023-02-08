@@ -1,5 +1,6 @@
 package com.example.be.core.application.dto.response;
 
+import com.example.be.core.domain.study.StudyRegion;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import javax.validation.constraints.Positive;
@@ -39,8 +40,8 @@ public class StudyDetailResponse {
   @Schema(type = "String", description = "대면, 비대면 규칙, NOT NULL")
   private final String rule;
 
-  @Schema(type = "String", description = "지역, NULL")
-  private final String region;
+  @Schema(type = "StudyRegion", description = "지역, NULL")
+  private final StudyRegion region;
 
   @Schema(type = "String", description = "스터디 하는 요일, NOT NULL")
   private final String studyDay;
@@ -62,7 +63,7 @@ public class StudyDetailResponse {
 
   public StudyDetailResponse(Long studyId, String title, String content, Integer level,
       String language, String speakingTest, String grade, Integer maxCapacity, Integer minCapacity,
-      String rule, String region, String studyDay, String posterImage, Integer interestCount,
+      String rule, StudyRegion region, String studyDay, String posterImage, Integer interestCount,
       Boolean isInterested, Boolean isLeader, MemberProfilesResponse memberProfiles) {
     this.studyId = studyId;
     this.title = title;

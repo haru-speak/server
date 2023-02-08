@@ -1,7 +1,8 @@
 package com.example.be.core.domain.study;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.util.Arrays;
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
 public enum StudyDay {
@@ -13,9 +14,16 @@ public enum StudyDay {
     SATURDAY("토"),
     SUNDAY("일");
 
-    private String studyDay;
+    private final String studyDay;
 
     StudyDay(String studyDay) {
         this.studyDay = studyDay;
+    }
+
+    public static StudyDay convert(String source) {
+        return Arrays.stream(values())
+            .filter(v -> v.studyDay.equals(source))
+            .findAny()
+            .orElseThrow(IllegalArgumentException::new);
     }
 }
