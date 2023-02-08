@@ -2,7 +2,6 @@ package com.example.be.core.web;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_ASSIGNMENT_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_ASSIGNMENT_SUCCESS;
-import static com.example.be.common.response.ResponseCodeAndMessages.FIND_ASSIGNMENT_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_ASSIGNMENT_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_ASSIGNMENT_SUCCESS;
 
@@ -12,7 +11,6 @@ import com.example.be.core.application.dto.request.AssignmentModifyRequest;
 import com.example.be.core.application.dto.request.AssignmentRequest;
 import com.example.be.core.application.dto.response.AssignmentDetailResponse;
 import com.example.be.core.application.dto.response.AssignmentResponse;
-import com.example.be.core.application.dto.response.AssignmentsResponse;
 import com.example.be.oauth.Login;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
@@ -40,7 +38,7 @@ public class AssignmentController {
   @ApiOperation(value = "과제 생성입니다.")
   public BaseResponse<AssignmentDetailResponse> create(@Login @Positive final Long memberId,
       @RequestBody @Valid final AssignmentRequest assignmentRequest) {
-    AssignmentDetailResponse response = assignmentService.create(assignmentRequest, memberId);
+    AssignmentDetailResponse response = assignmentService.create(memberId, assignmentRequest);
     return new BaseResponse<>(CREATE_ASSIGNMENT_SUCCESS, response);
   }
 
@@ -64,7 +62,7 @@ public class AssignmentController {
   @DeleteMapping("/{assignmentId}")
   @ApiOperation(value = "과제 삭제입니다.")
   public BaseResponse<Void> delete(@Login @Positive final Long memberId,
-      @PathVariable final Long assignmentId) {
+      @PathVariable @Positive final Long assignmentId) {
     assignmentService.delete(memberId, assignmentId);
     return new BaseResponse<>(DELETE_ASSIGNMENT_SUCCESS, null);
   }

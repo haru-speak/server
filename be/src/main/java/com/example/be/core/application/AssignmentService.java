@@ -40,9 +40,9 @@ public class AssignmentService {
   private final StudyMemberRepository studyMemberRepository;
 
   @Transactional
-  public AssignmentDetailResponse create(AssignmentRequest assignmentRequest, Long loginMemberId) {
+  public AssignmentDetailResponse create(Long memberId, AssignmentRequest assignmentRequest) {
     log.debug("[과제 생성] assignmentRequest = {}", assignmentRequest);
-    Member member = memberRepository.findById(loginMemberId)
+    Member member = memberRepository.findById(memberId)
         .orElseThrow(NotFoundMemberIdException::new);
 
     Study study = studyRepository.findById(assignmentRequest.getStudyId())
