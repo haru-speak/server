@@ -41,6 +41,8 @@ public class DataBaseConfigurator implements InitializingBean {
 	private static final String TRUNCATE_TABLE = "TRUNCATE TABLE ";
 	private static final String TABLE = "TABLE";
 	private static final String TABLE_NAME = "table_name";
+	private static final String staticImageUrl = "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/static/";
+	private static final String staticImageExt = ".png";
 
 	private static final int NUMBER_OF_MEMBER = 5;
 	private static final int NUMBER_OF_SPEAKING_LOG = 3;
@@ -240,14 +242,14 @@ public class DataBaseConfigurator implements InitializingBean {
 	 */
 
 	private void initSubject() {
-		subjectRepository.save(new Subject(1L, "여행"));
-		subjectRepository.save(new Subject(2L, "영화&음악"));
-		subjectRepository.save(new Subject(3L, "일&회사"));
-		subjectRepository.save(new Subject(4L, "쇼핑"));
-		subjectRepository.save(new Subject(5L, "음식"));
-		subjectRepository.save(new Subject(6L, "가족&친구"));
-		subjectRepository.save(new Subject(7L, "운동&건강"));
-		subjectRepository.save(new Subject(8L, "동네"));
-		subjectRepository.save(new Subject(9L, "연애"));
+		subjectRepository.save(new Subject(1L, "여행", staticImageUrl + "travle" + staticImageExt));
+		subjectRepository.save(new Subject(2L, "영화&음악", staticImageUrl + "movie_music" + staticImageExt));
+		subjectRepository.save(new Subject(3L, "일&회사", staticImageUrl + "company" + staticImageExt));
+		subjectRepository.save(new Subject(4L, "쇼핑", staticImageUrl + "shopping" + staticImageExt));
+		subjectRepository.save(new Subject(5L, "음식", staticImageUrl + "food" + staticImageExt));
+		subjectRepository.save(new Subject(6L, "가족&친구", staticImageUrl + "family" + staticImageExt));
+		subjectRepository.save(new Subject(7L, "운동&건강", staticImageUrl + "workout" + staticImageExt));
+		subjectRepository.save(new Subject(8L, "동네", staticImageUrl + "town" + staticImageExt));
+		subjectRepository.save(new Subject(9L, "연애", staticImageUrl + "love" + staticImageExt));
 	}
 }
