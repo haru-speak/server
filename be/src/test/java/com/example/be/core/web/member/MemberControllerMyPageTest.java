@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.be.common.response.BaseResponse;
-import com.example.be.core.application.MemberService;
+import com.example.be.core.application.member.MemberService;
 import com.example.be.core.application.dto.response.GoalResponse;
 import com.example.be.core.application.dto.response.MemberResponse;
 import com.example.be.core.application.dto.response.SubjectResponse;
@@ -20,7 +20,6 @@ import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import com.example.be.core.domain.member.subject.Subject;
 import com.example.be.core.web.InitControllerTest;
-import com.example.be.core.web.MemberController;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -56,9 +55,12 @@ class MemberControllerMyPageTest extends InitControllerTest {
 					GoalResponse.of(new Goal(2L, "다른 사람들의 피드백!"))
 				);
 				List<SubjectResponse> subjectResponses = Arrays.asList(
-					SubjectResponse.of(new Subject(2L, "영화&음악")),
-					SubjectResponse.of(new Subject(7L, "운동&건강")),
-					SubjectResponse.of(new Subject(8L, "동네"))
+					SubjectResponse.of(new Subject(2L, "영화&음악",
+						"https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/static/movie_music.png")),
+					SubjectResponse.of(new Subject(7L, "운동&건강",
+						"https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/static/workout.png")),
+					SubjectResponse.of(new Subject(8L, "동네",
+						"https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/static/town.png"))
 				);
 
 				MemberResponse response = new MemberResponse(

@@ -8,7 +8,6 @@ import com.example.be.common.exception.ErrorCodeAndMessages;
 import com.example.be.common.exception.member.NotFoundFollowRelationshipException;
 import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.application.MemberService;
 import com.example.be.core.application.dto.response.FollowResponse;
 import com.example.be.core.domain.member.Follow;
 import com.example.be.core.repository.member.FollowRepository;
