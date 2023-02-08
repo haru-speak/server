@@ -1,5 +1,6 @@
 package com.example.be.core.web;
 
+import com.example.be.core.application.AssignmentService;
 import com.example.be.core.application.SpeakingLogService;
 import com.example.be.core.application.StudyService;
 import com.example.be.oauth.provider.JwtProvider;
@@ -24,6 +25,9 @@ public abstract class InitControllerTest {
 
 	@MockBean
 	protected StudyService studyService;
+
+	@MockBean
+	protected AssignmentService assignmentService;
 
 	@Autowired
 	protected MockMvc mockMvc;
