@@ -22,11 +22,11 @@ public class StudyPreviewResponse {
     @Schema(type = "LocalDateTime", description = "생성 시간, NOT NULL")
     private final LocalDateTime createdAt;
 
-    @Schema(type = "MemberProfilesResponse", description = "스터디에 참여중인 멤버들의 프로필 이미지, NOT NULL")
-    private final MemberProfilesResponse memberProfiles;
+    @Schema(type = "PreviewProfilesResponse", description = "스터디에 참여중인 멤버들의 프로필 이미지, NOT NULL")
+    private final PreviewProfilesResponse memberProfiles;
 
     public StudyPreviewResponse(Long studyId, String title, String content, String posterImage,
-        LocalDateTime createdAt, MemberProfilesResponse memberProfiles) {
+        LocalDateTime createdAt, PreviewProfilesResponse memberProfiles) {
         this.studyId = studyId;
         this.title = title;
         this.content = content;

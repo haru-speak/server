@@ -49,6 +49,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	FIND_DETAIL_STUDY_SUCCESS("S-S003", "스터디 상세 조회를 성공했습니다."),
 	MODIFY_STUDY_SUCCESS("S-S004", "스터디 수정을 성공했습니다."),
 	DELETE_STUDY_SUCCESS("S-S005", "스터디 삭제를 성공했습니다."),
+	FIND_STUDY_PREVIEW_SUCCESS("S-S006", "스터디 미리보기 조회를 성공했습니다."),
 	
 	/**
 	 Assignment

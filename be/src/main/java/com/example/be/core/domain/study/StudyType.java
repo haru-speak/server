@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 public enum StudyType {
 
-  ALL("ALL"),
-  MY("MY"),
-  MATE("MATE"),
+  RECOMMEND("RECOMMEND"),
+  POPULAR("POPULAR"),
+  INTEREST("INTEREST")
   ;
 
   private final String type;
