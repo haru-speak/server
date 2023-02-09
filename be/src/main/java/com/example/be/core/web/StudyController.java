@@ -15,6 +15,7 @@ import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.application.dto.response.StudyPreviewResponse;
+import com.example.be.core.application.dto.response.StudyPreviewsResponse;
 import com.example.be.oauth.Login;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.constraints.Positive;
@@ -60,8 +61,9 @@ public class StudyController {
 
   @GetMapping("/preview")
   @ApiOperation(value = "스터디 미리보기 조회입니다.")
-  public BaseResponse<StudyPreviewResponse> findPreview(@Login @Positive final Long memberId, final StudyPreviewConditionRequest studyPreviewConditionRequest) {
-    return new BaseResponse<>(FIND_STUDY_PREVIEW_SUCCESS, null);
+  public BaseResponse<StudyPreviewsResponse> findPreview(@Login @Positive final Long memberId, final StudyPreviewConditionRequest studyPreviewConditionRequest) {
+    StudyPreviewsResponse response = studyService.findPreview(memberId, studyPreviewConditionRequest);
+    return new BaseResponse<>(FIND_STUDY_PREVIEW_SUCCESS, response);
   }
 
   @PutMapping("/{studyId}")
