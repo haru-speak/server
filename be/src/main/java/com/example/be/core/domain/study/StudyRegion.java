@@ -21,7 +21,7 @@ public enum StudyRegion {
     JEJU("제주"),
     ETC("기타");
 
-    private String region;
+    private final String region;
 
     StudyRegion(String region) {
         this.region = region;

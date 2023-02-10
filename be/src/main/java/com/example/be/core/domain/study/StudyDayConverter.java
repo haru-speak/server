@@ -14,19 +14,21 @@ public class StudyDayConverter implements AttributeConverter<EnumSet<StudyDay>, 
     @Override
     public String convertToDatabaseColumn(EnumSet<StudyDay> attribute) {
         StringBuilder sb = new StringBuilder();
-        attribute.stream().forEach(e -> sb.append(e.getStudyDay() + ","));
+        attribute.forEach(e -> sb.append(e.getStudyDay()).append(","));
         String result = sb.toString();
-        if (result.charAt(result.length() - 1) == ',') result = result.substring(0, result.length() - 1);
+        if (result.charAt(result.length() - 1) == ',') {
+            result = result.substring(0, result.length() - 1);
+        }
         log.debug("[DB 에서 사용될 StudyDay 정보] : {}", result);
         return result;
     }
 
     @Override
     public EnumSet<StudyDay> convertToEntityAttribute(String dbData) {
-        if (dbData == null || dbData == "" || dbData.contains(".")) return EnumSet.noneOf(StudyDay.class);
+        if (dbData == null || dbData.equals("") || dbData.contains(".")) return EnumSet.noneOf(StudyDay.class);
         EnumSet<StudyDay> attribute = EnumSet.noneOf(StudyDay.class);
         String[] dbDataArray = StringUtils.trimAllWhitespace(dbData).toUpperCase().split(",");
-        Arrays.stream(dbDataArray).forEach(e -> attribute.add(StudyDay.valueOf(e)));
+        Arrays.stream(dbDataArray).forEach(e -> attribute.add(StudyDay.convert(e)));
         log.debug("[Entity 에서 사용될 StudyDay 정보] : {}", attribute);
         return attribute;
     }

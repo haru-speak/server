@@ -14,6 +14,7 @@ import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.MemberProfilesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
 import com.example.be.core.domain.study.StudyDay;
+import com.example.be.core.domain.study.StudyRegion;
 import com.example.be.core.web.InitControllerTest;
 import com.example.be.core.web.StudyController;
 import java.util.ArrayList;
@@ -45,9 +46,9 @@ class StudyControllerCreatTest extends InitControllerTest {
         Integer likeCount = 10;
 
         StudyRequest request = new StudyRequest("스터디1", "내용1", 3, "english",
-            "OPIC", "AL", 5, 1, "대면", "서울", "월,화,수","https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg");
+            "OPIC", "AL", 5, 1, "대면", StudyRegion.SEOUL, "월,화,수","https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg");
         StudyDetailResponse response = new StudyDetailResponse(memberId, "스터디1", "내용1", 3, "english",
-            "OPIC", "AL", 5, 1, "대면", "서울","월,화,수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg",likeCount, false, Boolean.TRUE, new MemberProfilesResponse("leader", new ArrayList<>()));
+            "OPIC", "AL", 5, 1, "대면", StudyRegion.SEOUL,"월,화,수", "https://haru-speak-s3.s3.ap-northeast-2.amazonaws.com/image/a4cd3848-b965-4504-90ce-b772398d7f11.jpeg",likeCount, false, Boolean.TRUE, new MemberProfilesResponse("leader", new ArrayList<>()));
         BaseResponse<StudyDetailResponse> baseResponse = new BaseResponse<>(CREATE_STUDY_SUCCESS, response);
 
         when(studyService.create(refEq(request), refEq(memberId)))

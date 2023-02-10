@@ -10,6 +10,7 @@ import com.example.be.core.domain.speakinglog.SpeakingLog;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyDay;
 import com.example.be.core.domain.study.StudyMember;
+import com.example.be.core.domain.study.StudyRegion;
 import com.example.be.core.repository.assignment.AssignmentMemberRepository;
 import com.example.be.core.repository.assignment.AssignmentRepository;
 import com.example.be.core.repository.member.MemberRepository;
@@ -73,6 +74,8 @@ public class DataBaseConfigurator implements InitializingBean {
 	private EntityManager entityManager;
 
 	private List<String> tableNames;
+
+	EnumSet<StudyDay> studyDay = EnumSet.allOf(StudyDay.class);
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -164,9 +167,9 @@ public class DataBaseConfigurator implements InitializingBean {
 					"study-posterImage" + i,
 					"study-language" + i,
 					i,
-					EnumSet.of(StudyDay.MONDAY),
+					studyDay,
 					"study-rule" + i,
-					"study-region" + i,
+					StudyRegion.SEOUL,
 					i,
 					i,
 					"study-speakingTest" + i,
@@ -176,11 +179,15 @@ public class DataBaseConfigurator implements InitializingBean {
 			for (int j = 1; j <= NUMBER_OF_MEMBER; j++) {
 				Member member = memberRepository.findById((long) j)
 					.orElseThrow(NotFoundMemberIdException::new);
+				boolean leader = Boolean.FALSE;
+				if (j == 1) {
+					leader = Boolean.TRUE;
+				}
 				studyMemberRepository.save(
 					new StudyMember(
 						member,
 						study,
-						Boolean.TRUE
+						leader
 					)
 				);
 			}

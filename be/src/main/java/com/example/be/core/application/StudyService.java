@@ -223,7 +223,7 @@ public class StudyService {
     }
 
     //type: RANDOM
-    List<Study> studies = studyRepository.findAll(Sort.by(Direction.DESC, "created_at"));
+    List<Study> studies = studyRepository.findAll(Sort.by(Direction.DESC, "createdAt"));
     List<StudyPreviewResponse> randomStudyPreviewResponse = studies.stream().map(study -> {
 
       List<StudyMember> members = studyMemberRepository.findStudyMembersByStudyId(study.getId());

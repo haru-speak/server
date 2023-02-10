@@ -1,6 +1,7 @@
 package com.example.be.core.application.dto.request;
 
 import com.example.be.core.domain.study.StudyDay;
+import com.example.be.core.domain.study.StudyRegion;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.EnumSet;
@@ -47,8 +48,8 @@ public class StudyRequest {
   @NotBlank
   private String rule;
 
-  @Schema(type = "String", description = "지역, NULL")
-  private String region;
+  @Schema(type = "StudyRegion", description = "지역, NULL")
+  private StudyRegion region;
 
   @Schema(type = "String", description = "스터디 하는 요일, NOT NULL")
   @NotBlank
@@ -60,7 +61,7 @@ public class StudyRequest {
 
   public StudyRequest(String title, String content, Integer level, String language,
       String speakingTest, String grade, Integer maxCapacity, Integer minCapacity, String rule,
-      String region, String studyDay, String posterImage) {
+      StudyRegion region, String studyDay, String posterImage) {
     this.title = title;
     this.content = content;
     this.level = level;
