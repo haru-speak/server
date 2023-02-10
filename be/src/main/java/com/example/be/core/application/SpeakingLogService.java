@@ -10,19 +10,24 @@ import com.example.be.core.application.dto.response.CommentResponse;
 import com.example.be.core.application.dto.response.SpeakingLogDetailResponse;
 import com.example.be.core.application.dto.response.SpeakingLogResponse;
 import com.example.be.core.application.dto.response.SpeakingLogsResponse;
+import com.example.be.core.domain.member.Follow;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.speakinglog.Favorite;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
+import com.example.be.core.domain.speakinglog.SpeakingLogType;
+import com.example.be.core.repository.member.FollowRepository;
 import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.speakinglog.CommentRepository;
 import com.example.be.core.repository.speakinglog.FavoriteRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,14 +43,16 @@ public class SpeakingLogService {
 	private final FavoriteRepository favoriteRepository;
 	private final CommentRepository commentRepository;
 	private final MemberRepository memberRepository;
+	private final FollowRepository followRepository;
 
 	public SpeakingLogService(SpeakingLogRepository speakingLogRepository,
 		FavoriteRepository favoriteRepository, CommentRepository commentRepository,
-		MemberRepository memberRepository) {
+		MemberRepository memberRepository, FollowRepository followRepository) {
 		this.speakingLogRepository = speakingLogRepository;
 		this.favoriteRepository = favoriteRepository;
 		this.commentRepository = commentRepository;
 		this.memberRepository = memberRepository;
+		this.followRepository = followRepository;
 	}
 
 	@Transactional
@@ -78,38 +85,82 @@ public class SpeakingLogService {
 
 	public SpeakingLogsResponse find(Long memberId, SpeakingLogConditionRequest speakingLogConditionRequest) {
 		log.debug("[스피킹 로그 전체 조회] SpeakingLogConditionRequest = {}",speakingLogConditionRequest.toString());
+		LocalDate date = speakingLogConditionRequest.getDate();
+		LocalDateTime startDateTime = LocalDateTime.of(date.minusDays(1), LocalTime.of(0,0,0));
+		LocalDateTime endDateTime = LocalDateTime.of(date, LocalTime.of(23,59,59));
 
-		LocalDateTime startDateTime = LocalDateTime.of(speakingLogConditionRequest.getDate().minusDays(1),
-			LocalTime.of(0,0,0));
+		List<SpeakingLog> allSpeakingLogs = speakingLogRepository.findAllByCreatedAtBetween(startDateTime, endDateTime);
+		SpeakingLogType type = speakingLogConditionRequest.getType();
+		List<SpeakingLogResponse> speakingLogResponses;
 
-		LocalDateTime endDateTime = LocalDateTime.of(speakingLogConditionRequest.getDate(), LocalTime.of(23,59,59));
+		if (type == SpeakingLogType.MY) {
+			speakingLogResponses = getSpeakingLogResponses(memberId, allSpeakingLogs);
+		} else if (type == SpeakingLogType.MATE) {
+			List<Follow> followings = followRepository.findAllByFollowerId(memberId);
+			Set<Long> mates = followings.stream()
+				.map(f -> f.getFollowing().getId())
+				.collect(Collectors.toSet());
+			speakingLogResponses = getSpeakingLogResponses(memberId, allSpeakingLogs, mates);
+		} else {
+			speakingLogResponses = allSpeakingLogs
+				.stream()
+				.map(s -> new SpeakingLogResponse(
+						s.getId(),
+						s.getTitle(),
+						s.getVoiceRecord(),
+						s.getVoiceText(),
+						getFavoriteCount(s.getId()),
+						getCommentCount(s.getId()),
+						presentOfFavorite(memberId, s),
+						s.getMember().getProfileImage(),
+						s.getId()
+					))
+				.collect(Collectors.toList());
+		}
 
-		List<SpeakingLog> speakingLogs = speakingLogRepository.findAllByCreatedAtBetween(startDateTime, endDateTime);
-		/**
-		 * TODO: type에 따라 SpeakingLog 조회가 되어야 함
-		 */
+		return new SpeakingLogsResponse(type, date, speakingLogResponses);
+	}
 
-		List<SpeakingLogResponse> speakingLogResponses = speakingLogs.stream()
-			.map(speakingLog ->
-				new SpeakingLogResponse(
-					speakingLog.getId(),
-					speakingLog.getTitle(),
-					speakingLog.getVoiceRecord(),
-					speakingLog.getVoiceText(),
-					getFavoriteCount(speakingLog.getId()),
-					getCommentCount(speakingLog.getId()),
-					favoriteRepository.findByMemberIdAndSpeakingLog(memberId, speakingLog)
-						.isPresent(),
-					speakingLog.getMember().getProfileImage(),
-					speakingLog.getId()
-				))
+	private boolean presentOfFavorite(Long memberId, SpeakingLog speakingLog) {
+		return favoriteRepository
+			.findByMemberIdAndSpeakingLog(memberId, speakingLog)
+			.isPresent();
+	}
+
+	private List<SpeakingLogResponse> getSpeakingLogResponses(Long memberId, List<SpeakingLog> allSpeakingLogs, Set<Long> mates) {
+		return allSpeakingLogs
+			.stream()
+			.filter(s -> mates.contains(s.getMember().getId()))
+			.map(s -> new SpeakingLogResponse(
+				s.getId(),
+				s.getTitle(),
+				s.getVoiceRecord(),
+				s.getVoiceText(),
+				getFavoriteCount(s.getId()),
+				getCommentCount(s.getId()),
+				presentOfFavorite(memberId, s),
+				s.getMember().getProfileImage(),
+				s.getMember().getId()
+			))
 			.collect(Collectors.toList());
+	}
 
-		return new SpeakingLogsResponse(
-			speakingLogConditionRequest.getType(),
-			speakingLogConditionRequest.getDate(),
-			speakingLogResponses
-		);
+	private List<SpeakingLogResponse> getSpeakingLogResponses(Long memberId, List<SpeakingLog> allSpeakingLogs) {
+		return allSpeakingLogs
+			.stream()
+			.filter(s -> s.getMember().getId().equals(memberId))
+			.map(s -> new SpeakingLogResponse(
+				s.getId(),
+				s.getTitle(),
+				s.getVoiceRecord(),
+				s.getVoiceText(),
+				getFavoriteCount(s.getId()),
+				getCommentCount(s.getId()),
+				presentOfFavorite(memberId, s),
+				s.getMember().getProfileImage(),
+				s.getMember().getId()
+			))
+			.collect(Collectors.toList());
 	}
 
 
