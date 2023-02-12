@@ -199,7 +199,6 @@ public class StudyService {
     List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByMemberId(memberId);
     List<String> memberProfiles = new ArrayList<>();
 
-    //type: MY
     if (studyPreviewConditionRequest.getType().equals(StudyPreviewType.MY)) {
       List<StudyPreviewResponse> myStudyPreviewResponses = studyMembers.stream().map(studyMember -> {
 
@@ -223,7 +222,6 @@ public class StudyService {
       return new StudyPreviewsResponse(myStudyPreviewResponses);
     }
 
-    //type: RANDOM
     List<Study> studies = studyRepository.findAll(Sort.by(Direction.DESC, "createdAt"));
     List<StudyPreviewResponse> randomStudyPreviewResponse = studies.stream().map(study -> {
 
