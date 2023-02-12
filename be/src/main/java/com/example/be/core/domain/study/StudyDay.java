@@ -2,7 +2,6 @@ package com.example.be.core.domain.study;
 
 import java.util.Arrays;
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
 public enum StudyDay {

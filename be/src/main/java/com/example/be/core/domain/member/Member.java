@@ -36,7 +36,7 @@ public class Member extends BaseEntity {
 
 	private String profileImage;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(value = EnumType.STRING)
 	private MemberType memberType;
 	private Boolean alarmStatus;
 	private Integer point;

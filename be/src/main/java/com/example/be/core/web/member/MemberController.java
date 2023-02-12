@@ -1,4 +1,4 @@
-package com.example.be.core.web;
+package com.example.be.core.web.member;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.CANCEL_FOLLOW_MEMBER_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_MEMBER_INFO_SUCCESS;
@@ -7,7 +7,7 @@ import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_MEMB
 import static com.example.be.common.response.ResponseCodeAndMessages.SIGN_UP_MEMBER_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
-import com.example.be.core.application.MemberService;
+import com.example.be.core.application.member.MemberService;
 import com.example.be.core.application.dto.request.MemberModifyRequest;
 import com.example.be.core.application.dto.request.MemberSignUpRequest;
 import com.example.be.core.application.dto.response.FollowResponse;

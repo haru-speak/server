@@ -3,7 +3,6 @@ package com.example.be.core.application.member;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.be.core.application.InitServiceTest;
-import com.example.be.core.application.MemberService;
 import com.example.be.core.application.dto.request.MemberModifyRequest;
 import com.example.be.core.application.dto.request.MemberSignUpRequest;
 import com.example.be.core.application.dto.response.MemberResponse;
@@ -13,7 +12,6 @@ import com.example.be.core.domain.member.grade.SpeakingGradeLanguage;
 import com.example.be.core.domain.member.grade.SpeakingGradeLevel;
 import java.util.Arrays;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
