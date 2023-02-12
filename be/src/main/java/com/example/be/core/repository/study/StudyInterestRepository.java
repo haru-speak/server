@@ -10,4 +10,6 @@ public interface StudyInterestRepository extends JpaRepository<StudyInterest, Lo
   Integer countByStudyId(Long studyId);
 
   Optional<StudyInterest> findByMemberIdAndStudy(Long memberId, Study study);
+
+  void deleteByMemberIdAndStudyId(Long memberId, Long studyId);
 }

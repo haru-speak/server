@@ -1,6 +1,5 @@
 package com.example.be.core.domain.study;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
 import lombok.Getter;
 

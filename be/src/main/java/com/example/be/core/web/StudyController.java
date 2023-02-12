@@ -4,14 +4,20 @@ import static com.example.be.common.response.ResponseCodeAndMessages.CREATE_STUD
 import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_ALL_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_STUDY_PREVIEW_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.INTEREST_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.NOT_INTEREST_STUDY_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.StudyService;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
+import com.example.be.core.application.dto.request.StudyPreviewConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.core.application.dto.response.StudyPreviewResponse;
+import com.example.be.core.application.dto.response.StudyPreviewsResponse;
 import com.example.be.oauth.Login;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.constraints.Positive;
@@ -55,6 +61,13 @@ public class StudyController {
     return new BaseResponse<>(FIND_DETAIL_STUDY_SUCCESS, response);
   }
 
+  @GetMapping("/preview")
+  @ApiOperation(value = "스터디 미리보기 조회입니다.")
+  public BaseResponse<StudyPreviewsResponse> findPreview(@Login @Positive final Long memberId, final StudyPreviewConditionRequest studyPreviewConditionRequest) {
+    StudyPreviewsResponse response = studyService.findPreview(memberId, studyPreviewConditionRequest);
+    return new BaseResponse<>(FIND_STUDY_PREVIEW_SUCCESS, response);
+  }
+
   @PutMapping("/{studyId}")
   @ApiOperation(value = "스터디 수정입니다.")
   public BaseResponse<StudyDetailResponse> modify(
@@ -72,5 +85,21 @@ public class StudyController {
       @PathVariable final Long studyId) {
     studyService.delete(memberId, studyId);
     return new BaseResponse<>(DELETE_STUDY_SUCCESS, null);
+  }
+
+  @PostMapping("/interest/{studyId}")
+  public BaseResponse<Void> interest(
+      @Login @Positive final Long memberId,
+      @PathVariable final Long studyId) {
+    studyService.interest(memberId, studyId);
+    return new BaseResponse<>(INTEREST_STUDY_SUCCESS, null);
+  }
+
+  @DeleteMapping("/interest/{studyId}")
+  public BaseResponse<Void> notInterest(
+      @Login @Positive final Long memberId,
+      @PathVariable final Long studyId) {
+    studyService.notInterest(memberId, studyId);
+    return new BaseResponse<>(NOT_INTEREST_STUDY_SUCCESS, null);
   }
 }

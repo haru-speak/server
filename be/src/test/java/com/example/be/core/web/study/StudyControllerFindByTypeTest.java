@@ -1,8 +1,10 @@
 package com.example.be.core.web.study;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_ALL_STUDY_SUCCESS;
-import static com.example.be.core.domain.study.StudyType.ALL;
-import static com.example.be.core.domain.study.StudyType.MY;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_INTEREST_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_POPULAR_STUDY_SUCCESS;
+import static com.example.be.core.domain.study.StudyType.INTEREST;
+import static com.example.be.core.domain.study.StudyType.POPULAR;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,19 +38,19 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
     class NormalTest {
 
       @Test
-      @DisplayName("ALL TYPE 스터디 조회시 ALL TYPE 스터디가 조회된다")
+      @DisplayName("POPULAR TYPE 스터디 조회시 POPULAR TYPE 스터디가 조회된다")
       void find_all_type_study() throws Exception {
         //given
         Long memberId = 1L;
-        StudyConditionRequest request = new StudyConditionRequest("all");
-        StudiesResponse response = new StudiesResponse(ALL, null);
+        StudyConditionRequest request = new StudyConditionRequest("POPULAR");
+        StudiesResponse response = new StudiesResponse(POPULAR, null);
         BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
 
         when(studyService.find(refEq(memberId), refEq(request)))
             .thenReturn(response);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get("/study?type=all")
+        ResultActions resultActions = mockMvc.perform(get("/study?type=popular")
             .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));
@@ -62,19 +64,19 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
       }
 
       @Test
-      @DisplayName("타입 없이 스터디 조회시 MY TYPE 스터디가 조회된다")
+      @DisplayName("INTEREST TYPE 스터디 조회시 INTEREST TYPE 스터디가 조회된다")
       void find_no_type_study() throws Exception {
         //given
         Long memberId = 1L;
-        StudyConditionRequest request = new StudyConditionRequest(null);
-        StudiesResponse response = new StudiesResponse(MY, null);
+        StudyConditionRequest request = new StudyConditionRequest("interest");
+        StudiesResponse response = new StudiesResponse(INTEREST, null);
         BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
 
         when(studyService.find(refEq(memberId), refEq(request)))
             .thenReturn(response);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get("/study")
+        ResultActions resultActions = mockMvc.perform(get("/study?type=interest")
             .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));

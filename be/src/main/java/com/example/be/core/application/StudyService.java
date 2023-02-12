@@ -4,15 +4,21 @@ import com.example.be.common.exception.member.NotFoundMemberIdException;
 import com.example.be.common.exception.study.NotFoundStudyIdException;
 import com.example.be.common.exception.study.NotMatchStudyAndMemberException;
 import com.example.be.core.application.dto.request.StudyConditionRequest;
+import com.example.be.core.application.dto.request.StudyPreviewConditionRequest;
 import com.example.be.core.application.dto.request.StudyRequest;
 import com.example.be.core.application.dto.response.MemberProfilesResponse;
+import com.example.be.core.application.dto.response.PreviewProfilesResponse;
 import com.example.be.core.application.dto.response.StudiesResponse;
 import com.example.be.core.application.dto.response.StudyDetailResponse;
+import com.example.be.core.application.dto.response.StudyPreviewResponse;
+import com.example.be.core.application.dto.response.StudyPreviewsResponse;
 import com.example.be.core.application.dto.response.StudyResponse;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.study.StudyDayConverter;
 import com.example.be.core.domain.study.Study;
+import com.example.be.core.domain.study.StudyInterest;
 import com.example.be.core.domain.study.StudyMember;
+import com.example.be.core.domain.study.StudyPreviewType;
 import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.study.StudyCommentRepository;
 import com.example.be.core.repository.study.StudyInterestRepository;
@@ -21,8 +27,11 @@ import com.example.be.core.repository.study.StudyRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.SortedMap;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,13 +41,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class StudyService {
 
   private final StudyRepository studyRepository;
-  
+
   private final StudyInterestRepository studyInterestRepository;
-  
+
   private final StudyCommentRepository studyCommentRepository;
-  
+
   private final StudyMemberRepository studyMemberRepository;
-  
+
   private final MemberRepository memberRepository;
 
   private static final Integer ZERO = 0;
@@ -153,7 +162,7 @@ public class StudyService {
       if (member.getLeader().equals(Boolean.TRUE)) {
         leaderImg = member.getMember().getProfileImage();
         isLeader = leaderCheck(memberId, isLeader, member);
-      }else{
+      } else {
         otherImg.add(member.getMember().getProfileImage());
       }
     }
@@ -184,6 +193,57 @@ public class StudyService {
     );
   }
 
+  public StudyPreviewsResponse findPreview(Long memberId, StudyPreviewConditionRequest studyPreviewConditionRequest) {
+    log.debug("[스터디 미리보기 조회] memberId = {}, StudyPreviewConditionRequest = {}", memberId, studyPreviewConditionRequest);
+
+    List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByMemberId(memberId);
+    List<String> memberProfiles = new ArrayList<>();
+
+    if (studyPreviewConditionRequest.getType().equals(StudyPreviewType.MY)) {
+      List<StudyPreviewResponse> myStudyPreviewResponses = studyMembers.stream().map(studyMember -> {
+
+            List<StudyMember> members = getStudyMembers(studyMember.getStudy().getId());
+
+            memberProfiles.clear();
+            for (StudyMember member : members) {
+              memberProfiles.add(member.getMember().getProfileImage());
+            }
+
+            return new StudyPreviewResponse(
+                studyMember.getStudy().getId(),
+                studyMember.getStudy().getTitle(),
+                studyMember.getStudy().getContent(),
+                studyMember.getStudy().getPosterImage(),
+                studyMember.getStudy().getCreatedAt(),
+                new PreviewProfilesResponse(memberProfiles)
+            );
+          }).collect(Collectors.toList());
+
+      return new StudyPreviewsResponse(myStudyPreviewResponses);
+    }
+
+    List<Study> studies = studyRepository.findAll(Sort.by(Direction.DESC, "createdAt"));
+    List<StudyPreviewResponse> randomStudyPreviewResponse = studies.stream().map(study -> {
+
+      List<StudyMember> members = studyMemberRepository.findStudyMembersByStudyId(study.getId());
+
+      memberProfiles.clear();
+      for (StudyMember member : members) {
+        memberProfiles.add(member.getMember().getProfileImage());
+      }
+
+      return new StudyPreviewResponse(
+          study.getId(),
+          study.getTitle(),
+          study.getContent(),
+          study.getPosterImage(),
+          study.getCreatedAt(),
+          new PreviewProfilesResponse(memberProfiles)
+      );
+    }).collect(Collectors.toList());
+
+    return new StudyPreviewsResponse(randomStudyPreviewResponse);
+  }
   @Transactional
   public StudyDetailResponse modify(Long memberId, Long studyId, StudyRequest studyRequest) {
     log.debug("[스터디 수정] StudyId = {}, StudyRequest = {}", studyId, studyRequest);
@@ -259,6 +319,31 @@ public class StudyService {
     }
 
     studyRepository.deleteById(studyId);
+  }
+
+  @Transactional
+  public void interest(Long memberId, Long studyId) {
+    log.debug("[스터디 찜하기] studyId = {}", studyId);
+
+    Member member = memberRepository.findById(memberId)
+        .orElseThrow(NotFoundMemberIdException::new);
+
+    Study study = studyRepository.findById(studyId)
+        .orElseThrow(NotFoundStudyIdException::new);
+
+    studyInterestRepository.save(
+          new StudyInterest(
+              member,
+              study
+          )
+    );
+  }
+
+  @Transactional
+  public void notInterest(Long memberId, Long studyId) {
+    log.debug("[스터디 찜 취소하기] studyId = {}", studyId);
+
+    studyInterestRepository.deleteByMemberIdAndStudyId(memberId, studyId);
   }
 
   private Integer getStudyInterestCount(Study study) {

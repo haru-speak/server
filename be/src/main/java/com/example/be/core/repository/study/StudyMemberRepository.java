@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> {
     List<StudyMember> findStudyMembersByStudyId(Long studyId);
 
+    List<StudyMember> findStudyMembersByMemberId(Long memberId);
+
     StudyMember findStudyMemberByStudyIdAndLeaderIsTrue(Long studyId);
 
     Integer countStudyMemberByStudyId(Long studyId);

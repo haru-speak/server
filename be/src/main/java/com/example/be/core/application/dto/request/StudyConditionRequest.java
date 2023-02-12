@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StudyConditionRequest {
 
-  @Schema(enumAsRef = true, description = "스터디 로그 조회 타입, NULL, default = type.my")
+  @Schema(enumAsRef = true, description = "스터디 로그 조회 타입, NULL")
   private StudyType type;
 
   public StudyConditionRequest(String type) {
@@ -22,7 +22,7 @@ public class StudyConditionRequest {
   private StudyType getStudyTypeFromString(String input) {
 
     if (input == null) {
-      return StudyType.MY;
+      throw new IllegalArgumentException("type이 정해지지 않았습니다.");
     }
     return StudyType.convert(input.toUpperCase());
   }

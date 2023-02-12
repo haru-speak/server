@@ -9,6 +9,7 @@ import com.example.be.core.domain.member.subject.Subject;
 import com.example.be.core.domain.speakinglog.SpeakingLog;
 import com.example.be.core.domain.study.Study;
 import com.example.be.core.domain.study.StudyDay;
+import com.example.be.core.domain.study.StudyInterest;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.domain.study.StudyRegion;
 import com.example.be.core.repository.assignment.AssignmentMemberRepository;
@@ -17,6 +18,7 @@ import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.member.goal.GoalRepository;
 import com.example.be.core.repository.member.subject.SubjectRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
+import com.example.be.core.repository.study.StudyInterestRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import java.sql.Connection;
@@ -59,6 +61,9 @@ public class DataBaseConfigurator implements InitializingBean {
 
 	@Autowired
 	private StudyMemberRepository studyMemberRepository;
+
+	@Autowired
+	private StudyInterestRepository studyInterestRepository;
 
 	@Autowired
 	private AssignmentRepository assignmentRepository;
@@ -182,7 +187,7 @@ public class DataBaseConfigurator implements InitializingBean {
 				Member member = memberRepository.findById((long) j)
 					.orElseThrow(NotFoundMemberIdException::new);
 				boolean leader = Boolean.FALSE;
-				if(j == 1){
+				if (j == 1) {
 					leader = Boolean.TRUE;
 				}
 				studyMemberRepository.save(
@@ -192,6 +197,14 @@ public class DataBaseConfigurator implements InitializingBean {
 						leader
 					)
 				);
+				if (i == 2 && j == 1) {
+					studyInterestRepository.save(
+						new StudyInterest(
+							member,
+							study
+						)
+					);
+				}
 			}
 		}
 	}
