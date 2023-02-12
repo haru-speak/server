@@ -5,7 +5,9 @@ import static com.example.be.common.response.ResponseCodeAndMessages.DELETE_STUD
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_DETAIL_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_ALL_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_STUDY_PREVIEW_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.INTEREST_STUDY_SUCCESS;
 import static com.example.be.common.response.ResponseCodeAndMessages.MODIFY_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.NOT_INTEREST_STUDY_SUCCESS;
 
 import com.example.be.common.response.BaseResponse;
 import com.example.be.core.application.StudyService;
@@ -83,5 +85,21 @@ public class StudyController {
       @PathVariable final Long studyId) {
     studyService.delete(memberId, studyId);
     return new BaseResponse<>(DELETE_STUDY_SUCCESS, null);
+  }
+
+  @PostMapping("/interest/{studyId}")
+  public BaseResponse<Void> interest(
+      @Login @Positive final Long memberId,
+      @PathVariable final Long studyId) {
+    studyService.interest(memberId, studyId);
+    return new BaseResponse<>(INTEREST_STUDY_SUCCESS, null);
+  }
+
+  @DeleteMapping("/interest/{studyId}")
+  public BaseResponse<Void> notInterest(
+      @Login @Positive final Long memberId,
+      @PathVariable final Long studyId) {
+    studyService.notInterest(memberId, studyId);
+    return new BaseResponse<>(NOT_INTEREST_STUDY_SUCCESS, null);
   }
 }

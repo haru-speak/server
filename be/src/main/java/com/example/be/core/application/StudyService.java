@@ -16,6 +16,7 @@ import com.example.be.core.application.dto.response.StudyResponse;
 import com.example.be.core.domain.member.Member;
 import com.example.be.core.domain.study.StudyDayConverter;
 import com.example.be.core.domain.study.Study;
+import com.example.be.core.domain.study.StudyInterest;
 import com.example.be.core.domain.study.StudyMember;
 import com.example.be.core.domain.study.StudyPreviewType;
 import com.example.be.core.repository.member.MemberRepository;
@@ -320,6 +321,31 @@ public class StudyService {
     }
 
     studyRepository.deleteById(studyId);
+  }
+
+  @Transactional
+  public void interest(Long memberId, Long studyId) {
+    log.debug("[스터디 찜하기] studyId = {}", studyId);
+
+    Member member = memberRepository.findById(memberId)
+        .orElseThrow(NotFoundMemberIdException::new);
+
+    Study study = studyRepository.findById(studyId)
+        .orElseThrow(NotFoundStudyIdException::new);
+
+    studyInterestRepository.save(
+          new StudyInterest(
+              member,
+              study
+          )
+    );
+  }
+
+  @Transactional
+  public void notInterest(Long memberId, Long studyId) {
+    log.debug("[스터디 찜 취소하기] studyId = {}", studyId);
+
+    studyInterestRepository.deleteByMemberIdAndStudyId(memberId, studyId);
   }
 
   private Integer getStudyInterestCount(Study study) {

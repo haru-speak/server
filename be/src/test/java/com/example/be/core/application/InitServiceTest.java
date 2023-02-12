@@ -2,7 +2,9 @@ package com.example.be.core.application;
 
 import com.example.be.core.repository.assignment.AssignmentMemberRepository;
 import com.example.be.core.repository.assignment.AssignmentRepository;
+import com.example.be.core.repository.member.MemberRepository;
 import com.example.be.core.repository.speakinglog.SpeakingLogRepository;
+import com.example.be.core.repository.study.StudyInterestRepository;
 import com.example.be.core.repository.study.StudyMemberRepository;
 import com.example.be.core.repository.study.StudyRepository;
 import com.example.be.tool.DataBaseConfigurator;
@@ -18,6 +20,9 @@ import org.springframework.test.context.ActiveProfiles;
 public abstract class InitServiceTest {
 
 	@Autowired
+	protected MemberRepository memberRepository;
+
+	@Autowired
 	protected SpeakingLogService speakingLogService;
 
 	@Autowired
@@ -31,6 +36,9 @@ public abstract class InitServiceTest {
 
 	@Autowired
 	protected StudyMemberRepository studyMemberRepository;
+
+	@Autowired
+	protected StudyInterestRepository studyInterestRepository;
 
 	@Autowired
 	protected AssignmentService assignmentService;

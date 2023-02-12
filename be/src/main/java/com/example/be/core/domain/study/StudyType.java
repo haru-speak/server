@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public enum StudyType {
 
+  ALL("ALL"),
   RECOMMEND("RECOMMEND"),
   POPULAR("POPULAR"),
   INTEREST("INTEREST")

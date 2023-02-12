@@ -1,6 +1,8 @@
 package com.example.be.core.web.study;
 
 import static com.example.be.common.response.ResponseCodeAndMessages.FIND_ALL_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_INTEREST_STUDY_SUCCESS;
+import static com.example.be.common.response.ResponseCodeAndMessages.FIND_POPULAR_STUDY_SUCCESS;
 import static com.example.be.core.domain.study.StudyType.INTEREST;
 import static com.example.be.core.domain.study.StudyType.POPULAR;
 import static org.mockito.ArgumentMatchers.refEq;
@@ -40,7 +42,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
       void find_all_type_study() throws Exception {
         //given
         Long memberId = 1L;
-        StudyConditionRequest request = new StudyConditionRequest("all");
+        StudyConditionRequest request = new StudyConditionRequest("POPULAR");
         StudiesResponse response = new StudiesResponse(POPULAR, null);
         BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
 
@@ -48,7 +50,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
             .thenReturn(response);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get("/study?type=all")
+        ResultActions resultActions = mockMvc.perform(get("/study?type=popular")
             .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));
@@ -66,7 +68,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
       void find_no_type_study() throws Exception {
         //given
         Long memberId = 1L;
-        StudyConditionRequest request = new StudyConditionRequest(null);
+        StudyConditionRequest request = new StudyConditionRequest("interest");
         StudiesResponse response = new StudiesResponse(INTEREST, null);
         BaseResponse<StudiesResponse> baseResponse = new BaseResponse<>(FIND_ALL_STUDY_SUCCESS, response);
 
@@ -74,7 +76,7 @@ class StudyControllerFindByTypeTest extends InitControllerTest {
             .thenReturn(response);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get("/study")
+        ResultActions resultActions = mockMvc.perform(get("/study?type=interest")
             .header("Authorization", "Bearer "+jwtProvider.generateAccessToken(memberId))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE));
