@@ -57,7 +57,7 @@ public class AssignmentService {
             assignmentRequest.getPhoto())
     );
 
-    List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudyId(assignmentRequest.getStudyId());
+    List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudy_Id(assignmentRequest.getStudyId());
 
     studyMembers.forEach(studyMember ->
         assignmentMemberRepository.save(

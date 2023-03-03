@@ -27,7 +27,6 @@ import com.example.be.core.repository.study.StudyRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.SortedMap;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -127,7 +126,7 @@ public class StudyService {
 
     List<Study> studies = studyRepository.findAll();
     List<StudyResponse> studyResponses = studies.stream().map(study -> {
-      Integer memberCount = studyMemberRepository.countStudyMemberByStudyId(study.getId());
+      Integer memberCount = studyMemberRepository.countStudyMemberByStudy_Id(study.getId());
       return new StudyResponse(
           study.getId(),
           study.getTitle(),
@@ -196,7 +195,7 @@ public class StudyService {
   public StudyPreviewsResponse findPreview(Long memberId, StudyPreviewConditionRequest studyPreviewConditionRequest) {
     log.debug("[스터디 미리보기 조회] memberId = {}, StudyPreviewConditionRequest = {}", memberId, studyPreviewConditionRequest);
 
-    List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByMemberId(memberId);
+    List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByMember_Id(memberId);
     List<String> memberProfiles = new ArrayList<>();
 
     if (studyPreviewConditionRequest.getType().equals(StudyPreviewType.MY)) {
@@ -225,7 +224,7 @@ public class StudyService {
     List<Study> studies = studyRepository.findAll(Sort.by(Direction.DESC, "createdAt"));
     List<StudyPreviewResponse> randomStudyPreviewResponse = studies.stream().map(study -> {
 
-      List<StudyMember> members = studyMemberRepository.findStudyMembersByStudyId(study.getId());
+      List<StudyMember> members = studyMemberRepository.findStudyMembersByStudy_Id(study.getId());
 
       memberProfiles.clear();
       for (StudyMember member : members) {
@@ -312,7 +311,7 @@ public class StudyService {
   public void delete(Long memberId, Long studyId) {
     log.debug("[스터디 삭제] studyId = {}", studyId);
 
-    StudyMember studyLeader = studyMemberRepository.findStudyMemberByStudyIdAndLeaderIsTrue(studyId);
+    StudyMember studyLeader = studyMemberRepository.findStudyMemberByStudy_IdAndLeaderIsTrue(studyId);
 
     if (!Objects.equals(studyLeader.getMember().getId(), memberId)) {
       throw new NotMatchStudyAndMemberException();
@@ -351,7 +350,7 @@ public class StudyService {
   }
 
   private boolean isStudyInterested(Long loginMemberId, Study study) {
-    return studyInterestRepository.findByMemberIdAndStudy(loginMemberId, study).isPresent();
+    return studyInterestRepository.findByMember_IdAndStudy(loginMemberId, study).isPresent();
   }
 
   private static boolean leaderCheck(Long loginMemberId, boolean isLeader, StudyMember member) {
@@ -367,7 +366,7 @@ public class StudyService {
   }
 
   private List<StudyMember> getStudyMembers(Long studyId) {
-    return studyMemberRepository.findStudyMembersByStudyId(
+    return studyMemberRepository.findStudyMembersByStudy_Id(
         studyId);
   }
 }

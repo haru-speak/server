@@ -214,7 +214,7 @@ public class DataBaseConfigurator implements InitializingBean {
 	 */
 	private void initAssignment() {
 		Study study = studyRepository.findById(1L).get();
-		List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudyId(
+		List<StudyMember> studyMembers = studyMemberRepository.findStudyMembersByStudy_Id(
 			study.getId());
 		for (int i = 1; i <= NUMBER_OF_ASSIGNMENT; i++) {
 			Assignment assignment = assignmentRepository.save(
